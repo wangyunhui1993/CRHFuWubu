@@ -1,0 +1,16 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {1A240865-882B-49AC-92CB-93C3CF5DA405} = s 'LEDDrive Class'
+		{
+			ForceRemove Programmable
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{5ECA2C3D-B8B3-44C5-ACE4-D5101112B4CB}'
+			Version = s '1.0'
+		}
+	}
+}

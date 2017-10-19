@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LEDEngine", "LEDEngine\LEDEngine.vcxproj", "{3269089D-B242-4B8F-9851-0CF7A81430BA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LEDEnginePS", "LEDEngine\LEDEnginePS.vcxproj", "{C7358FE2-FA80-45A0-A3D8-17B91D17B71D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3269089D-B242-4B8F-9851-0CF7A81430BA} = {3269089D-B242-4B8F-9851-0CF7A81430BA}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEDCommTest", "..\LEDCommTest\LEDCommTest.csproj", "{67A68126-621F-4AD5-862B-023172C995E9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3269089D-B242-4B8F-9851-0CF7A81430BA} = {3269089D-B242-4B8F-9851-0CF7A81430BA}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Win32 = Debug|Win32
+		Debug|x86 = Debug|x86
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Win32 = Release|Win32
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3269089D-B242-4B8F-9851-0CF7A81430BA}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{3269089D-B242-4B8F-9851-0CF7A81430BA}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{3269089D-B242-4B8F-9851-0CF7A81430BA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3269089D-B242-4B8F-9851-0CF7A81430BA}.Debug|Win32.Build.0 = Debug|Win32
+		{3269089D-B242-4B8F-9851-0CF7A81430BA}.Debug|x86.ActiveCfg = Debug|Win32
+		{3269089D-B242-4B8F-9851-0CF7A81430BA}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{3269089D-B242-4B8F-9851-0CF7A81430BA}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{3269089D-B242-4B8F-9851-0CF7A81430BA}.Release|Win32.ActiveCfg = Release|Win32
+		{3269089D-B242-4B8F-9851-0CF7A81430BA}.Release|Win32.Build.0 = Release|Win32
+		{3269089D-B242-4B8F-9851-0CF7A81430BA}.Release|x86.ActiveCfg = Release|Win32
+		{C7358FE2-FA80-45A0-A3D8-17B91D17B71D}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{C7358FE2-FA80-45A0-A3D8-17B91D17B71D}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{C7358FE2-FA80-45A0-A3D8-17B91D17B71D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C7358FE2-FA80-45A0-A3D8-17B91D17B71D}.Debug|x86.ActiveCfg = Debug|Win32
+		{C7358FE2-FA80-45A0-A3D8-17B91D17B71D}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{C7358FE2-FA80-45A0-A3D8-17B91D17B71D}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{C7358FE2-FA80-45A0-A3D8-17B91D17B71D}.Release|Win32.ActiveCfg = Release|Win32
+		{C7358FE2-FA80-45A0-A3D8-17B91D17B71D}.Release|x86.ActiveCfg = Release|Win32
+		{67A68126-621F-4AD5-862B-023172C995E9}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{67A68126-621F-4AD5-862B-023172C995E9}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{67A68126-621F-4AD5-862B-023172C995E9}.Debug|Win32.ActiveCfg = Debug|x86
+		{67A68126-621F-4AD5-862B-023172C995E9}.Debug|x86.ActiveCfg = Debug|x86
+		{67A68126-621F-4AD5-862B-023172C995E9}.Debug|x86.Build.0 = Debug|x86
+		{67A68126-621F-4AD5-862B-023172C995E9}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{67A68126-621F-4AD5-862B-023172C995E9}.Release|Mixed Platforms.Build.0 = Release|x86
+		{67A68126-621F-4AD5-862B-023172C995E9}.Release|Win32.ActiveCfg = Release|x86
+		{67A68126-621F-4AD5-862B-023172C995E9}.Release|x86.ActiveCfg = Release|x86
+		{67A68126-621F-4AD5-862B-023172C995E9}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

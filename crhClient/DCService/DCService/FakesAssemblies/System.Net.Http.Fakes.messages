@@ -1,0 +1,106 @@
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.SR 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.SysSR 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.HttpStatusDescription 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpContent 生成存根: method System.Threading.Tasks.Task System.Net.Http.HttpContent.SerializeToStreamAsync(System.IO.Stream stream, System.Net.TransportContext context) unstubbable: 方法是抽象的，因此无法用作存根，类型 System.IO.Stream 在目标框架版本中不可用。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.ByteArrayContent 生成存根: method System.Threading.Tasks.Task System.Net.Http.HttpContent.SerializeToStreamAsync(System.IO.Stream stream, System.Net.TransportContext context) unstubbable: 方法是抽象的，因此无法用作存根，类型 System.IO.Stream 在目标框架版本中不可用。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.ClientCertificateOption 生成存根: 类型是一个值类型。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpMessageHandler 生成存根: method System.Threading.Tasks.Task`1<System.Net.Http.HttpResponseMessage> System.Net.Http.HttpMessageHandler.SendAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) unstubbable: 方法是抽象的，因此无法用作存根，类型 System.Threading.CancellationToken 在目标框架版本中不可用。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.DelegatingHandler 生成存根: method System.Threading.Tasks.Task`1<System.Net.Http.HttpResponseMessage> System.Net.Http.HttpMessageHandler.SendAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) unstubbable: 方法是抽象的，因此无法用作存根，类型 System.Threading.CancellationToken 在目标框架版本中不可用。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.DelegatingStream 生成存根: 类型不受支持，因为它不可用或已在版本之间更改。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.FormUrlEncodedContent 生成存根: method System.Threading.Tasks.Task System.Net.Http.HttpContent.SerializeToStreamAsync(System.IO.Stream stream, System.Net.TransportContext context) unstubbable: 方法是抽象的，因此无法用作存根，类型 System.IO.Stream 在目标框架版本中不可用。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.BaseHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.ByteArrayHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.CacheControlHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.DateHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.GenericHeaderParser 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HeaderUtilities 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpContentHeaders 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpGeneralHeaders 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpHeaderValueCollection`1 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpRequestHeaders 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpResponseHeaders 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.Int32NumberHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.Int64NumberHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.MediaTypeHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.MediaTypeWithQualityHeaderValue 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.ObjectCollection`1 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.ProductInfoHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.TimeSpanHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.TransferCodingHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.TransferCodingWithQualityHeaderValue 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.UriHeaderParser 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpClientHandler 生成存根: method System.Threading.Tasks.Task`1<System.Net.Http.HttpResponseMessage> System.Net.Http.HttpMessageHandler.SendAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) unstubbable: 方法是抽象的，因此无法用作存根，类型 System.Threading.CancellationToken 在目标框架版本中不可用。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpCompletionOption 生成存根: 类型是一个值类型。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpParseResult 生成存根: 类型是一个值类型。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpRuleParser 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpUtilities 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.MessageProcessingHandler 生成存根: method System.Net.Http.HttpRequestMessage System.Net.Http.MessageProcessingHandler.ProcessRequest(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) unstubbable: 方法是抽象的，因此无法用作存根，类型 System.Threading.CancellationToken 在目标框架版本中不可用。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.MultipartContent 生成存根: method System.Threading.Tasks.Task System.Net.Http.HttpContent.SerializeToStreamAsync(System.IO.Stream stream, System.Net.TransportContext context) unstubbable: 方法是抽象的，因此无法用作存根，类型 System.IO.Stream 在目标框架版本中不可用。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.MultipartFormDataContent 生成存根: method System.Threading.Tasks.Task System.Net.Http.HttpContent.SerializeToStreamAsync(System.IO.Stream stream, System.Net.TransportContext context) unstubbable: 方法是抽象的，因此无法用作存根，类型 System.IO.Stream 在目标框架版本中不可用。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.StreamContent 生成存根: method System.Threading.Tasks.Task System.Net.Http.HttpContent.SerializeToStreamAsync(System.IO.Stream stream, System.Net.TransportContext context) unstubbable: 方法是抽象的，因此无法用作存根，类型 System.IO.Stream 在目标框架版本中不可用。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.StreamToStreamCopy 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.StringContent 生成存根: method System.Threading.Tasks.Task System.Net.Http.HttpContent.SerializeToStreamAsync(System.IO.Stream stream, System.Net.TransportContext context) unstubbable: 方法是抽象的，因此无法用作存根，类型 System.IO.Stream 在目标框架版本中不可用。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.NclUtilities 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.ValidationHelper 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.ExceptionHelper 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.HttpKnownHeaderNames 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Logging 生成存根: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.TimerThread 生成存根: 类型已密封。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 <PrivateImplementationDetails>{C0B29235-E7B6-44DD-8DDB-FA00FEF3B379} 生成存根: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.SR 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.SysSR 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.HttpStatusDescription 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpContent+<>c__DisplayClass1 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpContent+<>c__DisplayClass12 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpContent+<>c__DisplayClass4 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpContent+<>c__DisplayClass7 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpContent+<>c__DisplayClassb 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpContent+<>c__DisplayClassf 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpContent+LimitMemoryStream 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.ClientCertificateOption 生成填充码: 类型是一个枚举。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.DelegatingStream 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.BaseHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.ByteArrayHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.CacheControlHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.DateHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.GenericHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HeaderUtilities 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpHeaders+<GetEnumerator>d__8 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpHeaders+<GetHeaderStrings>d__0 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpHeaders+HeaderStoreItemInfo 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpHeaders+StoreLocation 生成填充码: 类型是一个枚举。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpGeneralHeaders 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.HttpHeaderValueCollection`1+<GetEnumerator>d__0 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.Int32NumberHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.Int64NumberHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.MediaTypeHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.ObjectCollection`1 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.ProductInfoHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.TimeSpanHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.TransferCodingHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.Headers.UriHeaderParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpClient+<>c__DisplayClass10 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpClient+<>c__DisplayClass8`1 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpClient+<>c__DisplayClassd 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpClientHandler+<>c__DisplayClass3 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpClientHandler+<>c__DisplayClass6 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpClientHandler+<>c__DisplayClassa 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpClientHandler+RequestState 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpClientHandler+WebExceptionWrapperStream 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpCompletionOption 生成填充码: 类型是一个枚举。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpParseResult 生成填充码: 类型是一个枚举。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpRequestException+EmptyState 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpRuleParser 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.HttpUtilities 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.MessageProcessingHandler+<>c__DisplayClass2 生成填充码: 类型不受支持，因为存在内部限制。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.StreamContent+ReadOnlyStream 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Http.StreamToStreamCopy 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.NclUtilities 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.ValidationHelper 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.ExceptionHelper 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.HttpKnownHeaderNames 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.Logging 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 System.Net.TimerThread 生成填充码: 类型对 exported or assembly(System.Net.Http.Fakes) 不可见。
+C:\work\服务部\杭州动车所\DCService\DCService\Fakes\System.Net.Http.fakes : warning : 无法为 <PrivateImplementationDetails>{C0B29235-E7B6-44DD-8DDB-FA00FEF3B379} 生成填充码: 类型不受支持，因为存在内部限制。

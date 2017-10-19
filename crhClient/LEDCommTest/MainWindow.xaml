@@ -1,0 +1,36 @@
+﻿<Window x:Class="LEDCommTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Name="LEDUI">
+        <Button Content="增加发送内容" Height="23" HorizontalAlignment="Left" Margin="23,210,0,0" Name="BtnAddCpntent" VerticalAlignment="Top" Width="75" Click="SetLEDText_Click" />
+        <Button Content="发送到LED" Height="23" HorizontalAlignment="Left" Margin="23,267,0,0" Name="BtnSendContent" VerticalAlignment="Top" Width="75" Click="SendText_Click" />
+        <TextBox Height="21" HorizontalAlignment="Right" Margin="0,272,190,0" Name="textBox1" VerticalAlignment="Top" Width="103" Text="{Binding Path = IP}" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="85,12,0,0" Name="textBox2" VerticalAlignment="Top" Width="394" Text="{Binding Path = content}"/>
+        <TextBox Height="23" HorizontalAlignment="Right" Margin="0,51,18,0" Name="textBox3" VerticalAlignment="Top" Width="28" Text="{Binding Path = X}" HorizontalContentAlignment="Left" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="458,84,0,0" Name="textBox4" VerticalAlignment="Top" Width="28" Text="{Binding Path = Y}" HorizontalContentAlignment="Left" />
+        <TextBox Height="22" HorizontalAlignment="Left" Margin="461,210,0,0" Name="textBox5" VerticalAlignment="Top" Width="27" Text="{Binding Path = W_Height}" HorizontalContentAlignment="Left" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="460,178,0,0" Name="textBox6" VerticalAlignment="Top" Width="27" Text="{Binding Path = W_Width}" HorizontalContentAlignment="Left" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="133,153,0,0" Name="textBox7" VerticalAlignment="Top" Width="37" Text="{Binding Path = Color}" />
+        <TextBox Height="23" HorizontalAlignment="Right" Margin="0,116,214,0" Name="textBox8" VerticalAlignment="Top" Width="64" Text="{Binding Path = FontSize}"/>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="458,116,0,0" Name="textBox9" VerticalAlignment="Top" Width="27" Text="{Binding Path = Left}" HorizontalContentAlignment="Left" />
+        <TextBox Height="26" HorizontalAlignment="Right" Margin="0,147,16,0" Name="textBox10" VerticalAlignment="Top" Width="28" Text="{Binding Path = Top}" HorizontalContentAlignment="Left" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="133,52,0,0" Name="textBox11" VerticalAlignment="Top" Width="64" Text="{Binding Path=EnglishFont}" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="133,85,0,0" Name="textBox12" VerticalAlignment="Top" Width="64" Text="{Binding Path=ChineseFont}" />
+        <!--dddddddddddddddddddddddddddddddddddd -->
+        <TextBlock Height="22" HorizontalAlignment="Left" Margin="23,13,0,0" Name="textBlock1" Text="内容(xxxs)" VerticalAlignment="Top" Width="41" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="18,54,0,0" Name="textBlock2" Text="英文字体" VerticalAlignment="Top" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="19,87,0,0" Name="textBlock3" Text="中文字体" VerticalAlignment="Top" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,118,0,0" Name="textBlock4" Text="字体大小(12*12,16*16,24*24,32*32)" VerticalAlignment="Top" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="18,154,0,0" Name="textBlock5" Text="颜色(红，绿，黄)" VerticalAlignment="Top" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="125,271,0,0" Name="textBlock6" Text="LED IP(x.x.x.x)" VerticalAlignment="Top" Width="83" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="365,118,0,0" Name="textBlock7" Text="区域左" VerticalAlignment="Top" />
+        <TextBlock HorizontalAlignment="Left" Margin="365,150,0,138" Name="textBlock8" Text="区域上" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="365,179,0,0" Name="textBlock9" Text="区域宽度" VerticalAlignment="Top" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="366,209,0,0" Name="textBlock10" Text="区域高度" VerticalAlignment="Top" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="365,54,0,0" Name="textBlock11" Text="输出文字X坐标" VerticalAlignment="Top" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="365,86,0,0" Name="textBlock12" Text="输出文字Y坐标" VerticalAlignment="Top" />
+        <Label Content="LED端口" Height="28" HorizontalAlignment="Left" Margin="330,268,0,0" Name="label1" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="392,269,0,0" Name="textBox13" VerticalAlignment="Top" Width="37" Text="{Binding Path=LEDPort}" />
+    </Grid>
+</Window>

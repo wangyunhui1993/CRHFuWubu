@@ -1,0 +1,20 @@
+
+发送LED数据
+IP和端口 127.0.0.1:9999
+LED json格式：{"TYPE":"LED" , "IP" : "192.168.1.100", "PORT":"1023" , "LEDDATA": ["32*32&&黄&&欢迎公司领导检查指导！","16*16&&黄&&宝宝看看聊聊！"] }
+返回发送结果: 失败{"TYPE":"LED","success":"0"}，成功{"TYPE":"LED","success":"1"}
+
+
+查询有电无电状态
+{"TYPE":"TRACKIDPOWER"}
+
+返回轨道电源状态
+轨道1 有电
+{"TYPE":"TRACKIDPOWER","id":"1","power":"1","success":"1"}
+轨道1 无电
+{"TYPE":"TRACKIDPOWER","id":"1","power":"0","success":"1"}
+轨道2 有电
+{"TYPE":"TRACKIDPOWER","id":"2","power":"1","success":"1"}
+
+返回查询失败
+{"TYPE":"TRACKIDPOWER","success":"0"}

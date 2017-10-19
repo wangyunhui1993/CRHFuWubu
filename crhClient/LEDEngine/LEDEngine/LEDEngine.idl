@@ -1,0 +1,45 @@
+// LEDEngine.idl : IDL source for LEDEngine
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (LEDEngine.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(7A5E5035-2485-408C-B4F2-9B361F804418),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface ILEDDrive : IDispatch{
+	[propget, id(1)] HRESULT IP([out, retval] BSTR* pVal);
+	[propput, id(1)] HRESULT IP([in] BSTR newVal);
+	[id(2), helpstring("向LED发送字符串")] HRESULT SendTextToLED([out,retval]LONG* Result);
+	[id(3), helpstring("初始化scl库")] HRESULT InitializeSCL([out,retval] LONG* Result);
+	//[id(4), helpstring("设置带格式化的LED内容e.g.32*32&&黄&&欢迎公司领导检查指导！")] HRESULT SetFormatedContentText([in] BSTR txt,[out,retval]LONG* Result);
+	[id(5), helpstring("清理scl库")] HRESULT UnInitializeSCL();
+	[id(6), helpstring("获取带格式化的LED内容")] HRESULT GetFormatedContentText([out] BSTR* txt,[out,retval]LONG* Result);
+	[id(7), helpstring("增加一条内容")] HRESULT AddFormatedContentText([in] BSTR txt,[out,retval]LONG* Result);
+	[id(8), helpstring("清空广播内容")] HRESULT CleanFormatedContentText([out,retval]LONG* Result);
+	[propget, id(9), helpstring("LED的UPD端口号")] HRESULT UDPPort([out, retval] ULONG* pVal);
+	[propput, id(9), helpstring("LED的UPD端口号")] HRESULT UDPPort([in] ULONG newVal);
+};
+[
+	uuid(5ECA2C3D-B8B3-44C5-ACE4-D5101112B4CB),
+	version(1.0),
+]
+library LEDEngineLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(1A240865-882B-49AC-92CB-93C3CF5DA405)	
+	]
+	coclass LEDDrive
+	{
+		[default] interface ILEDDrive;
+	};
+};
+
