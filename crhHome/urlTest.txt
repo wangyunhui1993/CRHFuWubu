@@ -1,0 +1,14 @@
+http://localhost/crhservice/index.php/home/TrainColumn/getRecords
+http://localhost/crhservice/index.php/home/TrainColumn/getRecordsCount
+
+http://localhost/crhservice/index.php/home/TrainGroup/getRecords
+http://localhost/crhservice/index.php/home/TrainGroup/getRecordsCount
+
+http://localhost/crhservice/index.php/home/TrainModel/getRecords
+http://localhost/crhservice/index.php/home/TrainModel/getRecordsCount
+
+http://localhost/crhservice/index.php/home/TroubleMaintain/getRecords
+http://localhost/crhservice/index.php/home/TroubleMaintain/getRecordsCount
+
+http://localhost/crhservice/index.php/home/UserRole/getRecords
+http://localhost/crhservice/index.php/home/UserRole/getRecordsCount

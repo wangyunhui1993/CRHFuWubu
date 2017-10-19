@@ -1,0 +1,11 @@
+.DS_Store
+node_modules/
+dist/
+npm-debug.log
+
+node_moudules/
+/.idea/
+/.svn/
+/branches/
+/tags/
+/trunk/
