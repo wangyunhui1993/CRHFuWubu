@@ -79,7 +79,7 @@ class ExcelHelper
         if ($exportRecordValues == null || $exportRecordValues[0] == null) {
             return;
         }
-        $xls_sheet = data;
+        $xls_sheet = 0;
         $xls_rows = range($startRow, $startRow + count($exportRecordValues), 1);
         //$xls_cols = array_slice( ExcelHelper::$Columnlabel, $startCol-1, count($exportRecordValues[0]));
 
