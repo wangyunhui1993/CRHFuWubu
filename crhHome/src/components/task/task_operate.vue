@@ -119,10 +119,29 @@
                         <el-button
                                 size="small"
                                 type="primary"
+                                style="margin-left: 2px" 
                                 @click="handleEdit(scope.$index, scope.row)">作业操作</el-button>
+                                <br/>
+                                
+                        <el-button
+                                size="small"
+                                type="danger"
+                                style="margin-left: 8px" 
+                                @click="handleCancel(scope.$index, scope.row)">取消作业</el-button>
                     </template>
                 </el-table-column>
+
             </el-table>
+
+                            <el-dialog title="提示" v-model="cancelConfirmVisible" size="tiny">
+                <span>确认要取消序号为[ <b>{{selectedIndex+1}}</b> ]的作业任务吗？</span>
+                <span slot="footer" class="dialog-footer">
+	            <el-button @click="cancelConfirmVisible = false">取 消</el-button>
+	            <el-button type="primary" @click="onConfirmCancel">确 定</el-button>
+                </span>
+                </el-dialog>
+
+
             <div class="block" style="text-align: center; margin-top: 20px">
                 <el-pagination
                         @size-change="handleSizeChange"
@@ -901,6 +920,7 @@
                 getPersonCountUrl: HOME + "User/getSearchRecordsCount",
                 queryDepartmentUrl: HOME + "DepartmentInfo/getRecords",
                 queryWorkGroupUrl: HOME + "WorkGroup/getRecords",
+                modifyTaskURL: HOME + "TaskPlan/modifyData",
                 //getUserUrl: HOME + "User/searchRecords",
                 userInfo:"",
                 statusArr:[],
@@ -961,6 +981,8 @@
                 isError: false,
                 errorMsg: '',
 
+                cancelConfirmVisible: false,//取消确认
+                selectedIndex:-1,
                 //
                 currentAddIndicator: -1,// 1 -> a_left; 2 ->a_right; 3->b_left; 4->b_right; 5->a_leader; 6->b_leader; 7->a_quality; 8->b_quality
                 personForm:{
@@ -1066,12 +1088,43 @@
                 this.multiPersonSelection = val;
             },
 
-            handleEdit(index, row){
-//              alert(index)
+            handleEdit(index, row){              
               this.currentContentColumn = -1;
               this.modifyDialogVisible = true
               this.selectedTaskInfo = []
               this.selectedTaskInfo.push(row);
+            },
+            handleCancel(index, row){
+            
+                this.selectedIndex = index;
+                this.cancelConfirmVisible = true;
+                this.selectedItem = row;
+            },
+
+           onConfirmCancel() {
+                $.ajax({
+                    url: _this.modifyTaskURL,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {"id": this.selectedItem.id, "state": "4"},
+                    success: function (data) {
+                        _this.isError = data.status == 0;
+                        if (!_this.isError) {
+                            _this.cancelConfirmVisible = false;
+                            showMessage(_this, '取消作业任务成功！', 1);
+                            _this.selectedItem.state = "4";
+                             _this.fetchTaskCount();
+                             _this.taskContentData = [];
+
+                        } else {
+                            showMessage(_this, '取消作业任务失败！', 0);
+                        }
+                    },
+                    error: function (info) {
+                        _this.isError = true;
+                        _this.errorMsg = '服务器访问出错';
+                    }
+                })
             },
 
             rowClick(row, event, column) {
