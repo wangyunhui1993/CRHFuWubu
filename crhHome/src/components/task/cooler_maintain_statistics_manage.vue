@@ -456,7 +456,7 @@
 	  },
 	  computed: {},
 	  created: function () {
-		  this.onSearchRecordCounts();
+		  _this.onSearchRecordCounts();
 		  _this.getAllTrainColumn();
 	  },
 	  mounted: function () {

@@ -5,9 +5,18 @@
   </el-col>
   <el-col class="well well-lg" style="background-color: white;">
 
-  <el-col :span="24" >
-
-     <div class="title" style="margin-top: 20px; margin-bottom: 20px; margin-left: 5px" >填表日期：{{date}}</div>
+  <el-col :span="24" style="vertical-align:middle;">
+     <div class="title" style="max-width:100px;margin-top: 20px; margin-bottom: 20px; margin-left: 5px; margin-right: 0px">填表日期:
+     </div>
+    <el-date-picker type="date" placeholder="选择日期"
+              format="yyyy-MM-dd"
+              v-model="myDate"
+              :picker-options="pickerOpt"
+              max-width="200px;"
+              style="margin-top: 10px; margin-bottom: 20px; margin-left: 2px"
+               @change="dateChange"
+      >
+      </el-date-picker >
   </el-col>
   <el-table   :data="dynamicValidateForm.data"
               border
@@ -119,13 +128,41 @@
              train_column: '',
              number: 0,
              problem:'',
+             date:''
           }]
         },
+        myDate:Date(),
         trainColumns:[],
         errorMsg:'',
         isError:false,
         deleteVisible:false,
-        deleteIndex: -1
+        deleteIndex: -1,
+        pickerOpt: {
+				    disabledDate(time) {
+					    //return time.getTime() < Date.now() - 8.64e7;
+					    return time.getTime() > Date.now();
+				    },
+				    shortcuts: [{
+					    text: '今天',
+					    onClick(picker) {
+						    picker.$emit('pick', new Date());
+					    }
+				    }, {
+					    text: '昨天',
+					    onClick(picker) {
+						    const date = new Date();
+						    date.setTime(date.getTime() - 3600 * 1000 * 24);
+						    picker.$emit('pick', date);
+					    }
+				    }, {
+					    text: '一周前',
+					    onClick(picker) {
+						    const date = new Date();
+						    date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+						    picker.$emit('pick', date);
+					    }
+				    }],
+			    },
     }
     },
     methods: {
@@ -134,11 +171,18 @@
           id:_this.dynamicValidateForm.data.length+1,
           train_column: '',
           number: 1,
-          problem:''
+          problem:'',
+          date:''
         });
       },
       submit(){
         _this.isError = this.validateForm(this.dynamicValidateForm);
+
+        for(var i = 0; i < _this.dynamicValidateForm.data.length ; i++)
+        {
+            _this.dynamicValidateForm.data[i].date = _this.myDate;
+
+        };
 
         $.ajax({
             url: _this.submitUrl,
@@ -165,6 +209,7 @@
              train_column: '',
              number: 0,
              problem:'',
+             date:_this.myDate,
           }];
 
             },
@@ -227,8 +272,10 @@
       confirmDelete() {
         _this.dynamicValidateForm.data.splice(this.deleteIndex, 1);
         this.deleteVisible = false;
-      }
-
+      },
+      dateChange(val) {
+          _this.myDate=val;
+      },
     },
     computed: {
       sum(){
@@ -242,6 +289,9 @@
     },
     created: function () {
       _this.getAllTrainColumn();
+
+      var tempDate = new Date().format('yyyy-MM-dd');
+      _this.myDate = tempDate;//.toLocaleDateString();
     },
     mounted: function () {
 

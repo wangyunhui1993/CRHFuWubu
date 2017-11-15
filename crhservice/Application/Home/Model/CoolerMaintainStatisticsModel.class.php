@@ -14,13 +14,14 @@ class CoolerMaintainStatisticsModel extends Model
 {
     public function SubmitData($condition)
     {
+        $ff = date('Y-m-d');
         $m = M('cooler_maintain_statistics');
         if ($condition['data']) {
             $result = true;
             for ($i=0; $i <  count($condition['data']); $i++) {
                 # code...
                 $data['train_column'] = $condition['data'][$i]['train_column'];
-                $data['date'] = date('Y-m-d');
+                $data['date'] = $condition['data'][$i]['date'];
                 $data['number'] = $condition['data'][$i]['number'];
                 $data['problem'] = $condition['data'][$i]['problem'];
                 if (!$data['train_column']||!$data['number']||$data['number']<0) {
