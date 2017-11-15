@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-10-30 01:08:51
+Date: 2017-11-16 01:40:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,8 +25,9 @@ CREATE TABLE `cooler_maintain_statistics` (
   `train_column` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `problem` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=601 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=614 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cooler_maintain_statistics
@@ -631,6 +632,11 @@ INSERT INTO `cooler_maintain_statistics` VALUES ('597', '2017-10-16', '39', '1',
 INSERT INTO `cooler_maintain_statistics` VALUES ('598', '2017-10-17', '15', '1', '');
 INSERT INTO `cooler_maintain_statistics` VALUES ('599', '2017-10-17', '31', '1', '');
 INSERT INTO `cooler_maintain_statistics` VALUES ('600', '2017-10-17', '33', '1', '');
+INSERT INTO `cooler_maintain_statistics` VALUES ('609', '2017-11-07', '12', '1', ']]');
+INSERT INTO `cooler_maintain_statistics` VALUES ('610', '2017-11-07', '12', '1', 'ooo');
+INSERT INTO `cooler_maintain_statistics` VALUES ('611', '2017-11-10', '13', '1', 'kkkkkkkkkkkkkkkkk');
+INSERT INTO `cooler_maintain_statistics` VALUES ('612', '2017-11-02', '13', '1', 'uyuiyi');
+INSERT INTO `cooler_maintain_statistics` VALUES ('613', '2017-11-02', '15', '2', 'yuiyuityuiyi');
 
 -- ----------------------------
 -- Table structure for `cs_basic_setting`
@@ -747,8 +753,9 @@ CREATE TABLE `filter_cloth_statistics` (
   `train_column` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `problem` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2389 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=2391 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of filter_cloth_statistics
@@ -3128,6 +3135,8 @@ INSERT INTO `filter_cloth_statistics` VALUES ('2385', '2017-10-16', '39', '96', 
 INSERT INTO `filter_cloth_statistics` VALUES ('2386', '2017-10-17', '15', '96', '');
 INSERT INTO `filter_cloth_statistics` VALUES ('2387', '2017-10-17', '31', '96', '');
 INSERT INTO `filter_cloth_statistics` VALUES ('2388', '2017-10-17', '33', '96', '');
+INSERT INTO `filter_cloth_statistics` VALUES ('2389', '2017-11-14', '13', '2', '444');
+INSERT INTO `filter_cloth_statistics` VALUES ('2390', '2017-11-14', '12', '1', '445');
 
 -- ----------------------------
 -- Table structure for `filter_dust_statistics`
@@ -3140,8 +3149,9 @@ CREATE TABLE `filter_dust_statistics` (
   `number` int(11) NOT NULL,
   `problem` text,
   `train_model` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1558 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=1564 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of filter_dust_statistics
@@ -4695,6 +4705,12 @@ INSERT INTO `filter_dust_statistics` VALUES ('1554', '2017-10-17', '15', '1', ''
 INSERT INTO `filter_dust_statistics` VALUES ('1555', '2017-10-17', '31', '1', '', '1');
 INSERT INTO `filter_dust_statistics` VALUES ('1556', '2017-10-17', '33', '1', '', '1');
 INSERT INTO `filter_dust_statistics` VALUES ('1557', '2017-10-17', '62', '1', '', '1');
+INSERT INTO `filter_dust_statistics` VALUES ('1558', '2017-11-16', '12', '1', 'kjkl', '0');
+INSERT INTO `filter_dust_statistics` VALUES ('1559', '2017-11-16', '12', '1', 'kjkl', '1');
+INSERT INTO `filter_dust_statistics` VALUES ('1560', '2017-11-16', '13', '1', 'kjkl', '2');
+INSERT INTO `filter_dust_statistics` VALUES ('1561', '2017-11-03', '13', '1', 'ertetttttttttttttttttttt', '0');
+INSERT INTO `filter_dust_statistics` VALUES ('1562', '2017-11-03', '13', '1', 'ertetttttttttttttttttttt', '1');
+INSERT INTO `filter_dust_statistics` VALUES ('1563', '2017-11-03', '13', '1', 'ertetttttttttttttttttttt', '2');
 
 -- ----------------------------
 -- Table structure for `filter_element_statistics`
@@ -4706,8 +4722,9 @@ CREATE TABLE `filter_element_statistics` (
   `train_column` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `problem` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=403 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=406 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of filter_element_statistics
@@ -5109,6 +5126,9 @@ INSERT INTO `filter_element_statistics` VALUES ('399', '2017-10-17', '52', '24',
 INSERT INTO `filter_element_statistics` VALUES ('400', '2017-10-17', '16', '24', '');
 INSERT INTO `filter_element_statistics` VALUES ('401', '2017-10-17', '44', '24', '');
 INSERT INTO `filter_element_statistics` VALUES ('402', '2017-10-17', '38', '24', '');
+INSERT INTO `filter_element_statistics` VALUES ('403', '2017-11-07', '14', '1', 'werterteterterte');
+INSERT INTO `filter_element_statistics` VALUES ('404', '2017-11-08', '13', '1', 'tertet');
+INSERT INTO `filter_element_statistics` VALUES ('405', '2017-11-08', '13', '1', 'rtttttttttttttttttttttttttt');
 
 -- ----------------------------
 -- Table structure for `repair_info`
@@ -5273,12 +5293,12 @@ CREATE TABLE `task_plan` (
   `state` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_task_number` (`task_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=3540 DEFAULT CHARSET=utf8 COMMENT='作业计划';
+) ENGINE=InnoDB AUTO_INCREMENT=3544 DEFAULT CHARSET=utf8 COMMENT='作业计划';
 
 -- ----------------------------
 -- Records of task_plan
 -- ----------------------------
-INSERT INTO `task_plan` VALUES ('16', '15', '00100101', '13', '', '13', '1', '', '1', '17', '2017-04-07', '13:00:00', '3');
+INSERT INTO `task_plan` VALUES ('16', '15', '00100101', '13', '', '13', '1', '', '2', '17', '2017-04-07', '13:00:00', '3');
 INSERT INTO `task_plan` VALUES ('17', '16', '00100101', '14', '', '16', '1', '', '1', '35', '2017-04-07', '08:00:00', '3');
 INSERT INTO `task_plan` VALUES ('19', '18', '00100102', '14', '', '19', '1', '', '1', '56', '2017-04-12', '07:30:00', '3');
 INSERT INTO `task_plan` VALUES ('20', '19', '00100102', '14', '', '18', '1', '', '1', '58', '2017-04-12', '08:00:00', '3');
@@ -8376,31 +8396,31 @@ INSERT INTO `task_plan` VALUES ('3147', '3134', '00100101', '13', '空调冷凝�
 INSERT INTO `task_plan` VALUES ('3148', '3135', '00100101', '13', '辅助电源装置,空调冷凝器,空调蒸发器,牵引变流器,牵引电机冷风机,主变压器油冷却器过滤器', '18', '1', '', '1', '33', '2017-09-30', '04:00:00', '3');
 INSERT INTO `task_plan` VALUES ('3149', '3136', '00100101', '13', '空调冷凝器', '19', '1', '', '1', '52', '2017-09-30', '04:00:00', '3');
 INSERT INTO `task_plan` VALUES ('3150', '3137', '00100101', '13', '', '22', '1', '', '1', '17', '2017-09-30', '21:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3151', '3138', '00100101', '14', '空调冷凝器,主空压机滤尘器,供排气吸入口钢网', '15', '1', '', '1', '24', '2017-10-01', '08:14:27', '3');
-INSERT INTO `task_plan` VALUES ('3152', '3139', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器,裙板滤网', '14', '1', '', '1', '59', '2017-10-01', '09:15:41', '3');
-INSERT INTO `task_plan` VALUES ('3153', '3140', '00100101', '13', '空调冷凝器', '16', '1', '', '1', '55', '2017-10-01', '15:15:41', '3');
-INSERT INTO `task_plan` VALUES ('3154', '3141', '00100101', '13', '', '26', '1', '', '1', '59', '2017-10-01', '16:15:41', '3');
-INSERT INTO `task_plan` VALUES ('3155', '3142', '00100101', '13', '', '27', '1', '', '1', '24', '2017-10-01', '17:15:41', '3');
-INSERT INTO `task_plan` VALUES ('3156', '3143', '00100101', '13', '', '22', '1', '', '1', '55', '2017-10-01', '18:15:41', '3');
-INSERT INTO `task_plan` VALUES ('3157', '3144', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器', '15', '1', 'D2283', '1', '16', '2017-10-01', '21:30:00', '3');
-INSERT INTO `task_plan` VALUES ('3158', '3145', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器', '14', '1', 'D2283', '1', '20', '2017-10-01', '21:30:07', '3');
-INSERT INTO `task_plan` VALUES ('3159', '3146', '00100101', '13', '空调冷凝器', '16', '1', 'D3089', '1', '14', '2017-10-01', '23:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3160', '3147', '00100101', '13', '辅助电源装置,空调冷凝器,空调蒸发器,牵引变流器,牵引电机冷风机,主变压器油冷却器过滤器', '17', '1', 'D3089', '1', '18', '2017-10-01', '23:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3161', '3148', '00100101', '13', '', '13', '6', 'C3680', '1', '69', '2017-10-01', '23:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3162', '3149', '00100101', '13', '空调冷凝器', '9', '1', 'D2289', '1', '34', '2017-10-01', '23:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3163', '3150', '00100101', '13', '空调冷凝器', '18', '1', 'D2287', '1', '12', '2017-10-01', '01:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3164', '3151', '00100101', '13', '空调冷凝器', '19', '1', 'D2287', '1', '32', '2017-10-01', '01:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3165', '3152', '00100101', '13', '辅助电源装置,空调冷凝器,空调蒸发器,牵引变流器,牵引电机冷风机,主变压器油冷却器过滤器', '15', '1', 'D3063', '1', '62', '2017-10-01', '01:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3166', '3153', '00100101', '13', '辅助电源装置,空调冷凝器,空调蒸发器,牵引变流器,牵引电机冷风机,主变压器油冷却器过滤器', '14', '1', 'D3063', '1', '60', '2017-10-01', '01:00:01', '3');
-INSERT INTO `task_plan` VALUES ('3167', '3154', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器', '16', '1', 'D9541', '1', '17', '2017-10-01', '02:30:00', '3');
-INSERT INTO `task_plan` VALUES ('3168', '3155', '00100101', '13', '空调冷凝器', '17', '1', 'C3676', '1', '53', '2017-10-01', '02:30:00', '3');
-INSERT INTO `task_plan` VALUES ('3169', '3156', '00100101', '13', '辅助电源装置,空调冷凝器,空调蒸发器,牵引变流器,牵引电机冷风机,主变压器油冷却器过滤器', '13', '1', 'D379', '1', '29', '2017-10-01', '03:01:00', '3');
-INSERT INTO `task_plan` VALUES ('3170', '3157', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器', '9', '1', 'D379', '1', '28', '2017-10-01', '03:01:00', '3');
-INSERT INTO `task_plan` VALUES ('3171', '3158', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器', '18', '1', 'D3205', '1', '50', '2017-10-01', '04:02:00', '3');
-INSERT INTO `task_plan` VALUES ('3172', '3159', '00100101', '13', '空调冷凝器', '19', '1', 'C3088', '1', '36', '2017-10-01', '04:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3173', '3160', '00100101', '13', '', '24', '1', 'D3201', '1', '48', '2017-10-01', '23:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3174', '3161', '00100101', '13', '', '25', '1', 'D3201', '1', '47', '2017-10-01', '23:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3175', '3162', '00100101', '14', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器,主空压机滤尘器,供排气吸入口钢网,裙板滤网', '15', '1', '', '1', '48', '2017-10-02', '07:42:09', '3');
+INSERT INTO `task_plan` VALUES ('3151', '3138', '00100101', '14', '空调冷凝器,主空压机滤尘器,供排气吸入口钢网', '15', '1', '', '2', '24', '2017-10-01', '08:14:27', '3');
+INSERT INTO `task_plan` VALUES ('3152', '3139', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器,裙板滤网', '14', '1', '', '2', '59', '2017-10-01', '09:15:41', '3');
+INSERT INTO `task_plan` VALUES ('3153', '3140', '00100101', '13', '空调冷凝器', '16', '1', '', '2', '55', '2017-10-01', '15:15:41', '3');
+INSERT INTO `task_plan` VALUES ('3154', '3141', '00100101', '13', '', '26', '1', '', '2', '59', '2017-10-01', '16:15:41', '3');
+INSERT INTO `task_plan` VALUES ('3155', '3142', '00100101', '13', '', '27', '1', '', '2', '24', '2017-10-01', '17:15:41', '3');
+INSERT INTO `task_plan` VALUES ('3156', '3143', '00100101', '13', '', '22', '1', '', '2', '55', '2017-10-01', '18:15:41', '3');
+INSERT INTO `task_plan` VALUES ('3157', '3144', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器', '15', '1', 'D2283', '2', '16', '2017-10-01', '21:30:00', '3');
+INSERT INTO `task_plan` VALUES ('3158', '3145', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器', '14', '1', 'D2283', '2', '20', '2017-10-01', '21:30:07', '3');
+INSERT INTO `task_plan` VALUES ('3159', '3146', '00100101', '13', '空调冷凝器', '16', '1', 'D3089', '2', '14', '2017-10-01', '23:00:00', '3');
+INSERT INTO `task_plan` VALUES ('3160', '3147', '00100101', '13', '辅助电源装置,空调冷凝器,空调蒸发器,牵引变流器,牵引电机冷风机,主变压器油冷却器过滤器', '17', '1', 'D3089', '2', '18', '2017-10-01', '23:00:00', '3');
+INSERT INTO `task_plan` VALUES ('3161', '3148', '00100101', '13', '', '13', '1', 'C3680', '2', '69', '2017-10-01', '23:00:00', '3');
+INSERT INTO `task_plan` VALUES ('3162', '3149', '00100101', '13', '空调冷凝器', '9', '1', 'D2289', '2', '34', '2017-10-01', '23:00:00', '3');
+INSERT INTO `task_plan` VALUES ('3163', '3150', '00100101', '13', '空调冷凝器', '18', '1', 'D2287', '2', '12', '2017-10-01', '01:00:00', '3');
+INSERT INTO `task_plan` VALUES ('3164', '3151', '00100101', '13', '空调冷凝器', '19', '1', 'D2287', '2', '32', '2017-10-01', '01:00:00', '3');
+INSERT INTO `task_plan` VALUES ('3165', '3152', '00100101', '13', '辅助电源装置,空调冷凝器,空调蒸发器,牵引变流器,牵引电机冷风机,主变压器油冷却器过滤器', '15', '1', 'D3063', '2', '62', '2017-10-01', '01:00:00', '3');
+INSERT INTO `task_plan` VALUES ('3166', '3153', '00100101', '13', '辅助电源装置,空调冷凝器,空调蒸发器,牵引变流器,牵引电机冷风机,主变压器油冷却器过滤器', '14', '1', 'D3063', '2', '60', '2017-10-01', '01:00:01', '3');
+INSERT INTO `task_plan` VALUES ('3167', '3154', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器', '16', '1', 'D9541', '2', '17', '2017-10-01', '02:30:00', '3');
+INSERT INTO `task_plan` VALUES ('3168', '3155', '00100101', '13', '空调冷凝器', '17', '1', 'C3676', '2', '53', '2017-10-01', '02:30:00', '3');
+INSERT INTO `task_plan` VALUES ('3169', '3156', '00100101', '13', '辅助电源装置,空调冷凝器,空调蒸发器,牵引变流器,牵引电机冷风机,主变压器油冷却器过滤器', '13', '1', 'D379', '2', '29', '2017-10-01', '03:01:00', '3');
+INSERT INTO `task_plan` VALUES ('3170', '3157', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器', '9', '1', 'D379', '2', '28', '2017-10-01', '03:01:00', '3');
+INSERT INTO `task_plan` VALUES ('3171', '3158', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器', '18', '1', 'D3205', '2', '50', '2017-10-01', '04:02:00', '3');
+INSERT INTO `task_plan` VALUES ('3172', '3159', '00100101', '13', '空调冷凝器', '19', '1', 'C3088', '2', '36', '2017-10-01', '04:00:00', '3');
+INSERT INTO `task_plan` VALUES ('3173', '3160', '00100101', '13', '', '24', '1', 'D3201', '2', '48', '2017-10-01', '23:00:00', '3');
+INSERT INTO `task_plan` VALUES ('3174', '3161', '00100101', '13', '', '25', '1', 'D3201', '2', '47', '2017-10-01', '23:00:00', '3');
+INSERT INTO `task_plan` VALUES ('3175', '3162', '00100101', '14', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器,主空压机滤尘器,供排气吸入口钢网,裙板滤网', '15', '2', '', '1', '48', '2017-10-02', '07:42:09', '3');
 INSERT INTO `task_plan` VALUES ('3176', '3163', '00100101', '14', '空调冷凝器,主空压机滤尘器,供排气吸入口钢网', '14', '1', '', '1', '47', '2017-10-02', '10:43:11', '3');
 INSERT INTO `task_plan` VALUES ('3177', '3164', '00100101', '14', '辅助电源装置,空调冷凝器,空调蒸发器,牵引变流器,牵引电机冷风机,主变压器油冷却器过滤器,主空压机滤尘器,供排气吸入口钢网', '16', '1', '', '1', '43', '2017-10-02', '14:00:11', '3');
 INSERT INTO `task_plan` VALUES ('3178', '3165', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,空调冷凝器,空调蒸发器,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器', '17', '1', '', '1', '30', '2017-10-02', '13:00:36', '3');
@@ -8759,12 +8779,16 @@ INSERT INTO `task_plan` VALUES ('3530', '3517', '00100101', '13', '', '19', '1',
 INSERT INTO `task_plan` VALUES ('3531', '3518', '00100101', '13', '', '24', '1', 'C3638', '1', '60', '2017-10-17', '22:30:00', '3');
 INSERT INTO `task_plan` VALUES ('3532', '3519', '00100101', '13', '', '27', '1', 'D3089', '1', '47', '2017-10-17', '22:30:00', '3');
 INSERT INTO `task_plan` VALUES ('3533', '3520', '00100101', '13', '', '20', '1', 'C3644', '1', '45', '2017-10-17', '21:00:08', '3');
-INSERT INTO `task_plan` VALUES ('3534', '3521', '00100102', '14', '空调冷凝器,空调蒸发器,主空压机滤尘器,供排气吸入口钢网,裙板滤网', '15', '1', '备开', '1', '47', '2017-10-18', '08:00:00', '2');
-INSERT INTO `task_plan` VALUES ('3535', '3522', '00100102', '14', '空调冷凝器,空调蒸发器,主空压机滤尘器,供排气吸入口钢网,裙板滤网', '16', '1', '备开', '1', '59', '2017-10-18', '12:00:00', '2');
-INSERT INTO `task_plan` VALUES ('3536', '3523', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器,裙板滤网', '19', '1', '备开', '1', '34', '2017-10-18', '10:30:00', '2');
+INSERT INTO `task_plan` VALUES ('3534', '3521', '00100102', '14', '空调冷凝器,空调蒸发器,主空压机滤尘器,供排气吸入口钢网,裙板滤网', '15', '1', '备开', '1', '47', '2017-10-18', '08:00:00', '4');
+INSERT INTO `task_plan` VALUES ('3535', '3522', '00100102', '14', '空调冷凝器,空调蒸发器,主空压机滤尘器,供排气吸入口钢网,裙板滤网', '16', '1', '备开', '1', '59', '2017-10-18', '12:00:00', '4');
+INSERT INTO `task_plan` VALUES ('3536', '3523', '00100101', '13', '辅助电源装置,换气装置逆变器风机过滤器,空调换气装置滤芯,牵引变流器,牵引电机进风口,牵引电机冷风机,主变压器油冷却器过滤器,裙板滤网', '19', '1', '备开', '1', '34', '2017-10-18', '10:30:00', '4');
 INSERT INTO `task_plan` VALUES ('3537', '3524', '00100101', '13', '', '17', '1', '备开', '1', '60', '2017-10-18', '09:00:00', '3');
-INSERT INTO `task_plan` VALUES ('3538', '3525', '00100101', '13', '', '14', '1', 'C3642', '1', '62', '2017-10-18', '13:00:00', '2');
-INSERT INTO `task_plan` VALUES ('3539', '3526', '00100101', '13', '', '13', '1', '备开', '1', '29', '2017-10-18', '15:00:00', '1');
+INSERT INTO `task_plan` VALUES ('3538', '3525', '00100101', '13', '', '14', '1', 'C3642', '1', '62', '2017-10-18', '13:00:00', '4');
+INSERT INTO `task_plan` VALUES ('3539', '3526', '00100101', '13', '', '13', '1', '备开', '1', '29', '2017-10-18', '15:00:00', '4');
+INSERT INTO `task_plan` VALUES ('3540', '3527', '00100102', '14', '辅助电源装置,空调换气装置滤芯,空调冷凝器,空调蒸发器', '14', '1', '', '1', '12', '2017-11-05', '17:25:20', '4');
+INSERT INTO `task_plan` VALUES ('3541', '3528', '00100102', '14', '空调换气装置滤芯,空调蒸发器,牵引电机进风口', '14', '1', '', '1', '13', '2017-11-05', '01:25:54', '4');
+INSERT INTO `task_plan` VALUES ('3542', '3529', '00100102', '14', '空调冷凝器,牵引变流器,牵引电机进风口,牵引电机冷风机', '14', '1', '', '1', '14', '2017-11-05', '02:36:18', '4');
+INSERT INTO `task_plan` VALUES ('3543', '3530', '00100102', '14', '空调冷凝器,牵引变流器,牵引电机进风口,牵引电机冷风机', '14', '1', '', '1', '14', '2017-11-05', '02:37:18', '4');
 
 -- ----------------------------
 -- Table structure for `task_plan_detail`
@@ -8789,7 +8813,7 @@ CREATE TABLE `task_plan_detail` (
   `b_quality` text,
   PRIMARY KEY (`id`),
   KEY `index_detail_task_number` (`task_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=17822 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17839 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of task_plan_detail
@@ -26296,6 +26320,23 @@ INSERT INTO `task_plan_detail` VALUES ('17818', '3525', '26', '2', '2017-10-18 1
 INSERT INTO `task_plan_detail` VALUES ('17819', '3525', '20', '1', null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `task_plan_detail` VALUES ('17820', '3526', '7', '1', null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `task_plan_detail` VALUES ('17821', '3526', '26', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17822', '3527', '7', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17823', '3527', '13', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17824', '3527', '14', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17825', '3528', '14', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17826', '3528', '20', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17827', '3528', '21', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17828', '3528', '22', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17829', '3528', '23', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17830', '3529', '15', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17831', '3529', '21', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17832', '3530', '15', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17833', '3530', '16', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17834', '3530', '19', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17835', '3530', '20', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17836', '3530', '23', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17837', '3530', '21', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17838', '3530', '22', '1', null, null, null, null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `task_port`
@@ -26351,7 +26392,7 @@ INSERT INTO `train_column` VALUES ('20', '2014A', '1', '1', '001001', '#000000')
 INSERT INTO `train_column` VALUES ('21', '2015A', '1', '1', '001001', '#000000');
 INSERT INTO `train_column` VALUES ('22', '2016A', '1', '1', '001001', '#000000');
 INSERT INTO `train_column` VALUES ('23', '2018A', '1', '1', '001001', '#000000');
-INSERT INTO `train_column` VALUES ('24', '2020A', '1', '1', '001001', '#000000');
+INSERT INTO `train_column` VALUES ('24', '2020A', '1', '2', '001001', '#000000');
 INSERT INTO `train_column` VALUES ('25', '2021A', '1', '1', '001001', '#000000');
 INSERT INTO `train_column` VALUES ('26', '2024A', '1', '1', '001001', '#000000');
 INSERT INTO `train_column` VALUES ('27', '2025A', '1', '1', '001001', '#000000');
@@ -26790,7 +26831,7 @@ INSERT INTO `work_group` VALUES ('3', '00100103', '工作组三', '001001', '工
 -- View structure for `task_plan_detail_view`
 -- ----------------------------
 DROP VIEW IF EXISTS `task_plan_detail_view`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `task_plan_detail_view` AS select `tpd`.`id` AS `id`,`tpd`.`task_number` AS `task_number`,`tpd`.`task_content_id` AS `task_content_id`,`tpd`.`state` AS `state`,`tpd`.`trouble_maintain_id` AS `trouble_maintain_id`,`tpd`.`situation_content_id` AS `situation_content_id`,`tpd`.`a_left` AS `a_left`,`tpd`.`a_right` AS `a_right`,`tpd`.`b_left` AS `b_left`,`tpd`.`b_right` AS `b_right`,`tpd`.`a_leader` AS `a_leader`,`tpd`.`b_leader` AS `b_leader`,`tpd`.`a_quality` AS `a_quality`,`tpd`.`b_quality` AS `b_quality`,`tp`.`work_group_no` AS `work_group_no`,`tp`.`repair_id` AS `repair_id`,`tp`.`station_track_no` AS `station_track_no`,`tp`.`train_model` AS `train_model`,`tp`.`train_number` AS `train_number`,`tp`.`train_column` AS `train_column`,`tp`.`task_date` AS `task_date`,`tp`.`task_time` AS `task_time`,`tp`.`state` AS `task_state`,`tc`.`task_content` AS `task_content`,`tc`.`is_statistics` AS `is_statistics`,`wg`.`work_group_name` AS `work_group_name`,`di`.`department_no` AS `department_no`,`di`.`department_name` AS `department_name`,`t_colum`.`train_column` AS `train_column_name`,`t_colum`.`train_group` AS `train_group_id`,`tg`.`name` AS `train_group_name`,`sc`.`situation_content` AS `situation_content`,`ri`.`name` AS `repair_name`,`tm`.`train_model` AS `train_model_name`,`tm`.`rubbish_box` AS `rubbish_box`,`st`.`station_track_no` AS `station_track_name`,(case when ((`t_colum`.`train_group` = '2') and (`tc`.`task_content` like '%清洗%')) then '2' else '1' end) AS `train_task_count` from ((((((((((`task_plan_detail` `tpd` left join `task_plan` `tp` on((`tpd`.`task_number` = `tp`.`task_number`))) left join `task_content` `tc` on((`tpd`.`task_content_id` = `tc`.`id`))) left join `work_group` `wg` on((`tp`.`work_group_no` = `wg`.`work_group_no`))) left join `department_info` `di` on((`wg`.`department_no` = `di`.`department_no`))) left join `train_column` `t_colum` on((`t_colum`.`id` = `tp`.`train_column`))) left join `train_model` `tm` on((`tm`.`id` = `tp`.`train_model`))) left join `train_group` `tg` on((`t_colum`.`train_group` = `tg`.`id`))) left join `repair_info` `ri` on((`tp`.`repair_id` = `ri`.`id`))) left join `situation_content` `sc` on((`tpd`.`situation_content_id` = `sc`.`id`))) left join `station_track` `st` on((`tp`.`station_track_no` = `st`.`id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `task_plan_detail_view` AS select `tpd`.`id` AS `id`,`tpd`.`task_number` AS `task_number`,`tpd`.`task_content_id` AS `task_content_id`,`tpd`.`state` AS `state`,`tpd`.`trouble_maintain_id` AS `trouble_maintain_id`,`tpd`.`situation_content_id` AS `situation_content_id`,`tpd`.`a_left` AS `a_left`,`tpd`.`a_right` AS `a_right`,`tpd`.`b_left` AS `b_left`,`tpd`.`b_right` AS `b_right`,`tpd`.`a_leader` AS `a_leader`,`tpd`.`b_leader` AS `b_leader`,`tpd`.`a_quality` AS `a_quality`,`tpd`.`b_quality` AS `b_quality`,`tp`.`work_group_no` AS `work_group_no`,`tp`.`repair_id` AS `repair_id`,`tp`.`station_track_no` AS `station_track_no`,`tp`.`train_model` AS `train_model`,`tp`.`train_number` AS `train_number`,`tp`.`train_column` AS `train_column`,`tp`.`task_date` AS `task_date`,`tp`.`task_time` AS `task_time`,`tp`.`state` AS `task_state`,`tc`.`task_content` AS `task_content`,`tc`.`is_statistics` AS `is_statistics`,`wg`.`work_group_name` AS `work_group_name`,`di`.`department_no` AS `department_no`,`di`.`department_name` AS `department_name`,`t_colum`.`train_column` AS `train_column_name`,`t_colum`.`train_group` AS `train_group_id`,`tg`.`name` AS `train_group_name`,`sc`.`situation_content` AS `situation_content`,`ri`.`name` AS `repair_name`,`tm`.`train_model` AS `train_model_name`,`tm`.`rubbish_box` AS `rubbish_box`,`st`.`station_track_no` AS `station_track_name`,(case when (`t_colum`.`train_group` = '2') then '2' else '1' end) AS `train_task_count` from ((((((((((`task_plan_detail` `tpd` left join `task_plan` `tp` on((`tpd`.`task_number` = `tp`.`task_number`))) left join `task_content` `tc` on((`tpd`.`task_content_id` = `tc`.`id`))) left join `work_group` `wg` on((`tp`.`work_group_no` = `wg`.`work_group_no`))) left join `department_info` `di` on((`wg`.`department_no` = `di`.`department_no`))) left join `train_column` `t_colum` on((`t_colum`.`id` = `tp`.`train_column`))) left join `train_model` `tm` on((`tm`.`id` = `tp`.`train_model`))) left join `train_group` `tg` on((`t_colum`.`train_group` = `tg`.`id`))) left join `repair_info` `ri` on((`tp`.`repair_id` = `ri`.`id`))) left join `situation_content` `sc` on((`tpd`.`situation_content_id` = `sc`.`id`))) left join `station_track` `st` on((`tp`.`station_track_no` = `st`.`id`))) ;
 
 -- ----------------------------
 -- View structure for `user_info_view`
