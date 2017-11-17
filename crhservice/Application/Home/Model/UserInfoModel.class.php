@@ -236,6 +236,11 @@ class UserInfoModel extends Model
                 $str = $condition['department_no'];
                 $data .= " AND department_no='$str' ";
             }
+
+           if ($condition['work_group_no']) {
+                $str = $condition['work_group_no'];
+                $data .= " AND work_group_no = '$str' ";
+            }
         }
         $list = M('user_info_view')
             ->where($data)
