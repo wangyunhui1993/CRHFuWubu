@@ -42,6 +42,31 @@ class TaskGroupModel extends Model
 
     }
 
+    public function getGroupNames($condition = null)
+    {
+        $data = ' 1 ';
+        if ($condition) {
+            if ($condition['id']) {
+                $str = $condition['id'];
+                $data .= " AND id='$str' ";
+            }
+            if ($condition['department_no']) {
+                $str = $condition['department_no'];
+                $data .= " AND department_no='$str' ";
+            }
+            if ($condition['task_group_name']) {
+                $str = $condition['task_group_name'];
+                $data .= " AND task_group_name='$str' ";
+            }
+        }
+
+        $list = M('task_group')
+            ->where($data)
+            ->select();
+        return $list;
+
+    }
+
     public function isExistRecord($condition)
     {
         $data = ' 1 ';

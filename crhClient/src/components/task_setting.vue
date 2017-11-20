@@ -21,13 +21,13 @@
                 <el-color-picker v-model="submitData.header_color" ></el-color-picker >
               </div >
             </el-col>
-            <el-col :span="5">
+            <!--el-col :span="5">
               <el-form-item label="表格颜色：" :label-width="formLabelWidth" >
               </el-form-item>
               <div class="block" style="margin-top: -60px;margin-left:60px; " >
                 <el-color-picker v-model="submitData.tb_color" ></el-color-picker >
               </div >
-            </el-col>
+            </el-col-->
           </el-col>
         </el-form>
         <el-form >
@@ -64,20 +64,20 @@
                 <el-color-picker v-model="submitData.alert_color"></el-color-picker >
               </div >
             </el-col>
-            <el-col :span="5">
+            <!--el-col :span="5">
               <el-form-item label="文字背景：" :label-width="formLabelWidth" >
               </el-form-item>
               <div class="block" style="margin-top: -60px;margin-left:60px; " >
                 <el-color-picker v-model="submitData.word_bg_color" ></el-color-picker >
               </div >
-            </el-col>
-            <el-col :span="5">
+            </el-col-->
+            <!--el-col :span="5">
               <el-form-item label="其他标题：" :label-width="formLabelWidth" >
               </el-form-item>
               <div class="block" style="margin-top: -60px;margin-left:60px; " >
                 <el-color-picker v-model="submitData.other_title_color" ></el-color-picker >
               </div >
-            </el-col>
+            </el-col-->
           </el-col>
         </el-form>
       </div >

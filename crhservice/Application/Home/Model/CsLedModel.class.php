@@ -35,7 +35,7 @@ class CsLedModel extends Model
 
         $data['color'] = $info['color'];
         $data['department_no'] = $info['department_no'];
-        $data['display'] =  $info['department_no'] ?  $info['department_no'] : 0;
+        $data['display'] =  $info['display'] ?  $info['display'] : 0;
         $result = M('cs_led')->data($data)->add();
         return $result;
     }

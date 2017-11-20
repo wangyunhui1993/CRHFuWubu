@@ -740,7 +740,9 @@
             <el-button type="primary" @click="onConfirmEndTaskPlan" >确 定</el-button >
           </span >
         </el-dialog >
-        <el-dialog :title="currentAddIndicator | filterPersonAddTitle" v-model="addPersonDialogVisible" size="large">
+      </el-dialog >
+
+      <el-dialog :title="currentAddIndicator | filterPersonAddTitle" v-model="addPersonDialogVisible" size="large">
           <el-row>
               <el-col :span="3" style="margin-left: 5px;">
                   <div style="margin-bottom: 10px; font-size: 18px; cursor: pointer"
@@ -764,6 +766,15 @@
                                @click.stop="chooseWorkGroup(index, item)" >
                               {{item.work_group_no}} {{item.work_group_name}}
                           </div >
+
+                          <!-- 作业小组 -->
+                          <div v-for="item in taskGroup"
+                               style="margin-top: 5px;margin-left: 20px;font-size: 14px;"
+                               v-bind:class="item.work_group_no | filterWorkGroupClass"
+                               @click.stop="chooseTaskGroup(index, item)" >
+                              {{ item.task_group_name}}
+                          </div >
+
                       </div >
                   </div >
               </el-col>
@@ -886,10 +897,7 @@
                 <el-button @click="addPersonDialogVisible = false" >取 消</el-button >
                 <el-button type="primary" @click="onConfirmAddPerson" >确 定</el-button >
             </span >
-        </el-dialog>
-
-      </el-dialog >
-
+        </el-dialog>        
     </div>
 </template>
 
@@ -1235,7 +1243,7 @@
                             _this.trainModel = data.info.train_model;
                             _this.taskContent = data.info.task_content;
 //                            _this.workGroup = data.info.work_group;
-//                            _this.taskGroup = data.info.task_group;
+                            _this.taskGroup = data.info.task_group;
                         } else {
                             showMessage(_this, '获取部门相关信息失败！', 0);
                         }
@@ -1799,8 +1807,12 @@
                 success: function (data) {
                   if (data.status) {
                     _this.searchedPersonData = data.info;
+                    _this.personForm.task_group_name = "";
                   }
-                }
+                },
+                error: function (info) {
+                    _this.personForm.task_group_name = "";
+                 }
               })
             },
             fetchPersonCount(){
@@ -1834,6 +1846,17 @@
                 }
               })
             },
+           
+            chooseTaskGroup(index, taskGp) {
+
+
+                this.activePartID = taskGp.department_no;
+                this.activeWorkGroupID = "";
+                this.personForm.task_group_name = taskGp.task_group_name;
+
+                this.fetchPersonCount();
+            },
+
             chooseWorkGroup(index, group) {
                 this.activeWorkGroupIndex = index;
                 this.activeWorkGroupID = group.work_group_no;

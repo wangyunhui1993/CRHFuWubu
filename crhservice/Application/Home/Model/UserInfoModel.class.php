@@ -89,19 +89,15 @@ class UserInfoModel extends Model
         } else {
             $taskGroups = M("task_group")->field("*")->select();
         }
-        for ($i=0; $i< count($list); $i++) {
-            $found = false;
-            for($j=0; $j< count($taskGroups) && !$found; $j++) {
+        for ($i=0; $i< count($list); $i++) {           
+            $strGroupList = "";
+            for($j=0; $j< count($taskGroups); $j++) {
                 //成功返回非负整型值
                 if(is_int(strpos($taskGroups[$j]['group_member'], $list[$i]["account"]))) {
-                    $list[$i]["task_group_name"] = $taskGroups[$j]['task_group_name'];
-                    $found = true;
+                    $strGroupList = $strGroupList.$taskGroups[$j]['task_group_name']." , ";                    
                 }
             }
-            //没有该用户对应的小组
-            if(!$found) {
-                $list[$i]["task_group_name"] = "";
-            }
+            $list[$i]["task_group_name"] = $strGroupList;           
         }
 
         return $list;
