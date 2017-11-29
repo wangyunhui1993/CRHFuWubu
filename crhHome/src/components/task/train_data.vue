@@ -34,14 +34,15 @@
             </el-date-picker>
             <el-button type="primary" @click="toToday" >今天</el-button>
           </el-form-item>
+          
           <el-form-item  label="修程：">
             <el-select v-model="form.repair_id" clearable placeholder="选择修程" style="width: 222px;margin-left: 25px">
               <el-option v-for=" item in repairInfo" :label="item.name" :value="item.id">
               </el-option>
-
             </el-select>
           </el-form-item>
         </el-col>
+
         <el-col :span="10">
           <el-form-item  label="部门：">
             <el-select  v-model="form.department_no" clearable placeholder="选择部门" style="width: 200px">
@@ -53,16 +54,41 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <!--<el-col :span="6">-->
+
+        <el-col :span="10" >
+            <el-form-item label="作业项目:" style="margin-left: 0px">
+              <!--template scope="scope" -->
+                <el-select
+                    style="width: 100%; margin-left: 0px"
+                    v-model="form.taskContentlist"
+                    multiple
+                    filterable
+                    placeholder="选择项目" >
+                    <el-option
+                        v-for="item in taskContent"
+                        :label="item.task_content"
+                        :value="item.id" >
+                        <span style="float: left" >{{ item.task_content }}</span >
+                        <span style="float: right; color: #8492a6; font-size: 13px; margin-right: 20px" >
+                            {{ item.task_content}}
+                        </span >
+                    </el-option >
+                </el-select >
+              <!--/template -->
+            </el-form-item >
+
+            <!--<el-col :span="6">-->
           <!--<el-form-item  label="状态：">-->
             <!--<el-select  v-model="form.state" placeholder="选择状态" clearable style="width: 200px">-->
               <!--<el-option v-for="item in statusArr" :label="item.name" :value="item.value"></el-option>-->
             <!--</el-select>-->
           <!--</el-form-item>-->
         <!--</el-col>-->
-        <el-col :span="4">
-          <el-button type="primary" icon="search" @click="search" >搜索</el-button>
-        </el-col>
+          <el-button style="margin-left: 20px" type="primary" icon="search" @click="search" >搜索</el-button>
+
+        </el-col >
+
+
       </el-form>
       <el-table
               :data="tableData"
@@ -481,12 +507,14 @@
         fetchPortNameURL:HOME + "TaskPlanDetail/getPortName",
         getPersonUrl: HOME + "User/searchRecords",
         printYicheYiDangURL:HOME + "TaskPlan/exportYiCheYiDang",
+        queryTaskContentDataUrl: HOME + "TaskContent/getRecords",
         form: {
           train_column: '',
           task_date: [],
           department_no: "",
           station_track_no: "",
           repair_id: "",
+          taskContentlist: "",
           state:""
         },
         userInfo:"",

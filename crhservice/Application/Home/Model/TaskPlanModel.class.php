@@ -37,10 +37,6 @@ class TaskPlanModel extends Model
                 $str = $condition['station_track_no'];
                 $data .= " AND tp.station_track_no='$str' ";
             }
-            if ($condition['station_track_no']) {
-                $str = $condition['station_track_no'];
-                $data .= " AND tp.station_track_no='$str' ";
-            }
             if ($condition['repair_id']) {
                 $str = $condition['repair_id'];
                 $data .= " AND tp.repair_id='$str' ";
@@ -53,7 +49,22 @@ class TaskPlanModel extends Model
                 $str = $condition['department_no'];
                 $data .= " AND tc.department_no='$str' ";
             }
+
+            if ($condition['taskContentlist'][0]) {
+
+                $taskObjList = $condition['taskContentlist'];                
+                $objStr=$objStr.'And tpd.task_content_id IN (-1';
+
+                for ($i = 0; $i < sizeof($taskObjList); $i++) {
+                    $objStr = $objStr.','.$taskObjList[$i];
+                }
+
+                $objStr=$objStr.')';
+
+                $data .= $objStr;
+            }
         }
+
         $list = M('task_plan')
             ->alias("tp")
             ->join("LEFT JOIN train_column AS tc ON(tc.id=tp.train_column) 
@@ -109,10 +120,6 @@ class TaskPlanModel extends Model
                 $str = $condition['station_track_no'];
                 $data .= " AND tp.station_track_no='$str' ";
             }
-            if ($condition['station_track_no']) {
-                $str = $condition['station_track_no'];
-                $data .= " AND tp.station_track_no='$str' ";
-            }
             if ($condition['repair_id']) {
                 $str = $condition['repair_id'];
                 $data .= " AND tp.repair_id='$str' ";
@@ -125,15 +132,35 @@ class TaskPlanModel extends Model
                 $str = $condition['department_no'];
                 $data .= " AND tc.department_no='$str' ";
             }
+
+            if ($condition['taskContentlist'][0]) {
+
+                $taskObjList = $condition['taskContentlist'];                
+                $objStr=$objStr.'And tpd.task_content_id IN (-1';
+
+                for ($i = 0; $i < sizeof($taskObjList); $i++) {
+                    $objStr = $objStr.','.$taskObjList[$i];
+                }
+
+                $objStr=$objStr.')';
+
+                $data .= $objStr;
+            }
         }
         $list = M('task_plan')
             ->alias("tp")
-            ->join("LEFT JOIN train_column AS tc ON(tc.id=tp.train_column)")
+            //->join("LEFT JOIN train_column AS tc ON(tc.id=tp.train_column)")
+            ->join("LEFT JOIN train_column AS tc ON(tc.id=tp.train_column) 
+                    LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
             ->where($data)
-            ->field("tp.*")
-            ->count();
-        return $list;
+            ->group("tp.task_number")
+            ->field("tp.task_number")
+            ->select();
+            //->count();
 
+       $count =  count($list);
+
+        return $count;
     }
 
     public function getNotCompletedRecordsCount($condition)
