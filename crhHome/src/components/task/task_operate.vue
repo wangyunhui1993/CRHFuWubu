@@ -133,13 +133,13 @@
 
             </el-table>
 
-                            <el-dialog title="提示" v-model="cancelConfirmVisible" size="tiny">
+     <el-dialog title="提示" v-model="cancelConfirmVisible" size="tiny">
                 <span>确认要取消序号为[ <b>{{selectedIndex+1}}</b> ]的作业任务吗？</span>
                 <span slot="footer" class="dialog-footer">
 	            <el-button @click="cancelConfirmVisible = false">取 消</el-button>
 	            <el-button type="primary" @click="onConfirmCancel">确 定</el-button>
                 </span>
-                </el-dialog>
+      </el-dialog>
 
 
             <div class="block" style="text-align: center; margin-top: 20px">
@@ -635,7 +635,9 @@
           <el-button @click="discardModify" >返 回</el-button >
           <el-button type="primary" @click="confirmModify" >保 存</el-button >
         </div >
-        <el-dialog title="增加故障维护" v-model="addTroubleDialogVisible" size="tiny">
+      </el-dialog >
+      
+      <el-dialog title="增加故障维护" v-model="addTroubleDialogVisible" size="tiny">
           <el-form :model="troubleForm">
             <el-form-item label="故障维护：" :label-width="formLabelWidth">
               <el-input v-model="troubleForm.content" auto-complete="off"></el-input>
@@ -740,7 +742,6 @@
             <el-button type="primary" @click="onConfirmEndTaskPlan" >确 定</el-button >
           </span >
         </el-dialog >
-      </el-dialog >
 
       <el-dialog :title="currentAddIndicator | filterPersonAddTitle" v-model="addPersonDialogVisible" size="large">
           <el-row>
@@ -897,7 +898,7 @@
                 <el-button @click="addPersonDialogVisible = false" >取 消</el-button >
                 <el-button type="primary" @click="onConfirmAddPerson" >确 定</el-button >
             </span >
-        </el-dialog>        
+     </el-dialog>        
     </div>
 </template>
 
