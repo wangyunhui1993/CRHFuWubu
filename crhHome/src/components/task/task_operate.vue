@@ -230,7 +230,7 @@
                         </ul>
                       </template>
                     </el-table-column>
-                    <el-table-column
+                    <!--el-table-column
                             prop="a_right"
                             :label="portName.a_right"
                             min-width="60">
@@ -241,7 +241,7 @@
                           </li>
                         </ul>
                       </template>
-                    </el-table-column>
+                    </el-table-column-->
 
                     <el-table-column
                             prop="b_left"
@@ -255,7 +255,7 @@
                         </ul>
                       </template>
                     </el-table-column>
-                    <el-table-column
+                    <!--el-table-column
                             prop="b_right"
                             :label="portName.b_right"
                             min-width="60">
@@ -266,7 +266,7 @@
                           </li>
                         </ul>
                       </template>
-                    </el-table-column>
+                    </el-table-column-->
                 </el-table-column>
 
                 <el-table-column label="作业组长">
@@ -515,7 +515,7 @@
                            type="primary" size="mini" @click="aLeftAdd(scope.$index)" icon="plus">人员</el-button>
               </template>
             </el-table-column>
-            <el-table-column
+            <!--el-table-column
                     prop="a_right"
                     :label="portName.a_right"
                     min-width="60">
@@ -529,7 +529,7 @@
                 <el-button style="margin-left: -10px; margin-top: 3px" :disabled="scope.row.state == '3'"
                            type="primary" size="mini" @click="aRightAdd(scope.$index)" icon="plus">人员</el-button>
               </template>
-            </el-table-column>
+            </el-table-column-->
 
             <el-table-column
                     prop="b_left"
@@ -546,7 +546,7 @@
                            type="primary" size="mini" @click="bLeftAdd(scope.$index)" icon="plus">人员</el-button>
               </template>
             </el-table-column>
-            <el-table-column
+            <!--el-table-column
                     prop="b_right"
                     :label="portName.b_right"
                     min-width="60">
@@ -560,7 +560,7 @@
                 <el-button style=" margin-left: -10px; margin-top: 3px" :disabled="scope.row.state == '3'"
                            type="primary" size="mini" @click="bRightAdd(scope.$index)" icon="plus">人员</el-button>
               </template>
-            </el-table-column>
+            </el-table-column-->
           </el-table-column>
 
           <el-table-column label="作业组长">
