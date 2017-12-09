@@ -830,6 +830,62 @@ class TaskPlanModel extends Model
 
     }
 
+    public function exportTaskDetailStatistics($condition)
+    {
+        $whereSql = ' WHERE 1 ';
+        $whereSql .= " AND is_statistics!='0' ";//作业内容标记为统计的才能统计查询
+        $whereSql .= " AND task_state='3' ";//任务已完成的才能统计查询
+        if ($condition) {
+            if ($condition['id']) {
+                $str = $condition['id'];
+                $whereSql .= " AND id='$str' ";
+            }
+            if ($condition['task_content_id']) {
+                $str = $condition['task_content_id'];
+                $whereSql .= " AND task_content_id='$str' ";
+            }
+            if ($condition['department_no']) {
+                $str = $condition['department_no'];
+                $whereSql .= " AND department_no='$str' ";
+            }
+            if ($condition['work_group_no']) {
+                $str = $condition['work_group_no'];
+                $whereSql .= " AND work_group_no='$str' ";
+            }
+            if ($condition['train_model']) {
+                $str = $condition['train_model'];
+                $whereSql .= " AND train_model='$str' ";
+            }
+            if ($condition['keywords']) {
+                $str = $condition['keywords'];
+                $whereSql .= " AND (train_model like '%$str%' OR train_model_name like '%$str%') ";
+            }
+
+//            if ($condition['dateStart'] && $condition['dateEnd']) {
+//                $beginStr = $condition['dateStart'];
+//                $endStr = $condition['dateEnd'];
+//                $whereSql .= " AND task_date='$beginStr' ";
+//            }
+            if ($condition['dateStart'] && $condition['dateEnd']) {
+                $beginStr = $condition['dateStart'];
+                $endStr = $condition['dateEnd'];
+                $whereSql .= " AND (
+                                    CONCAT(DATE_FORMAT(`task_date`,'%Y-%m-%d'),' ',TIME_FORMAT(`task_time`,'%H:%i:%s'))
+                                    BETWEEN '$beginStr' AND '$endStr'
+                                   )";
+            }
+        }
+        $sql = "
+                SELECT DISTINCT *
+                FROM task_plan_detail_view
+                $whereSql 
+              ";
+
+        $list = $this->db->query($sql);
+        return $list;
+
+    }
+
     public function getTaskDetailStatisticsCount($condition)
     {
         $whereSql = ' WHERE 1 ';

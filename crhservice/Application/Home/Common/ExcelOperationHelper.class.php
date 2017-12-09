@@ -76,10 +76,11 @@ class ExcelOperationHelper
         //print_r($templatePath);
         return ExcelHelper::getWorkSheet($templatePath, $Worksheet, $WorkbookThisWorkbook, $excelApplication,$sheetIndex);
     }
-    public function closeWorkSheet($WorkbookThisWorkbook, $Worksheet,  $excelApplication,$selRange,$saveExcel,$resultFile)
+    public function closeWorkSheet($WorkbookThisWorkbook, $Worksheet,  $excelApplication,$selRange,$saveExcel,$print,$resultFile)
     {
         $resData['state'] = 0;
         $resData['result'] = "";
+        $result['status'] = 0;
 
         $savePath = Util::toAbsolutePath($this->outputFolder . $resultFile);
         //print_r($savePath);
@@ -87,10 +88,11 @@ class ExcelOperationHelper
         {
             unlink($savePath);
         }
-        ExcelHelper::closeWorkSheet($WorkbookThisWorkbook, $Worksheet, $excelApplication, $selRange, $saveExcel, $savePath);
+        ExcelHelper::closeWorkSheet($WorkbookThisWorkbook, $Worksheet, $excelApplication, $selRange, $saveExcel, $print,$savePath);
 
         $resData['state'] = 1;
         $resData['result'] = $this->outputFolder . $resultFile;
+        $result['status'] = 1;
         return $resData;
     }
     public function importRecordDataFromExcel($fileName, $sheetName, $excelTitleTokey)

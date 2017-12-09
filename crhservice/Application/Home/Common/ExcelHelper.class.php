@@ -159,7 +159,7 @@ class ExcelHelper
         //var_dump($obj);
         return $obj;
     }
-    public static function closeWorkSheet($WorkbookThisWorkbook, $Worksheet, $excelApplication,$selRange,$saveExcel,$result_path)
+    public static function closeWorkSheet($WorkbookThisWorkbook, $Worksheet, $excelApplication,$selRange,$saveExcel,$print,$result_path)
     {
         $excelApplication->DisplayAlerts = false;
         //print_r("$result_path \r\n next line__ ");
@@ -170,8 +170,10 @@ class ExcelHelper
         //$Worksheet->Columns("A:P")->AutoFit();
         //$Worksheet->Range($selRange)->Select();
 //
-        try
-        {
+      if($print)
+      {
+            try
+            {
                 $rngPrint = $Worksheet->Range($selRange);//->CurrentRegion();
                 //$Worksheet->PageSetup->PrintGridLines = true;
                 //$Worksheet->PageSetup->Zoom = false;
@@ -179,11 +181,13 @@ class ExcelHelper
                 $Worksheet->PageSetup->FitToPagesWide = 1;
                 //$Worksheet->PrintOut();// release should to print
                 $rngPrint->PrintOut();
-        }
-        catch(Exception $e)
-        {
-                ;
-        }
+            }
+            catch(Exception $e)
+            {
+                    ;
+            }
+      }
+
 //
         // COM DESTROY
         $WorkbookThisWorkbook->Close();

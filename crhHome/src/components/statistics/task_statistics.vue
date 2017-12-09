@@ -322,6 +322,15 @@
 				 </div >
 
 			</el-row >
+
+			<el-col :span="2" style="float: right;margin-bottom: 15px" >
+				<el-button
+						icon="document"
+						size="normal"
+						type="primary"
+						@click="onExportDetail" >导出
+				</el-button >
+			</el-col >
 		</el-dialog >
     </div >
 </template >
@@ -344,6 +353,7 @@
 			    queryDetailDataCountUrl: HOME + "TaskPlan/getTaskDetailStatisticsCount",
 			    queryTaskContentDataUrl: HOME + "TaskContent/getRecords",
 			    exportUrl: HOME + "TaskPlan/exportTaskStatisticsData",
+				exportDetailUrl: HOME + "TaskPlan/exportTaskStatisticsDetailData",
 
 			    isError: false,
 			    errorMsg: '',
@@ -452,6 +462,44 @@
 				}
 			    _this.ExportTaskContent();
 		    },
+
+			onExportDetail()
+			{
+			    var loadService = Loading.service(
+					    {
+						    text: '正在导出中，请稍后...',
+					    });
+				;
+
+				$.ajax({
+				    url: _this.exportDetailUrl,
+				    type: 'POST',
+				    dataType: 'json',
+				    data: _this.detailFilters,
+				    success: function (data) {
+					    loadService.close();
+					    if (data.status) {
+						    if (data.info.state > 0) {
+							    var res = downloadFile(document, HOST_URL + data.info.result);
+							    if (res == true) {
+								    showMessage(_this, "导出成功！", 1);
+							    }
+							    else {
+								    showMessage(_this, "导出错误！" + res, 0);
+							    }
+						    }
+						    else {
+							    showMessage(_this, data.info.result, 0);
+						    }
+					    }
+				    },
+				    error: function (data) {
+					    loadService.close();
+					    _this.loadingUI = false;
+					    showMessage(_this, "导出错误！", 0);
+				    }
+			    });
+			},
 
 		    ExportTaskContent()
 		    {

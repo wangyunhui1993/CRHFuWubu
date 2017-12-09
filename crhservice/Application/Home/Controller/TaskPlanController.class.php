@@ -200,6 +200,129 @@ class TaskPlanController extends Controller
         $this->success($result, null, true);
     }
 
+    public function exportTaskStatisticsDetailData()
+    {
+        $resData = D('TaskPlan')->exportTaskDetailStatistics($_POST);
+
+        $result = null;
+
+       try {
+                //get execel work sheet
+                $dtNow = new \DateTime('now', new \DateTimeZone('UTC'));
+                $str = $dtNow->format('Ymd');
+                $fileTemplate = "TaskDetail.xlsx";
+                //$fileres = '作业详细'.$str.".xlsx";
+                $sheetNum = 1;
+                $objSheet = ExcelOperationHelper::getInstance()->getWorkSheet($fileTemplate, $Worksheet, $WorkbookThisWorkbook, $excelApplication,$sheetNum);
+                $Worksheet = $objSheet[0];
+                $WorkbookThisWorkbook = $objSheet[1];
+                $excelApplication = $objSheet[2];
+        
+                //print 1st part
+                $informationPosition = Array('序号'=>'A','作业内容'=>'B','工作量'=>'C','作业日期'=>'D','作业时间'=>'E',
+                '车列号'=>'F','车型'=>'G','修程'=>'H','股道'=>'I','车组类型'=>'J');
+                
+                $taskDate = "0";
+                $i=0;
+                foreach($resData as $obj)
+                {
+                    $i++;
+
+                    $item = $informationPosition["序号"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $i;
+                    }
+
+                    $item = $informationPosition["作业内容"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['task_content'];
+                    }
+                    
+                    $item = $informationPosition["工作量"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['train_task_count'];
+                    }
+
+                    $item = $informationPosition["作业日期"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['task_date'];
+                        $taskDate =  $obj['task_date'];
+                    }
+
+                    $item = $informationPosition["作业时间"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['task_time'];
+                    }
+
+                    $item = $informationPosition["车列号"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['train_column_name'];
+                    }
+
+                    $item = $informationPosition["车型"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['train_model_name'];
+                    }
+
+                    $item = $informationPosition["修程"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['repair_name'];
+                    }
+
+                    $item = $informationPosition["股道"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['station_track_no'];
+                    }
+
+                    $item = $informationPosition["车组类型"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['train_group_name'];
+                    }
+                }
+
+                $fileres = '作业详细'.$taskDate.".xlsx";
+
+                $Worksheet->Columns($informationPosition['序号'].":".$informationPosition["车组类型"])->AutoFit();
+                $selRange = "A1:".$informationPosition['车组类型'].($i+1);
+
+                //$Worksheet->range($selRange)->Borders()->Weight = 1;
+                //$Worksheet->range($selRange)->Borders()->Color = RGB(0,0,0);
+                $Worksheet->range($selRange)->Borders()->LineStyle = 1;                
+
+                //print and close the excel
+                $result = ExcelOperationHelper::getInstance()->closeWorkSheet($WorkbookThisWorkbook,$Worksheet,$excelApplication,$selRange,true,false,$fileres); 
+        }
+        catch(Exception $e)
+        {
+             $result = null;
+        }
+        if ($result) {
+            $this->success($result, null, true);
+        } else {
+            $this->error($_POST, null, true);
+        }
+    }
+
     public function exportTaskStatisticsData()
     {
         $result = D('TaskPlan')->exportTaskDataGroupByDate($_POST);
@@ -628,7 +751,7 @@ class TaskPlanController extends Controller
                 //$selRange = "A1:".$taskPosition['质检人员二列位'].($i+7);
                 $selRange = "A1:".$taskPosition['质检人员二列位']."25";
                 //print and close the
-                $result = ExcelOperationHelper::getInstance()->closeWorkSheet($WorkbookThisWorkbook,$Worksheet,$excelApplication,$selRange,true,$fileres); 
+                $result = ExcelOperationHelper::getInstance()->closeWorkSheet($WorkbookThisWorkbook,$Worksheet,$excelApplication,$selRange,true,true,$fileres); 
 
                 $result['status'] = 1;
         }
