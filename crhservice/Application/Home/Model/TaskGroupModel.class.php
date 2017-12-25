@@ -121,6 +121,8 @@ class TaskGroupModel extends Model
         $data['task_group_name'] = $info['task_group_name'];
         //添加时，group number自动产生，在原来最大值基础上加1
         $data['department_no'] = $info['department_no'];
+        
+        /*
         //传入的group member是数组对象，转化成string,通过逗号连接
         for($i=0; $i<sizeof($info['group_member']); $i++) {
             if($i != sizeof($info['group_member'])-1) {
@@ -129,7 +131,28 @@ class TaskGroupModel extends Model
                 $data['group_member'] = $data['group_member'] . $info['group_member'][$i];
             }
         }
-        $data['group_member'] = $info['group_member'];
+        */
+        if (isset($info['group_member'])) {
+            $temp= null;
+            //把数组转成String,通过","连接
+            for ($i=0; $i<sizeof($info['group_member']); $i++){
+                if($i != sizeof($info['group_member'])-1) {
+                    $temp .= $info['group_member'][$i] . ",";
+                } else {
+                    $temp .= $info['group_member'][$i];
+                }
+            }
+            if($temp == null) {
+                $data['group_member'] = "";
+            } else {
+                $data['group_member'] = $temp;
+            }
+        } else {
+            //修复client端在group_member(数组)为空时，该项不会被作为post中的一部分，所以为null
+            $data['group_member'] = "";
+        }
+
+        //$data['group_member'] = $info['group_member'];
         $data['comment'] = $info['comment'];
         $result = M('task_group')->data($data)->add();
         return $result;
