@@ -515,10 +515,18 @@ class TaskPlanController extends Controller
                         $situationContent[$situation['id']]=$situation['situation_content'];
                 }
                     //taske details
-                    $taskStartNum = 11;
+                    $taskStartNum = 10;
                     $i=0;
                     foreach($taskDetail as $value){
                         //if($value->category!="Start"&&$value->category!="End"){
+                        //copy a row with format to next row.
+                        $srcRng = $Worksheet->Range($taskPosition['序号'].($i+$taskStartNum));
+                        $dstRng = $Worksheet->Range($taskPosition['序号'].($i+$taskStartNum+1));
+                        $srcRng->EntireRow->Copy($dstRng);
+                        //$taskPosition['二列位右'].($i+$taskStartNum)
+                        //Sheets(1).Range("A1").EntireRow.Copy Sheets(2).Range("A1")
+                        //
+
                             $cell = $Worksheet->Range($taskPosition['序号'].($i+$taskStartNum));
                             $cell->value =  $i+1;
                             $task_contentQuery['id'] = $value['task_content_id'];
@@ -688,6 +696,8 @@ class TaskPlanController extends Controller
                             $i++;
                         //}
                     }
+                    
+                    $maxIndex = $i + 9 + 3;
 
                     //modify the portname:
                     //$taskPortName
@@ -730,27 +740,40 @@ class TaskPlanController extends Controller
                         $cell->value =  $name !=null ? $name : "";
                     }
 
-                //$Worksheet->Columns($taskPosition['一列位左'].":".$taskPosition["质检人员二列位"])->Font->Strikethrough  = True;
-                $Worksheet->Columns($taskPosition['一列位左'].":".$taskPosition["质检人员二列位"])->AutoFit();
+                //print signature placement
+                $signature = Array('工长：'=>'D','调度员：'=>'E','值班主任：'=>'I','值班员：'=>'M');
+                $cell = $Worksheet->Range($signature["工长："].($maxIndex));
+                $cell->value =  "工长：";
+                $cell->Font->Bold = True;
 
-                
+                $cell = $Worksheet->Range($signature["调度员："].($maxIndex));
+                $cell->value =  "调度员：";
+                $cell->Font->Bold = True;
+
+                $cell = $Worksheet->Range($signature["值班主任："].($maxIndex));
+                $cell->value =  "值班主任：";
+                $cell->Font->Bold = True;
+
+                $cell = $Worksheet->Range($signature["值班员："].($maxIndex));
+                $cell->value =  "值班员：";
+                $cell->Font->Bold = True;
+
+
+                //$Worksheet->Columns($taskPosition['一列位左'].":".$taskPosition["质检人员二列位"])->AutoFit();
                 //$Worksheet->Columns($taskPosition['作业内容'].":".$taskPosition["结束时间"])->Font->Strikethrough  = True;
                 $Worksheet->Columns($taskPosition['作业内容'].":".$taskPosition["结束时间"])->AutoFit();
 
-            //       $Worksheet->Columns($taskPosition['作业内容'])->AutoFit();
-
-            //       $Worksheet->Columns($taskPosition['开始时间'].":".$taskPosition["结束时间"])->Font->Strikethrough  = True;
-            //       $Worksheet->Columns($taskPosition['开始时间'])->AutoFit();
-
-            //       $Worksheet->Columns($taskPosition['结束时间'])->Font->Strikethrough  = True;
-            //       $Worksheet->Columns($taskPosition['开始时间'].":".$taskPosition["结束时间"])->AutoFit();
+                //$Worksheet->Columns($taskPosition['结束时间'])->Font->Strikethrough  = True;
+                //$Worksheet->Columns($taskPosition['开始时间'].":".$taskPosition["结束时间"])->AutoFit();
 
                 //$Worksheet->Rows("$taskStartNum".":22")->Font->Strikethrough  = True;
-                $Worksheet->Rows("$taskStartNum".":22")->AutoFit();
+                $Worksheet->Rows("$taskStartNum".$maxIndex)->AutoFit();
+                //$Worksheet->Rows("$taskStartNum".$maxIndex)->AutoFit();
 
                 //$selRange = "A1:".$taskPosition['质检人员二列位'].($i+7);
-                $selRange = "A1:".$taskPosition['质检人员二列位']."25";
-                //print and close the
+                $selRange = "A1:".$taskPosition['质检人员二列位'].$maxIndex;
+
+                //print and close the excel object
                 $result = ExcelOperationHelper::getInstance()->closeWorkSheet($WorkbookThisWorkbook,$Worksheet,$excelApplication,$selRange,true,true,$fileres); 
 
                 $result['status'] = 1;
