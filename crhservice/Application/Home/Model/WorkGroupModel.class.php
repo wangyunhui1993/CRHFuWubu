@@ -29,10 +29,22 @@ class WorkGroupModel extends Model
                 $data .= " AND work_group_no='$str' ";
             }
         }
-        $list = M('work_group')
+
+        if(isset($condition['start_record'])&&$condition['start_record'] != ''&& isset($condition['page_size'])
+        &&$condition['page_size'] != '')
+        {
+            $list = M('work_group')
             ->where($data)
             ->limit($condition['start_record'],$condition['page_size'])
             ->select();
+        }
+        else
+        {
+            $list = M('work_group')
+                ->where($data)
+                ->select();
+        }
+
         return $list;
 
     }

@@ -70,13 +70,13 @@ class ExcelOperationHelper
         return $resData;
     }
 
-    public function getWorkSheet($templateName, $Worksheet, $WorkbookThisWorkbook, $excelApplication,$sheetIndex)
+    public function getWorkSheet($templateName, &$Worksheet, &$WorkbookThisWorkbook, &$excelApplication,$sheetIndex)
     {
         $templatePath = Util::toAbsolutePath($this->templateFolder . $templateName);//'C:\phpStudy\WWW\crhservice';
         //print_r($templatePath);
         return ExcelHelper::getWorkSheet($templatePath, $Worksheet, $WorkbookThisWorkbook, $excelApplication,$sheetIndex);
     }
-    public function closeWorkSheet($WorkbookThisWorkbook, $Worksheet,  $excelApplication,$selRange,$saveExcel,$print,$resultFile)
+    public function closeWorkSheet($WorkbookThisWorkbook, &$Worksheet,  &$excelApplication,$selRange,$saveExcel,$print,$resultFile)
     {
         $resData['state'] = 0;
         $resData['result'] = "";

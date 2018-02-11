@@ -207,6 +207,10 @@ class TaskPlanController extends Controller
         $result = null;
 
        try {
+                $Worksheet = null;
+                $WorkbookThisWorkbook = null;
+                $excelApplication = null;
+
                 //get execel work sheet
                 $dtNow = new \DateTime('now', new \DateTimeZone('UTC'));
                 $str = $dtNow->format('Ymd');
@@ -427,6 +431,10 @@ class TaskPlanController extends Controller
        $result = null;
 
        try {
+                    $Worksheet = null;
+                    $WorkbookThisWorkbook = null;
+                    $excelApplication = null;
+
                     $yiCheYiDang = $_POST['taskYiCheYiDangForPrint'];
                     $objArray = json_decode($yiCheYiDang);
                     $obj =  $objArray[0];

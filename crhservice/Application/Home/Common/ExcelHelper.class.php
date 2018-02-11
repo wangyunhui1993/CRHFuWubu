@@ -144,7 +144,7 @@ class ExcelHelper
         $excelApplication->Quit();
         unset($excelApplication);
     }
-    public static function getWorkSheet($Tmplfile, $Worksheet, $WorkbookThisWorkbook, $excelApplication,$sheetIndex)
+    public static function getWorkSheet($Tmplfile, &$Worksheet, &$WorkbookThisWorkbook, &$excelApplication,$sheetIndex)
     {
         $excelApplication = new \COM("Excel.Application", '127.0.0.1', CP_UTF8) or die ("ERROR: Unable to instantaniate COM!\r\n");
         // COM CREATE
@@ -159,7 +159,7 @@ class ExcelHelper
         //var_dump($obj);
         return $obj;
     }
-    public static function closeWorkSheet($WorkbookThisWorkbook, $Worksheet, $excelApplication,$selRange,$saveExcel,$print,$result_path)
+    public static function closeWorkSheet(&$WorkbookThisWorkbook, &$Worksheet, &$excelApplication,$selRange,$saveExcel,$print,$result_path)
     {
         $excelApplication->DisplayAlerts = false;
         //print_r("$result_path \r\n next line__ ");

@@ -17,7 +17,7 @@ class TaskPlanModel extends Model
     {
         $data = ' 1 ';
         if ($condition) {
-            if ($condition['task_date']) {
+            if (isset($condition['task_date'])&&$condition['task_date']!='') {
                 $beginStr = $condition['task_date'][0];
                 $endStr = $condition['task_date'][1];
                 if ($beginStr == $endStr) {
@@ -29,28 +29,28 @@ class TaskPlanModel extends Model
                     $data .= " AND tp.task_date>='$beginStr' AND tp.task_date<='$endStr'";
                 }
             }
-            if ($condition['train_column']) {
+            if (isset($condition['train_column'])&&$condition['train_column']!='') {
                 $str = $condition['train_column'];
                 $data .= " AND tp.train_column='$str' ";
             }
-            if ($condition['station_track_no']) {
+            if (isset($condition['station_track_no'])&&$condition['station_track_no']!='') {
                 $str = $condition['station_track_no'];
                 $data .= " AND tp.station_track_no='$str' ";
             }
-            if ($condition['repair_id']) {
+            if (isset($condition['repair_id'])&&$condition['repair_id']!='') {
                 $str = $condition['repair_id'];
                 $data .= " AND tp.repair_id='$str' ";
             }
-            if ($condition['state']) {
+            if (isset($condition['state'])&&$condition['state']!='') {
                 $str = $condition['state'];
                 $data .= " AND tp.state='$str' ";
             }
-            if ($condition['department_no']) {
+            if (isset($condition['department_no'])&&$condition['department_no']!='') {
                 $str = $condition['department_no'];
                 $data .= " AND tc.department_no='$str' ";
             }
 
-            if ($condition['taskContentlist'][0]) {
+            if (isset($condition['taskContentlist'][0])) {
 
                 $taskObjList = $condition['taskContentlist'];                
                 $objStr=$objStr.'And tpd.task_content_id IN (-1';

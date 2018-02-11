@@ -31,24 +31,25 @@ class UserInfoModel extends Model
     public function searchRecords($condition) {
         $data = ' 1 ';
         if ($condition) {
-            if ($condition['name']) {
+            if (isset($condition['name']) && $condition['name']!='') {
                 $str = $condition['name'];
                 $data .= " AND name like '%$str%' ";
             }
-            if ($condition['account']) {
+            if (isset($condition['account'])&& $condition['account']!='') {
                 $str = $condition['account'];
                 $data .= " AND account like '%$str%' ";
             }
-            if ($condition['department_no']) {
+            if (isset($condition['department_no']) && $condition['department_no'] != '') {
                 $str = $condition['department_no'];
                 $data .= " AND department_no = '$str' ";
             }
-            if ($condition['work_group_no']) {
+            if (isset($condition['work_group_no']) && $condition['work_group_no'] != '') {
                 $str = $condition['work_group_no'];
                 $data .= " AND work_group_no = '$str' ";
             }
         }
-        if($condition['task_group_name']) {
+
+        if(isset($condition['task_group_name']) && $condition['task_group_name']!='' ) {
             $name = "%" . $condition['task_group_name'] . "%";
             $tempList = M("task_group")->where("task_group_name like '$name'")->select();
             $groupMember = "";
@@ -62,7 +63,7 @@ class UserInfoModel extends Model
                 }
             }
         }
-        if($condition['task_group_name']) {
+        if(isset($condition['task_group_name']) && $condition['task_group_name'] != '') {
             if($condition['start_record'] && $condition['page_size']) {
                 $startStr = $condition['start_record'];
                 $pageSizeStr = $condition['page_size'];
@@ -71,7 +72,7 @@ class UserInfoModel extends Model
                 $sql = "SELECT * FROM user_info WHERE find_in_set(account,('$groupMember')) AND $data";
             }
         } else {
-            if(isset($condition['start_record']) && $condition['page_size']) {
+            if(isset($condition['start_record']) && isset($condition['page_size'])) {
                 $startStr = $condition['start_record'];
                 $pageSizeStr = $condition['page_size'];
                 $sql = "SELECT * FROM user_info WHERE $data LIMIT $startStr,$pageSizeStr";
@@ -84,7 +85,7 @@ class UserInfoModel extends Model
 
         //获取全部的小组信息
         $taskGroups = array();
-        if($condition['department_no']) {
+        if(isset($condition['department_no']) && $condition['department_no']!='') {
             $taskGroups = M("task_group")->where("department_no = " .$condition['department_no'])->select();
         } else {
             $taskGroups = M("task_group")->field("*")->select();
@@ -106,24 +107,24 @@ class UserInfoModel extends Model
     public function getSearchRecordsCount($condition) {
         $data = ' 1 ';
         if ($condition) {
-            if ($condition['name']) {
+            if (isset($condition['name']) && $condition['name'] ！= '') {
                 $str = $condition['name'];
                 $data .= " AND name like '%$str%' ";
             }
-            if ($condition['account']) {
+            if (isset($condition['account']) && $condition['account'] != '') {
                 $str = $condition['account'];
                 $data .= " AND account like '%$str%' ";
             }
-            if ($condition['department_no']) {
+            if (isset($condition['department_no']) && $condition['department_no'] != '') {
                 $str = $condition['department_no'];
                 $data .= " AND department_no = '$str' ";
             }
-            if ($condition['work_group_no']) {
+            if (isset($condition['work_group_no']) && $condition['work_group_no'] != '') {
                 $str = $condition['work_group_no'];
                 $data .= " AND work_group_no = '$str' ";
             }
         }
-        if($condition['task_group_name']) {
+        if(isset($condition['task_group_name']) && $condition['task_group_name'] != '') {
             $name = "%" . $condition['task_group_name'] . "%";
             $tempList = M("task_group")->where("task_group_name like '$name'")->select();
             $groupMember = "";
@@ -141,7 +142,7 @@ class UserInfoModel extends Model
             }
         }
 
-        if($condition['task_group_name']) {
+        if(isset($condition['task_group_name'])&&$condition['task_group_name']!='') {
             if($condition['start_record'] && $condition['page_size']) {
                 $startStr = $condition['start_record'];
                 $pageSizeStr = $condition['page_size'];
@@ -150,7 +151,8 @@ class UserInfoModel extends Model
                 $sql = "SELECT * FROM user_info WHERE find_in_set(account,('$groupMember')) AND $data";
             }
         } else {
-            if($condition['start_record'] && $condition['page_size']) {
+            if(isset($condition['start_record']) && $condition['start_record']!= ''
+            && isset($condition['page_size'])&&$condition['page_size']!='') {
                 $startStr = $condition['start_record'];
                 $pageSizeStr = $condition['page_size'];
                 $sql = "SELECT * FROM user_info WHERE $data LIMIT '$startStr','$pageSizeStr'";
@@ -169,30 +171,30 @@ class UserInfoModel extends Model
         $data = ' 1 ';
         if ($condition) {
             if ($isFuzzyQuery) {
-                if ($condition['name']) {
+                if (isset($condition['name']) && $condition['name'] != '') {
                     $str = $condition['name'];
                     $data .= " AND name like '%$str%' ";
                 }
-                if ($condition['account']) {
+                if (isset($condition['account']) && $condition['account'] != '') {
                     $str = $condition['account'];
                     $data .= " AND account like '%$str%' ";
                 }
             } else {
-                if ($condition['account']) {
+                if (isset($condition['account']) && $condition['account'] != '') {
                     $str = $condition['account'];
                     $data .= " AND account='$str' ";
                 }
-                if ($condition['name']) {
+                if (isset($condition['name']) && $condition['name'] != '') {
                     $str = $condition['name'];
                     $data .= " AND name='$str' ";
                 }
             }
-            if ($condition['department_no']) {
+            if (isset($condition['department_no']) && $condition['department_no'] != '') {
                 $str = $condition['department_no'];
                 $data .= " AND department_no='$str' ";
             }
 
-            if ($condition['work_group_no']) {
+            if (isset($condition['work_group_no']) && $condition['work_group_no'] != '') {
                 $str = $condition['work_group_no'];
                 $data .= " AND work_group_no='$str' ";
             }
@@ -210,30 +212,30 @@ class UserInfoModel extends Model
         $data = ' 1 ';
         if ($condition) {
             if ($isFuzzyQuery) {
-                if ($condition['name']) {
+                if (isset($condition['name']) && $condition['name'] != '') {
                     $str = $condition['name'];
                     $data .= " AND name like '%$str%' ";
                 }
-                if ($condition['account']) {
+                if (isset($condition['account']) && $condition['account'] != '') {
                     $str = $condition['account'];
                     $data .= " AND account like '%$str%' ";
                 }
             } else {
-                if ($condition['account']) {
+                if (isset($condition['account']) && $condition['account'] != '') {
                     $str = $condition['account'];
                     $data .= " AND account='$str' ";
                 }
-                if ($condition['name']) {
+                if (isset($condition['name']) && $condition['name'] != '') {
                     $str = $condition['name'];
                     $data .= " AND name='$str' ";
                 }
             }
-            if ($condition['department_no']) {
+            if (isset($condition['department_no']) && $condition['department_no'] != '') {
                 $str = $condition['department_no'];
                 $data .= " AND department_no='$str' ";
             }
 
-           if ($condition['work_group_no']) {
+           if (isset($condition['work_group_no']) && $condition['work_group_no'] != '') {
                 $str = $condition['work_group_no'];
                 $data .= " AND work_group_no = '$str' ";
             }
@@ -250,15 +252,15 @@ class UserInfoModel extends Model
     {
         $data = ' 1 ';
         if ($condition) {
-            if ($condition['id']) {
+            if (isset($condition['id']) && $condition['id'] != '') {
                 $str = $condition['id'];
                 $data .= " AND id!='$str' ";
             }
-            if ($condition['account']) {
+            if (isset($condition['account']) && $condition['account']!='') {
                 $str = $condition['account'];
                 $data .= " AND account='$str' ";
             }
-            if ($condition['name']) {
+            if (isset($condition['name']) && $condition['name'] != '') {
                 $str = $condition['name'];
                 $data .= " AND name='$str' ";
             }

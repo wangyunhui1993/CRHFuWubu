@@ -37,22 +37,37 @@ class TroubleMaintainModel extends Model
     {
         $data = ' 1 ';
         if ($condition) {
-            if ($condition['id']) {
+            if (isset($condition['id'])) {
                 $str = $condition['id'];
                 $data .= " AND s.id='$str' ";
             }
-            if ($condition['department_no']) {
+            if (isset($condition['department_no'])) {
                 $str = $condition['department_no'];
                 $data .= " AND s.department_no='$str' ";
             }
         }
-        $list = M('trouble_maintain')
+
+        if(isset($condition['start_record'])&&$condition['start_record'] != ''&& isset($condition['page_size'])
+        &&$condition['page_size'] != '')
+        {
+            $list = M('trouble_maintain')
             ->alias("s")
             ->join("LEFT JOIN department_info AS d on d.department_no=s.department_no")
             ->where($data)
             ->field("s.*,d.department_name")
             ->limit($condition['start_record'],$condition['page_size'])
             ->select();
+        }
+        else
+        {
+            $list = M('trouble_maintain')
+            ->alias("s")
+            ->join("LEFT JOIN department_info AS d on d.department_no=s.department_no")
+            ->where($data)
+            ->field("s.*,d.department_name")
+            ->select();
+        }
+
         return $list;
     }
 

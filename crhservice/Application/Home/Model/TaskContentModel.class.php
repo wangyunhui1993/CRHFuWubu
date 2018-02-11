@@ -35,15 +35,29 @@ class TaskContentModel extends Model
 //                $data .= " AND s.department_no='$str' ";
 //            }
         }
-        $list = M('task_content')
+
+        if(isset($condition['start_record'])&&$condition['start_record'] != ''&& isset($condition['page_size'])
+        &&$condition['page_size'] != '')
+        {
+            $list = M('task_content')
             ->alias("s")
             ->join("LEFT JOIN department_info AS d on d.department_no=s.department_no")
             ->where($data)
             ->field("s.*,d.department_name")
             ->limit($condition['start_record'],$condition['page_size'])
             ->select();
-        return $list;
+        }
+        else
+        {
+            $list = M('task_content')
+            ->alias("s")
+            ->join("LEFT JOIN department_info AS d on d.department_no=s.department_no")
+            ->where($data)
+            ->field("s.*,d.department_name")
+            ->select();
+        }
 
+        return $list;
     }
 
     public function getRecordsCount($condition = null)
@@ -72,7 +86,6 @@ class TaskContentModel extends Model
             ->where($data)
             ->count();
         return $list;
-
     }
 
     public function addData($info)

@@ -29,10 +29,23 @@ class TaskGroupModel extends Model
                 $data .= " AND task_group_name='$str' ";
             }
         }
-        $list = M('task_group')
+
+        if(isset($condition['start_record'])&&$condition['start_record'] != ''&& isset($condition['page_size'])
+        &&$condition['page_size'] != '')
+        {
+            $list = M('task_group')
             ->where($data)
             ->limit($condition['start_record'],$condition['page_size'])
             ->select();
+        }
+        else
+        {
+            $list = M('task_group')
+            ->where($data)
+            ->select();
+        }
+
+
         for($i=0; $i<sizeof($list); $i++) {
             if($list[$i]['group_member'] != null) {
                 $list[$i]['group_member'] = explode(',',$list[$i]['group_member']);

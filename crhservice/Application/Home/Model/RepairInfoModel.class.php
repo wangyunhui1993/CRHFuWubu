@@ -25,10 +25,22 @@ class RepairInfoModel extends Model
                 $data .= " AND `name`='$str' ";
             }
         }
-        $list = M('repair_info')
+
+        if(isset($condition['start_record'])&&$condition['start_record'] != ''&& isset($condition['page_size'])
+        &&$condition['page_size'] != '')
+        {
+            $list = M('repair_info')
             ->where($data)
             ->limit($condition['start_record'], $condition['page_size'])
             ->select();
+        }
+        else
+        {
+            $list = M('repair_info')
+            ->where($data)
+            ->select();
+        }
+
         return $list;
 
     }
