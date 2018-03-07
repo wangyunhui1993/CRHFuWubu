@@ -131,13 +131,7 @@
                             作业日期:
                         </label >
                         <label class="panel-lable" >
-                            {{queryFilters.dateStart|converterDate}}
-                        </label >
-                        <label class="panel-lable" >
-                            至
-                        </label >
-                        <label class="panel-lable" >
-                            {{queryFilters.dateEnd|converterDate}}
+                            {{workDate}}
                         </label >
                     </el-col >
 
@@ -239,6 +233,8 @@
 				    keywords: '',
 			    },
 
+				workDate: '',
+
 			    pickerOpt: {
 				    disabledDate(time) {
 					    //return time.getTime() < Date.now() - 8.64e7;
@@ -303,6 +299,24 @@
 		    onSearch() {
 			    _this.onSearchRecordCounts();
 		    },
+			onDateChange(){
+				var dateDiff = _this.queryFilters.dateEnd.getTime() - _this.queryFilters.dateStart.getTime();
+				var days = Math.floor(dateDiff / (24 * 3600 * 1000));
+				var ds = _this.queryFilters.dateStart.format("yyyy-MM-dd");
+				var de = _this.queryFilters.dateEnd.format("yyyy-MM-dd");
+				//console.log("days:" + days);
+				//console.log("ds:" + ds);
+				//console.log("de:" + de);
+				var dsh = _this.queryFilters.dateStart.format("hh");
+				var dse = _this.queryFilters.dateEnd.format("hh");
+				//console.log("dsh: " + dsh);
+				//console.log("dse: " + dse);
+				if(days <= 1 && (dsh == dse) && (dsh == "08")){
+					_this.workDate = ds;
+				}else{
+					_this.workDate = ds + '至' + de;
+				}
+			},
 
 		    onExport()
 		    {
@@ -444,6 +458,14 @@
 		    },
 	    },
 	    computed: {},
+		watch:{
+			'queryFilters.dateStart' : function(){
+				_this.onDateChange();
+			},
+			'queryFilters.dateEnd' : function(){
+				_this.onDateChange();
+			},
+		},
 	    filters: {
 		    filterDepartmentName(id) {
 			    let result = ''
@@ -511,7 +533,8 @@
     }
 
 </script >
-<style >
+
+<style>
     .breadcrumb-container {
 	    padding: 15px;
 	    background-color: #E5E9F2;
