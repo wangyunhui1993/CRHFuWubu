@@ -415,6 +415,7 @@
             <el-button type="primary" @click="addSituation" style="margin-top: 20px">情况说明</el-button >
             <el-button type="primary" @click="endTask" style="margin-top: 20px">结束作业</el-button >
             <el-button type="primary" @click="endTaskPlan" style="margin-top: 20px">车辆出库</el-button >
+            <el-button type="primary" @click="cancelTask" style = "margin-top: 20px">取消作业</el-button>
           </div>
 
         <el-table
@@ -423,7 +424,8 @@
                 style="width: 100%; margin-top: 20px"
                 @row-click="contentRowClick"
                 @selection-change="handleTaskContentSelectionChange"
-                :row-class-name="contentTableRowClassName">
+                :row-class-name="contentTableRowClassName"
+                ref = "tableContent">
           <el-table-column
                   type="selection"
                   width="55">
@@ -743,6 +745,14 @@
           </span >
         </el-dialog >
 
+        <el-dialog title="提示" v-model="cancelTaskConfirmVisible" size="tiny" >
+          <span >确认要<strong>取消作业</strong>吗？</span >
+          <span slot="footer" class="dialog-footer" >
+            <el-button @click="cancelTaskConfirmVisible = false" >取 消</el-button >
+            <el-button type="primary" @click="onConfirmCancelTask" >确 定</el-button >
+          </span >
+        </el-dialog >
+
       <el-dialog :title="currentAddIndicator | filterPersonAddTitle" v-model="addPersonDialogVisible" size="large">
           <el-row>
               <el-col :span="3" style="margin-left: 5px;">
@@ -955,6 +965,7 @@
                 startConfirmVisible: false,
                 endConfirmVisible: false,
                 endTaskPlanConfirmVisible: false,
+                cancelTaskConfirmVisible: false,
                 addPersonDialogVisible: false,
                 //故障添加
                 troubleList:[],
@@ -1064,9 +1075,7 @@
               //只有正在作业的状态才可以提交数据
               let postData = [];
               for(let i=0; i< this.taskContentData.length; i++) {
-                if(this.taskContentData[i].state == "2") {
-                  postData.push(this.taskContentData[i]);
-                }
+                 postData.push(this.taskContentData[i]);
               }
               $.ajax({
                 url: _this.modifyTaskContentDetailURL,
@@ -1438,6 +1447,26 @@
                 showMessage(_this, '访问服务器出错！', 0);
               }
             })
+          },
+
+          cancelTask(){
+              if(this.multipleTaskSelection.length == 0){
+                  showMessage(this, "未选择作业内容！", 0);
+              }else{
+                 this.cancelTaskConfirmVisible = true;
+              }
+            
+          },
+          onConfirmCancelTask(){
+              this.cancelTaskConfirmVisible = false;
+              for(let i = 0; i < this.multipleTaskSelection.length; i++){
+                  if(this.multipleTaskSelection[i].state == "2"){
+                      this.multipleTaskSelection[i].state = "1";
+                  }
+              }
+              this.multipleTaskSelection = [];
+              this.$refs.tableContent.clearSelection();
+              showMessage(this, "取消作业成功", 1);
           },
 
           endTaskPlan() {
