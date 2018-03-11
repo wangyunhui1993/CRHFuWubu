@@ -468,14 +468,18 @@
                     label="故障状态"
                     min-width="100">
               <template scope="scope">
-                <el-select :disabled="scope.row.state == '1' || scope.row.state == '3'"
+                <!-- <el-select :disabled="scope.row.state == '1' || scope.row.state == '3'"
                            v-model="scope.row.trouble_maintain_id" multiple placeholder="选择故障">
                   <el-option
                           v-for="item in troubleList"
                           :label="item.content"
                           :value="item.id">
                   </el-option>
-                </el-select>
+                </el-select> -->
+                    <el-input :disabled="scope.row.state == '1' || scope.row.state == '3'"
+                     v-show="true" size="small" v-model="scope.row.trouble_maintain_id"></el-input>
+                    <!-- <span v-show="!scope.row.edit">{{ scope.row.title }}</span> -->
+
               </template>
             </el-table-column>
             <el-table-column
@@ -483,14 +487,16 @@
                     label="情况说明"
                     min-width="100">
               <template scope="scope">
-                <el-select :disabled="scope.row.state == '1' || scope.row.state == '3'"
+                <!-- <el-select :disabled="scope.row.state == '1' || scope.row.state == '3'"
                            v-model="scope.row.situation_content_id" multiple placeholder="选择说明">
                   <el-option
                           v-for="item in situationList"
                           :label="item.situation_content"
                           :value="item.id">
                   </el-option>
-                </el-select>
+                </el-select> -->
+                 <el-input :disabled="scope.row.state == '1' || scope.row.state == '3'"
+                     v-show="true" size="small" v-model="scope.row.situation_content_id"></el-input>
               </template>
             </el-table-column>
           </el-table-column>
