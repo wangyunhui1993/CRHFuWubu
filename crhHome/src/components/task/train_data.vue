@@ -546,7 +546,8 @@
         workGroup:[],//作业班组
         situationList:[],
         troubleList:[],
-        departmentUsers:[]
+        departmentUsers:[],
+        queryTraincloumn:'',
       }
     },
     methods: {
@@ -708,6 +709,20 @@
               _this.trainModel = data.info.train_model;
               _this.taskContent = data.info.task_content;
               _this.workGroup = data.info.work_group;
+
+              if(_this.queryTraincloumn != null && _this.queryTraincloumn != "")
+              {
+                 for(let i=0; i< _this.trainColumn.length; i++) {
+                    if(_this.queryTraincloumn == _this.trainColumn[i].train_column) {
+                      _this.form.train_column = _this.trainColumn[i].id;
+                      break;
+                    }
+                  }
+                  
+                  _this.fetchTaskCount();
+                  _this.queryTraincloumn = null;
+              }
+
             } else {
               showMessage(_this, '获取部门相关信息失败！', 0);
             }
@@ -851,8 +866,26 @@
           return 'canceled-row';
         }
         return '';
-      }
-
+      },
+      
+      parseUrl(){
+        var url=location.href;
+        var i=url.indexOf('?');
+        if(i==-1)return;
+        var querystr=url.substr(i+1);
+        var arr1=querystr.split('&');
+        var arr2=new Object();
+        for  (i=0; i < arr1.length; i++)
+        {
+            var strtemp = arr1[i];
+            if(strtemp && strtemp != "")
+               {
+                 var ta = strtemp.split('=');
+                  arr2[ta[0]]=ta[1];
+               }
+        }
+        return arr2;
+      },
     },
     computed: {
       currentDepartmentStr(){
@@ -995,8 +1028,10 @@
         }
         return result;
       },
+    
     },
     created: function () {
+          
       this.userInfo = JSON.parse(sessionStorage.getItem('user'));
       //根据用户获取部分信息
       if (this.userInfo != null && this.userInfo.department_no != "001") {
@@ -1010,7 +1045,20 @@
       //获取修程信息（与部门无关）
       this.fetchRepairInfo();
       this.fetchDepartmentRelatedInfo();
-      this.fetchTaskCount();
+
+      var param = this.parseUrl();//解析所有参数
+      if(param && param['train_column_n'])
+      {
+        var trainClm = param['train_column_n'];//就是你要的结果
+
+        this.queryTraincloumn = trainClm;
+      }
+
+      if(this.queryTraincloumn == null || this.queryTraincloumn == "")
+      {
+        this.fetchTaskCount();
+      }
+
       this.fetchDepartmentUsers();
 
       this.getTroubleList();
@@ -1019,6 +1067,7 @@
     mounted: function () {
 
     },
+ 
   }
 
 </script>

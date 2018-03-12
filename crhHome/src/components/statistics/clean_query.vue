@@ -162,6 +162,17 @@
                     <el-table-column
 		                    prop="train_column_name"
 		                    label="实际车组号" >
+							<!-- -->
+							<template scope="scope" >
+								<el-button
+										style="min-width: 50px;float: left"
+										@click.native.prevent="onYicheYiDangQuery(scope.row.train_column_name)"
+										type="text"
+								>
+								{{scope.row.train_column_name}}
+								</el-button >
+							</template >
+							<!-- -->
                     </el-table-column >
                     <el-table-column
 
@@ -456,6 +467,10 @@
 				    },
 			    })
 		    },
+			onYicheYiDangQuery(train_column_name)
+			{
+				this.$router.push({path: '/home/task/train_data',query: { train_column_n: train_column_name }});
+			}
 	    },
 	    computed: {},
 		watch:{
