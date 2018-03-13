@@ -37,7 +37,7 @@ class TaskPlanDetailController extends Controller
                 //     $r = ' ';
                 // }
                 
-                $r = $result[$i]['trouble_maintain_id'][0];
+                $r = $result[$i]['trouble_maintain_id'];
             }
             $result[$i]['trouble_maintain_id'] = $r;
             //情况说明
