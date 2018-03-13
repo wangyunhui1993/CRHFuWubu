@@ -40,12 +40,14 @@ class TaskPlanDetailModel extends Model
         //故障登记、情况说明、人员相关字段都是通过“,”隔开每个数据，所以返回client前转变成数组
         for($i=0; $i<sizeof($list); $i++) {
             if($list[$i]['trouble_maintain_id'] != null) {
-                $list[$i]['trouble_maintain_id'] = explode(',',$list[$i]['trouble_maintain_id']);
+                //$list[$i]['trouble_maintain_id'] = explode(',',$list[$i]['trouble_maintain_id']);
+                $list[$i]['trouble_maintain_id'] = $list[$i]['trouble_maintain_id'];
             } else {
                 $list[$i]['trouble_maintain_id'] = [];
             }
             if($list[$i]['situation_content_id'] != null) {
-                $list[$i]['situation_content_id'] = explode(',',$list[$i]['situation_content_id']);
+                //$list[$i]['situation_content_id'] = explode(',',$list[$i]['situation_content_id']);
+                $list[$i]['situation_content_id'] = $list[$i]['situation_content_id'];
             } else {
                 $list[$i]['situation_content_id'] = [];
             }
