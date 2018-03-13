@@ -411,8 +411,8 @@
 
           <div style="display: inline">
             <el-button type="primary" @click="startTask" style="margin-left:20px; margin-top: 20px">开始作业</el-button >
-            <el-button type="primary" @click="addTrouble" style="margin-top: 20px">故障登记</el-button >
-            <el-button type="primary" @click="addSituation" style="margin-top: 20px">情况说明</el-button >
+            <el-button type="primary" @click="addTrouble" v-show = 'false' style="margin-top: 20px">故障登记</el-button >
+            <el-button type="primary" @click="addSituation" v-show = 'false' style="margin-top: 20px">情况说明</el-button >
             <el-button type="primary" @click="endTask" style="margin-top: 20px">结束作业</el-button >
             <el-button type="primary" @click="endTaskPlan" style="margin-top: 20px">车辆出库</el-button >
             <el-button type="primary" @click="cancelTask" style = "margin-top: 20px">取消作业</el-button>
