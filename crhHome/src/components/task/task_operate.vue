@@ -198,7 +198,7 @@
                       <template scope="scope">
                         <ul style="list-style: none; margin-top: 10px">
                           <li style="margin-left: -40px; margin-top: 3px" v-for=" item in scope.row.trouble_maintain_id">
-                            <el-tag type="danger"  href="#" :title="item | filterTroubleName">{{item | filterTroubleName}}</el-tag>
+                            <el-tag v-if=" item !=' '&& item !='' " type="danger"  href="#" :title="item | filterTroubleName">{{item | filterTroubleName}}</el-tag>
                           </li>
                         </ul>
                       </template>
@@ -210,7 +210,7 @@
                       <template scope="scope">
                         <ul style="list-style: none;margin-top: 10px">
                           <li style="margin-left: -40px; margin-top: 3px" v-for=" item in scope.row.situation_content_id">
-                            <el-tag type="warning" href="#" :title="item | filterSituationName">{{item | filterSituationName}}</el-tag>
+                            <el-tag v-if=" item !=' '&& item !='' " type="warning" href="#" :title="item | filterSituationName">{{item | filterSituationName}}</el-tag>
                           </li>
                         </ul>
                       </template>
@@ -515,9 +515,9 @@
                 <!--</ul>-->
                 <el-tag style="margin-left: -10px; margin-top: 3px"
                         v-for="(tag,index) in scope.row.a_left"
-                        :closable="scope.row.state == '2'"
+                        :closable="scope.row.state != '3'"
                         @close="handleALeftClose(scope.row, index)">
-                  {{tag | filterUserName}}
+                        {{tag|filterUserName}}
                 </el-tag>
                 <el-button style="margin-left: -10px; margin-top: 3px" :disabled="scope.row.state == '3'"
                            type="primary" size="mini" @click="aLeftAdd(scope.$index)" icon="plus">人员</el-button>
@@ -546,9 +546,9 @@
               <template scope="scope">
                 <el-tag style="margin-left: -10px; margin-top: 3px"
                         v-for="(tag,index) in scope.row.b_left"
-                        :closable="scope.row.state == '2'"
+                        :closable="scope.row.state != '3'"
                         @close="handleBLeftClose(scope.row, index)">
-                  {{tag | filterUserName}}
+                        {{tag | filterUserName}}
                 </el-tag>
                 <el-button style="margin-left: -10px; margin-top: 3px" :disabled="scope.row.state == '3'"
                            type="primary" size="mini" @click="bLeftAdd(scope.$index)" icon="plus">人员</el-button>
@@ -579,9 +579,9 @@
               <template scope="scope">
                 <el-tag style="margin-left: -10px; margin-top: 3px"
                         v-for="(tag,index) in scope.row.a_leader"
-                        :closable="scope.row.state == '2'"
+                        :closable="scope.row.state != '3'"
                         @close="handleALeaderClose(scope.row, index)">
-                  {{tag | filterUserName}}
+                        {{tag | filterUserName}}
                 </el-tag>
                 <el-button style="margin-left: -10px; margin-top: 3px" :disabled=" scope.row.state == '3'"
                            type="primary" size="mini" @click="aLeaderAdd(scope.$index)" icon="plus">组长</el-button>
@@ -594,7 +594,7 @@
               <template scope="scope">
                 <el-tag style="margin-left: -10px; margin-top: 3px"
                         v-for="(tag,index) in scope.row.b_leader"
-                        :closable="scope.row.state == '2'"
+                        :closable="scope.row.state != '3'"
                         @close="handleBLeaderClose(scope.row, index)">
                   {{tag | filterUserName}}
                 </el-tag>
@@ -613,7 +613,7 @@
               <template scope="scope">
                 <el-tag style="margin-left: -10px; margin-top: 3px"
                         v-for="(tag,index) in scope.row.a_quality"
-                        :closable="scope.row.state == '2'"
+                        :closable="scope.row.state != '3'"
                         @close="handleAQualityClose(scope.row, index)">
                   {{tag | filterUserName}}
                 </el-tag>
@@ -628,7 +628,7 @@
               <template scope="scope">
                 <el-tag style="margin-left: -10px; margin-top: 3px"
                         v-for="(tag,index) in scope.row.b_quality"
-                        :closable="scope.row.state == '2'"
+                        :closable="scope.row.state != '3'"
                         @close="handleBQualityClose(scope.row, index)">
                   {{tag | filterUserName}}
                 </el-tag>
