@@ -20,7 +20,46 @@ class TaskPlanDetailController extends Controller
 
     public function getRecords()
     {
+        // 查询数据库
         $result = D("TaskPlanDetail")->getRecords($_POST);
+        // 通过trouble_maintain_id查询具体的content
+        for($i = 0; $i < sizeof($result); $i++){
+            //故障状态
+            $r = ' ';
+            if(sizeof($result[$i]['trouble_maintain_id']) > 0){
+                //$v = $result[$i]['trouble_maintain_id'][0];
+                // $q = array("id" => $v);
+                // $content =  D("trouble_maintain")->getRecords($q);
+                // if(sizeof($content) > 0){
+                //     $r = $content[0]['content'];
+                // }
+                // else{
+                //     $r = ' ';
+                // }
+                
+                $r = $result[$i]['trouble_maintain_id'][0];
+            }
+            $result[$i]['trouble_maintain_id'] = $r;
+            //情况说明
+            $r = ' ';
+            if(sizeof($result[$i]['situation_content_id']) > 0){
+                // $v = $result[$i]['situation_content_id'][0];
+                // $q = array("id" => $v);
+                // $content = D("SituationContent")->getRecords($q);
+                // if(sizeof($content) > 0){
+                //     $r = $content[0]['situation_content'];
+                // }
+                // else{
+                //     $r = ' ';
+                // }
+                // $result[$i]['situation_content_id'] = $r;
+                $r = $result[$i]['situation_content_id'];
+            }
+            $result[$i]['situation_content_id'] = $r;
+        }
+
+
+        //返回结果
         if (isset($result)) {
             $this->success($result, null, true);
         } else {
