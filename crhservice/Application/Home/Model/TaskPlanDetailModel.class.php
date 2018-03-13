@@ -331,10 +331,10 @@ class TaskPlanDetailModel extends Model
                 $data['end_time'] = $info[$i]['end_time'];
             }
             if (isset($info[$i]['trouble_maintain_id'])) {
-                $data['trouble_maintain_id'] = implode(",",$info[$i]['trouble_maintain_id']);
+                $data['trouble_maintain_id'] = $info[$i]['trouble_maintain_id'];
             }
             if (isset($info[$i]['situation_content_id'])) {
-                $data['situation_content_id'] = implode(",",$info[$i]['situation_content_id']);
+                $data['situation_content_id'] = $info[$i]['situation_content_id'];
             }
             if (isset($info[$i]['a_left'])) {
                 $data['a_left'] = implode(",",$info[$i]['a_left']);
