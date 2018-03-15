@@ -229,24 +229,29 @@
       </div>
     </el-col>
     <el-dialog  v-model="checkTaskDetailVisible" size="full" >
+    	 <div id="subOutputRank-print">
+       <div  style="width:982px">
       <h2 style="font-weight: bold;text-align: center; font-size: x-large">一车一档查询</h2>
       <el-table
               :data="selectedTaskInfo"
               border
               style="width: 100%">
         <el-table-column
-                min-width="110"
+                width="110"
                 prop="task_date"
+                align="center"
                 label="作业日期">
         </el-table-column>
         <el-table-column
-                min-width="110"
+                width="110"
                 prop="task_time"
+                align="center"
                 label="作业时间">
         </el-table-column>
         <el-table-column
                 prop="train_column"
-                min-width="110"
+                width="110"
+                align="center"
                 label="车列号">
           <template scope="scope">
             <div>
@@ -256,7 +261,8 @@
         </el-table-column>
         <el-table-column
                 prop="train_model"
-                min-width="120"
+                width="120"
+                align="center"
                 label="车型">
           <template scope="scope">
             <div>
@@ -266,7 +272,8 @@
         </el-table-column>
         <el-table-column
                 prop="station_track_no"
-                min-width="110"
+                align="center"
+                width="110"
                 label="股道">
           <template scope="scope">
             <div>
@@ -275,7 +282,8 @@
           </template>
         </el-table-column>
         <el-table-column
-                min-width="110"
+                width="110"
+                align="center"
                 prop="repair_id"
                 label="修程">
           <template scope="scope">
@@ -286,6 +294,7 @@
         </el-table-column>
         <el-table-column
                 width="200"
+                align="center"
                 label="修程项目">
           <template scope="scope">
             <el-tag
@@ -300,7 +309,8 @@
           </template>
         </el-table-column>
         <el-table-column
-                min-width="110"
+                width="110"
+                align="center"
                 prop="train_group"
                 label="车组类型">
           <template scope="scope">
@@ -314,20 +324,23 @@
       <el-table
               :data="taskContentData"
               border
-              style="width: 100%">
+              class="setPadding"
+              style="width: 100%;text-align:center">
         <el-table-column
                 prop="id"
+                align="center"
                 label="序号"
-                min-width="50">
+                width="50">
           <template scope="scope">
             <span >{{scope.$index +1}}</span>
           </template>
         </el-table-column>
-        <el-table-column label="作业信息">
+        <el-table-column align="center" label="作业信息">
           <el-table-column
                   prop="task_content_id"
                   label="作业内容"
-                  min-width="80">
+                  align="center"
+                  width="70">
             <template scope="scope">
               <div>
                 {{scope.row.task_content_id | filterTaskContent}}
@@ -337,17 +350,20 @@
           <el-table-column
                   prop="begin_time"
                   label="开始时间"
-                  min-width="75">
+                  align="center"
+                  width="80">
           </el-table-column>
           <el-table-column
                   prop="end_time"
                   label="结束时间"
-                  min-width="75">
+                  align="center"
+                  width="80">
           </el-table-column>
           <el-table-column
                   prop="trouble_maintain_id"
                   label="故障状态"
-                  min-width="80">
+                  align="center"
+                  width="70">
             <template scope="scope">
               <ul style="list-style: none; margin-top: 10px">
                 <li style="margin-left: -20px; margin-top: 3px" v-for=" item in scope.row.trouble_maintain_id">
@@ -359,7 +375,8 @@
           <el-table-column
                   prop="situation_content_id"
                   label="情况说明"
-                  min-width="80">
+                  align="center"
+                  width="70">
             <template scope="scope">
               <ul style="list-style: none;margin-top: 10px">
                 <li style="margin-left: -20px; margin-top: 3px" v-for=" item in scope.row.situation_content_id">
@@ -370,11 +387,12 @@
           </el-table-column>
         </el-table-column>
 
-        <el-table-column label="作业人员">
+        <el-table-column align="center" label="作业人员">
           <el-table-column
                   prop="a_left"
+                  align="center"
                   :label="portName.a_left"
-                  min-width="80">
+                  width="70">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.a_left">
@@ -385,8 +403,9 @@
           </el-table-column>
           <el-table-column
                   prop="a_right"
+                  align="center"
                   :label="portName.a_right"
-                  min-width="80">
+                  width="70">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.a_right">
@@ -398,8 +417,9 @@
 
           <el-table-column
                   prop="b_left"
+                  align="center"
                   :label="portName.b_left"
-                  min-width="80">
+                  width="70">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.b_left">
@@ -422,11 +442,12 @@
           </el-table-column>
         </el-table-column>
 
-        <el-table-column label="作业组长">
+        <el-table-column align="center" label="作业组长">
           <el-table-column
                   prop="a_leader"
+                  align="center"
                   :label="portName.a_leader"
-                  min-width="80">
+                  width="70">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.a_leader">
@@ -437,8 +458,9 @@
           </el-table-column>
           <el-table-column
                   prop="b_leader"
+                  align="center"
                   :label="portName.b_leader"
-                  min-width="80">
+                  width="70">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.b_leader">
@@ -451,11 +473,12 @@
         </el-table-column>
 
 
-        <el-table-column label="质检人员">
+        <el-table-column align="center" label="质检人员">
           <el-table-column
                   prop="a_quality"
+                  align="center"
                   :label="portName.a_quality"
-                  min-width="80">
+                  width="70">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.a_quality">
@@ -466,8 +489,9 @@
           </el-table-column>
           <el-table-column
                   prop="b_quality"
+                  align="center"
                   :label="portName.b_quality"
-                  min-width="80">
+                  width="70">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.b_quality">
@@ -478,6 +502,14 @@
           </el-table-column>
         </el-table-column>
       </el-table>
+      <el-row :gutter="20" style="margin-top:10px;">
+      <el-col :span="6">工长：</el-col>
+      <el-col :span="6">调度员：</el-col>
+      <el-col :span="6">值班主任：</el-col>
+      <el-col :span="6">值班员：</el-col>
+    </el-row>
+      </div>
+      </div>
       <span slot="footer" class="dialog-footer" >
       <el-button @click="PrintYicheYiDang" type="primary">打印</el-button >
 	    <el-button @click="checkTaskDetailVisible = false" type="primary">返回</el-button >
@@ -569,9 +601,23 @@
         this.startRecord = this.pageSize * (this.currentPage -1)
         this.fetchTaskCount();
       },
+     printContent(e){  
+               let subOutputRankPrint = document.getElementById('subOutputRank-print');  
+               console.log(subOutputRankPrint.innerHTML);  
+               let newContent =subOutputRankPrint.innerHTML;  
+               let oldContent = document.body.innerHTML;  
+               document.body.innerHTML = newContent;  
+               window.print();  
+               window.location.reload();  
+               document.body.innerHTML = oldContent;  
+               return false;  
+           } ,
       PrintYicheYiDang()
       {
-        var loadService = Loading.service(
+      	console.log('1234679');
+        this.printContent();
+//    	this.printContent();
+/*        var loadService = Loading.service(
 				{
 //						    lock: true,
 						    text: '正在打印中，请稍后...',
@@ -618,7 +664,7 @@
 
               showMessage(_this, '服务器访问出错！', 0);
             }
-          })
+          })*/
       },
 
       handleCheck(index, row) {
@@ -1083,5 +1129,20 @@
   }
   .el-table .finished-row {
     background: lightgreen;
+  }
+  .setPadding .cell{
+    padding: 5px;
+  }
+  .setPadding .cell ul{
+    padding: 0;
+  }
+  .setPadding .cell ul li{
+    margin-left: 0 !important;
+
+  }
+  .setPadding .cell ul li span{
+    word-wrap:break-word;
+    word-break: break-all;
+    word-spacing: normal;
   }
 </style>
