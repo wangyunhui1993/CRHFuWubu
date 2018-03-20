@@ -107,7 +107,7 @@ class UserInfoModel extends Model
     public function getSearchRecordsCount($condition) {
         $data = ' 1 ';
         if ($condition) {
-            if (isset($condition['name']) && $condition['name'] ！= '') {
+            if (isset($condition['name']) && $condition['name'] != '') {
                 $str = $condition['name'];
                 $data .= " AND name like '%$str%' ";
             }
