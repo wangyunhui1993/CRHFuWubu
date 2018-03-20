@@ -197,6 +197,27 @@ class FilterElementStatisticsModel extends Model
         return true;
     }
 
+    public function QueryStatisticsByDate($condition)
+    {
+        $whereSql = ' WHERE 1 ';
+        if ($condition) {
+            if ($condition['date']) {
+                $dateStr = $condition['date'];
+                $whereSql .= " AND (`date`='$dateStr')";
+            }
+        }
+        $sql = "
+                SELECT * FROM filter_element_statistics $whereSql                
+              ";
+        if (isset($condition['start_record']) && $condition['page_size']) {
+            $start = $condition['start_record'];
+            $size = $condition['page_size'];
+            $sql .= " limit $start,$size";
+        }
+        $list = $this->db->query($sql);
+        return $list;
+    }
+    
     #region #getStatistics
     public function getStatistics($condition)
     {

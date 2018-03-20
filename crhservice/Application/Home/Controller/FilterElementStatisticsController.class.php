@@ -88,6 +88,17 @@ class FilterElementStatisticsController extends Controller
         $this->success($result, null, true);
     }
     #endregion
+
+    public function QueryStatisticsByDate()
+    {
+        $resData = D('FilterElementStatistics')->QueryStatisticsByDate($_POST);
+        if ($resData) {
+            $this->success($resData, null, true);
+        } else {
+            $this->error($_POST, null, true);
+        }
+    }
+
     public function exportFilterElementStatics()
     {
         $resData = D('FilterElementStatistics')->getStatistics($_POST);
