@@ -12,3 +12,5 @@ http://localhost/crhservice/index.php/home/TroubleMaintain/getRecordsCount
 
 http://localhost/crhservice/index.php/home/UserRole/getRecords
 http://localhost/crhservice/index.php/home/UserRole/getRecordsCount
+
+http://127.0.0.1/github/crhfuwubu/crhservice/index.php/home/UserRole/getRecords
