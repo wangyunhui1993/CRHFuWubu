@@ -97,8 +97,7 @@
 		                element-loading-text="获取数据中..."
 		                :data="tableData"
 		                border
-		                style="width: 100%;"
-                >
+		                style="width: 100%;">
                     <el-table-column
 		                    prop="no"
 		                    label="序号" >
@@ -106,10 +105,13 @@
 		                        {{scope.$index+1}}
 	                        </template >
                     </el-table-column >
-                    <el-table-column
-		                    prop="date"
-		                    label="日期" >
-                    </el-table-column >
+					<el-table-column
+		        		prop="date"
+		        		label="日期" >
+            			<template scope="scope" >
+							<el-button type="text" @click="showDateDetail(scope.row.date)" >{{scope.row.date}}</el-button>
+            			</template >
+        			</el-table-column >
                     <el-table-column
 		                    prop="task_number"
 		                    label="数量(只)" >
@@ -138,6 +140,69 @@
                 </el-pagination >
             </div >
         </el-col >
+		<el-dialog v-model="modifyDialogVisible" size="normal" >
+			<div id="printContent"  class="table-responsive" style="text-align: center;margin-top: -10px">
+				<h3 >CRH2型动车组滤芯清洁工作量统计</h3>
+				<h5 style="text-align: right;margin:20px;">_______分公司__________动车服务部</h5>
+				<h5 style="text-align: right;margin:20px;">{{modifyDialogDate}}</h5>
+				<el-table :data="modifyForm.data"
+						border
+						style="width: 100%"
+						max-height="400"
+						v-loading="dialogLoading"
+						>
+					<el-table-column
+							width = "120" 
+							label="序号">
+							<template scope="scope">
+								<span>{{scope.$index + 1}}</span>
+							</template>
+					</el-table-column>
+				
+					<el-table-column
+							width = "200" 
+							prop="train_column"
+							label="车组号">
+					</el-table-column>
+					
+					<el-table-column
+							width = "160" 
+							prop="number"
+							label="数量(只)"
+							>
+					</el-table-column>
+					<el-table-column
+							width = "160" 
+							prop="number"
+							label="备注"
+							>
+					</el-table-column>
+				</el-table> 
+				<el-col :span="12">
+            		<el-row :span="2" style="margin-top: 33px">
+                		<el-col>
+							<h5 style="text-align: left;">升亮公司代表签认：</h5>
+                		</el-col>
+            		</el-row>
+        		</el-col>
+				<el-col :span="12">
+            		<el-row>
+                		<el-col>
+							<h5 style="text-align: left;">动车所工长签认：</h5>
+                		</el-col>
+            		</el-row>
+					<el-row>
+                		<el-col>
+							<h5 style="text-align: left;">动车所质检签认：</h5>
+                		</el-col>
+            		</el-row>
+        		</el-col>
+				<div slot="footer" class="dialog-footer" style="margin-top: 50px;text-align: right;" >
+					<el-button type="primary" @click="PrintDateDetialData" >打 印</el-button >
+					<el-button type="primary" @click="onEdit" >导 出</el-button >
+				</div >
+			</div>
+		</el-dialog >
     </div >
 </template >
 
@@ -197,7 +262,17 @@
 			    startRecord: 0,
 			    formLabelWidth: '100px',
 			    loadingUI: false,
-
+				modifyDialogVisible: false,
+				modifyDialogDate: null,
+				modifyForm:{
+					data:[{
+						id:0,
+						order_id:'1',
+						train_column: '',
+						number: 0,
+						problem:'',
+					}],
+				},
 		    }
 	    },
 	    methods: {
@@ -331,6 +406,47 @@
 				    },
 			    })
 		    },
+			showDateDetail(date){
+				_this.modifyDialogVisible = true;
+				_this.modifyDialogDate = new Date(date).format('yyyy 年 MM 月 dd 日');
+			    $.ajax({
+				    url: _this.queryDataUrl,
+				    type: 'POST',
+				    dataType: 'json',
+				    data: _this.queryFilters,
+				    success: function (data) {
+					    _this.loadingUI = false;
+					    if (data.status) {
+							_this.modifyForm.data = data.info;
+						    for (var i = 0; i < _this.modifyForm.data.length; i++) {
+							    if (i == 0) {
+								    _this.modifyForm.data[i].total_task_number = _this.modifyForm.data[i].task_number;
+							    }
+							    else {
+								    var sum = parseInt(_this.modifyForm.data[i - 1].total_task_number) + parseInt(_this.modifyForm.data[i].task_number);
+								    _this.modifyForm.data[i].total_task_number = sum;
+							    }
+						    }
+					    }
+				    }
+			    })
+			},
+			printContent(e){ 
+               let subOutputRankPrint = document.getElementById('printContent');  
+               console.log(subOutputRankPrint.innerHTML);  
+               let newContent =subOutputRankPrint.innerHTML;  
+               let oldContent = document.body.innerHTML;  
+               document.body.innerHTML = newContent;  
+               window.print();  
+               window.location.reload();  
+               document.body.innerHTML = oldContent;  
+               return false;  
+           } ,
+		    PrintDateDetialData()
+			{
+				console.log('1234679');
+				this.printContent();
+			}
 	    },
 	    computed: {},
 	    filters: {
