@@ -17,4 +17,12 @@ npm run dev  //启动webpack服务，可以开始
 ----------------------------------------------------------------------------------------------------------
 npm rebuild node-sass --force
 
+鉴于国内的环境，node-sass实在是太难安装了，可以直接通过淘宝的npm镜像来安装。
+
+1.安装cnpm（https://npm.taobao.org/）
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+2.在项目文件夹下安装node-sass
+cnpm install --save-dev node-sass
+说明：--save-dev自动将node-sass加入到项目文件夹下的package.json中
 
