@@ -208,8 +208,9 @@
 </template >
 
 <script >
-    import Vue from 'vue'
+    import Vue from 'vue';
 	import {Loading} from 'element-ui';
+	import XLSX from 'xlsx';
     var _this;
     export default {
 	    name: "filter_clean_statistics",
@@ -221,6 +222,7 @@
 			    queryCountUrl: HOME + "FilterElementStatistics/getStatisticsCount",
 			    queryDataUrl: HOME + "FilterElementStatistics/getStatistics",
 				queryDataByDateUrl: HOME + "FilterElementStatistics/QueryStatisticsByDate",	
+				exporDataByDatetUrl: HOME + "FilterElementStatistics/exportFilterElemenByDate",
 				exportUrl: HOME + "FilterElementStatistics/exportFilterElementStatics",
 			 	queryDateFilters: {
 				    date: ''
@@ -451,8 +453,83 @@
 				this.printContent();
 			},
 			onExportDetail()
-			{
+			{				
+				var _headers = { A6: { v: '序号' },B6: { v: '车组号' },C6: { v: '数量(只)' }, D6: { v: '备注' }};
 
+				var _data={};
+				for(var i =0; i < _this.detailForm.data.length; i++ )
+				{
+					var obj=_data;
+					//obj['A'+ (i+7)] = {v:_this.detailForm.data[i].id};
+					obj['A'+ (i+7)] = {v:i};
+					obj['B' + (i+7)] = {v:_this.detailForm.data[i].train_column};
+					obj['C' + (i+7)] = {v:_this.detailForm.data[i].number};
+					obj['D' + (i+7)] = {v:_this.detailForm.data[i].problem};			
+				}
+
+				// 合并 headers 和 data
+				var output = Object.assign({}, _headers, _data);
+				// 获取所有单元格的位置
+				var outputPos = Object.keys(output);
+				// 计算出范围
+				var ref = outputPos[0] + ':' + outputPos[outputPos.length - 1];
+
+				// 构建 workbook 对象
+				var wb = {
+					SheetNames: ['滤芯清洗统计'],
+					Sheets: {
+						'滤芯清洗统计': Object.assign({}, output, { '!ref': ref })
+					}
+				};
+
+				// 导出 Excel
+				XLSX.writeFile(wb, '滤芯清洗统计.xlsx');
+
+		/*		
+				if (_this.detailForm.data.length == 0) {
+				    _this.loadingUI = false;
+				    return;
+			    }
+
+				_this.loadingUI = true;
+				var loadService = Loading.service(
+				{
+//						    lock: true,
+						    text: '正在导出中，请稍后...',
+				});
+
+			    $.ajax({
+				    url: _this.exporDataByDatetUrl,
+				    type: 'POST',
+				    dataType: 'json',
+				    data: _this.queryDataByDateUrl,
+				    success: function (data) {
+					    _this.loadingUI = false;
+						
+					    loadService.close();
+					    if (data.status) {
+						    if (data.info.state > 0) {
+							    var res = downloadFile(document, HOST_URL + data.info.result);
+							    if (res == true) {
+								    showMessage(_this, "导出成功！", 1);
+							    }
+							    else {
+								    showMessage(_this, "导出错误！" + res, 0);
+							    }
+						    }
+						    else {
+							    showMessage(_this, data.info.result, 0);
+						    }
+					    }
+				    },
+				    error: function (data) {
+					loadService.close();
+					_this.loadingUI = false;
+					    showMessage(_this, "导出错误！", 0);
+				    }
+			    });
+
+				*/
 			},
 	    },
 	    computed: {},
