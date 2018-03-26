@@ -406,7 +406,8 @@ class TaskPlanController extends Controller
 
     public function exportCleanQueryStatics()
     {
-        $result = D('TaskPlan')->exportCleanQueryStatics($_POST);
+        $resData = D('TaskPlan')->exportCleanQueryStatics($_POST);
+/*        
         $columnHeader = Array('工作内容' => 'task_content', '计划车组号' => 'train_column_name',
             '实际车组号' => 'train_column_nameactual',
             '数量' => 'task_count'
@@ -420,6 +421,103 @@ class TaskPlanController extends Controller
         $filname = ExcelOperationHelper::getInstance()->exportToExcel($result, $columnHeader, $fileTemplate, $resultFile);
 
         $this->success($filname, null, true);
+
+        */
+
+        $result = null;
+
+       try {
+                $taskDate ="";
+                if ($_POST['dateStart'] && $_POST['dateEnd']) {
+                    $beginStr = $_POST['dateStart'];
+                    $endStr = $_POST['dateEnd'];
+
+                    $taskDate=$taskDate.$beginStr."_".$endStr;
+                    $taskDate = str_replace(':','',$taskDate);
+                    $taskDate = str_replace('-','',$taskDate);    
+                    $taskDate = str_replace(' ','',$taskDate);
+                }
+
+                $Worksheet = null;
+                $WorkbookThisWorkbook = null;
+                $excelApplication = null;
+
+                //get execel work sheet
+                $dtNow = new \DateTime('now', new \DateTimeZone('UTC'));
+                $str = $dtNow->format('Ymd');
+                $fileTemplate = "BaoJieXiWu.xlsm";
+
+                $sheetNum = 1;
+                $objSheet = ExcelOperationHelper::getInstance()->getWorkSheet($fileTemplate, $Worksheet, $WorkbookThisWorkbook, $excelApplication,$sheetNum);
+                $Worksheet = $objSheet[0];
+                $WorkbookThisWorkbook = $objSheet[1];
+                $excelApplication = $objSheet[2];
+        
+                //print 1st part
+                $informationPosition = Array('作业内容'=>'A','计划车组号'=>'B','数量1'=>'C','实际车组号'=>'D','数量2'=>'E',
+                '作业组长'=>'F','公司质检员'=>'G','段方质检员'=>'H','备注'=>'I');
+                
+                $i=0;
+                foreach($resData as $obj)
+                {
+                    $i++;
+
+                    $item = $informationPosition["作业内容"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['task_content'];
+                    }
+                    
+                    $item = $informationPosition["计划车组号"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['train_column_name'];
+                    }
+
+                    $item = $informationPosition["数量1"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['task_count'];
+                    }
+
+                    $item = $informationPosition["实际车组号"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['train_column_nameactual'];
+                    }
+
+                    $item = $informationPosition["数量2"];
+                    $cell = $Worksheet->Range($item.($i+1));
+                    if( $item != null)
+                    {
+                        $cell->value =  $obj['task_count_actual'];
+                    }
+                }
+
+                $fileres = '保洁吸污查询'.$taskDate.".xlsm";
+
+                $Worksheet->Columns($informationPosition['作业内容'].":".$informationPosition["备注"])->AutoFit();
+                $selRange = "A1:".$informationPosition['备注'].($i+1);
+
+                $Worksheet->range($selRange)->Borders()->LineStyle = 1;                
+
+                //print and close the excel
+                $result = ExcelOperationHelper::getInstance()->closeWorkSheet($WorkbookThisWorkbook,$Worksheet,$excelApplication,$selRange,true,false,$fileres); 
+        }
+        catch(Exception $e)
+        {
+             $result = null;
+        }
+        if ($result) {
+            $this->success($result, null, true);
+        } else {
+            $this->error($_POST, null, true);
+        }
+
     }
     public function exportCleanQuerySummary()
     {

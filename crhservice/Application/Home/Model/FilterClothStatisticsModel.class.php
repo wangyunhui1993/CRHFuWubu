@@ -118,8 +118,6 @@ class FilterClothStatisticsModel extends Model
         return $list;
     }
 
-
-
     public function delete($condition)
     {
 
@@ -196,6 +194,28 @@ class FilterClothStatisticsModel extends Model
 
         }
         return true;
+    }
+
+    public function QueryTrainLWStatisticsByDate($condition)
+    {
+        $whereSql = ' WHERE 1 ';
+        if ($condition) {
+            if ($condition['date']) {
+                $dateStr = $condition['date'];
+                $whereSql .= " AND (`date`='$dateStr')";
+            }
+        }
+
+        $sql = "
+                SELECT *  FROM filter_cloth_statistics $whereSql
+                ";
+        if (isset($condition['start_record']) && $condition['page_size']) {
+            $start = $condition['start_record'];
+            $size = $condition['page_size'];
+            $sql .= " limit $start,$size";
+        }
+        $list = $this->db->query($sql);
+        return $list;
     }
 
     #region #TrainLWSummary

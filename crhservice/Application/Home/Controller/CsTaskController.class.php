@@ -7,10 +7,11 @@
  */
 
 namespace Home\Controller;
+header("Access-Control-Allow-Origin: *");
 use Think\Controller;
 use Home\Common\Util;
 
-header("Access-Control-Allow-Origin: *");
+
 
 class CsTaskController extends Controller
 {

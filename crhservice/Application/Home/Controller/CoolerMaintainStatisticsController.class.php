@@ -88,6 +88,17 @@ class CoolerMaintainStatisticsController extends Controller
         $this->success($result, null, true);
     }
     #endregion
+
+    public function QueryStatisticsByDate()
+    {
+        $resData = D('CoolerMaintainStatistics')->QueryStatisticsByDate($_POST);
+        if ($resData) {
+            $this->success($resData, null, true);
+        } else {
+            $this->error($_POST, null, true);
+        }
+    }
+
     public function exportCoolerMaintainStatics()
     {
         $resData = D('CoolerMaintainStatistics')->getStatistics($_POST);

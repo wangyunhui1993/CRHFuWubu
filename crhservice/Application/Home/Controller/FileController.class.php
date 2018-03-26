@@ -8,12 +8,13 @@
 
 namespace Home\Controller;
 
+header("Access-Control-Allow-Origin: *");
 use Think\Controller;
 use Home\Common\Util;
 use Home\Common\ExcelOperationHelper;
 use Think\Exception;
 
-header("Access-Control-Allow-Origin: *");
+
 
 class FileController extends Controller
 {

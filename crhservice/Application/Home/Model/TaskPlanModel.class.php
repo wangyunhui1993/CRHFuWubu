@@ -1110,7 +1110,7 @@ class TaskPlanModel extends Model
             }
         }
         $sql = "
-               SELECT task_content,train_column_name,train_column_name as train_column_nameactual, task_count FROM
+               SELECT task_content,train_column_name,train_column_name as train_column_nameactual, task_count,task_count as task_count_actual FROM
                 ((SELECT *, SUM(train_task_count) AS task_count 
                   FROM task_plan_detail_view $whereSql GROUP BY $groupby
                 ) AS tcv) 

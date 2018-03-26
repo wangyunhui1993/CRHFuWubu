@@ -85,6 +85,15 @@ class StatisticsController extends Controller
     }
     #endregion
 
+    public function QueryTrainLWStatisticsByDate()
+    {
+        $resData = D('FilterClothStatistics')->QueryTrainLWStatisticsByDate($_POST);
+        if ($resData) {
+            $this->success($resData, null, true);
+        } else {
+            $this->error($_POST, null, true);
+        }
+    }
     public function exportLWStatics()
     {
         $resData = D('FilterClothStatistics')->getTrainLWSummary($_POST);

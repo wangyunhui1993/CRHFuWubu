@@ -8,9 +8,10 @@
 
 namespace Home\Controller;
 
+header("Access-Control-Allow-Origin: *");
 use Think\Controller;
 
-header("Access-Control-Allow-Origin: *");
+
 
 class SituationContentController extends Controller
 {

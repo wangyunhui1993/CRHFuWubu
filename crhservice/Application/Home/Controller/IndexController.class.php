@@ -8,13 +8,14 @@
 
 namespace Home\Controller;
 
+header("Access-Control-Allow-Origin: *");
 use Think\Controller;
 use Home\Common\Util;
 use Home\Common\ExcelOperationHelper;
 use Home\Common\COMExcelHelper;
 
 
-header("Access-Control-Allow-Origin: *");
+
 
 class IndexController extends Controller
 {
