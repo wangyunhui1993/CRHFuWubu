@@ -164,7 +164,7 @@
 				
 					<el-table-column
 							width = "200" 
-							prop="train_column"
+							prop="train_columnname"
 							label="车组号">
 					</el-table-column>
 					
@@ -283,6 +283,7 @@
 						id:'',
 						number: 0,
 						problem:'',
+						train_columnName: '',
 						train_column: '',						
 					}],
 				},

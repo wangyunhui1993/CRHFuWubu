@@ -239,9 +239,12 @@ class CoolerMaintainStatisticsModel extends Model
         }
 
         $sql = "
-                SELECT * FROM  cooler_maintain_statistics $whereSql 
+                SELECT cooler_maintain_statistics.date,cooler_maintain_statistics.id,cooler_maintain_statistics.number,cooler_maintain_statistics.problem,
+                train_column.train_column as train_columnName,cooler_maintain_statistics.train_column as 'train_column' 
+                FROM  cooler_maintain_statistics left join `train_column` on((`cooler_maintain_statistics`.`train_column` = `train_column`.`id`)) 
+                $whereSql
                 ";
-
+                
         if (isset($condition['start_record']) && $condition['page_size']) {
             $start = $condition['start_record'];
             $size = $condition['page_size'];

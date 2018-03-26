@@ -207,8 +207,12 @@ class FilterClothStatisticsModel extends Model
         }
 
         $sql = "
-                SELECT *  FROM filter_cloth_statistics $whereSql
+                SELECT filter_cloth_statistics.date,filter_cloth_statistics.id,filter_cloth_statistics.number,filter_cloth_statistics.problem,
+                train_column.train_column as train_columnName,filter_cloth_statistics.train_column as 'train_column' 
+                FROM  filter_cloth_statistics left join `train_column` on((`filter_cloth_statistics`.`train_column` = `train_column`.`id`)) 
+                $whereSql
                 ";
+
         if (isset($condition['start_record']) && $condition['page_size']) {
             $start = $condition['start_record'];
             $size = $condition['page_size'];

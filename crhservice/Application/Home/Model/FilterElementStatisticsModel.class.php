@@ -207,7 +207,10 @@ class FilterElementStatisticsModel extends Model
             }
         }
         $sql = "
-                SELECT * FROM filter_element_statistics $whereSql                
+                SELECT filter_element_statistics.date,filter_element_statistics.id,filter_element_statistics.number,filter_element_statistics.problem,
+                train_column.train_column as train_columnName,filter_element_statistics.train_column as 'train_column' 
+                FROM  filter_element_statistics left join `train_column` on((`filter_element_statistics`.`train_column` = `train_column`.`id`)) 
+                $whereSql
               ";
         if (isset($condition['start_record']) && $condition['page_size']) {
             $start = $condition['start_record'];
