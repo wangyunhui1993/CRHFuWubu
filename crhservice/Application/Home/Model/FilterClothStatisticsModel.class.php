@@ -245,6 +245,24 @@ class FilterClothStatisticsModel extends Model
         return $list;
     }
 
+        #region #TrainLWSummary
+        public function getTrainLWSummaryByDate($condition)
+        {
+            $whereSql = ' WHERE 1 ';
+            $groupby = 'date';
+            if ($condition) {
+                if ($condition['datetime']) {
+                    $beginStr = $condition['datetime'];
+                    $whereSql .= " AND ( `date`='$beginStr')";
+                }
+            }
+            
+            $sql = "SELECT * FROM ((SELECT date, SUM(`number`) AS task_number FROM filter_cloth_statistics GROUP BY `$groupby`) AS tlws) $whereSql";
+            
+            $list = $this->db->query($sql);
+            return $list;
+        }
+
     public function getTrainLWSummaryCount($condition)
     {
         $whereSql = ' WHERE 1 ';

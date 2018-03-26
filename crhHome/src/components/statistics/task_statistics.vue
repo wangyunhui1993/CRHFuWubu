@@ -180,6 +180,11 @@
 		                    prop="task_total_count"
 		                    label="累计数" >
 	                </el-table-column >
+					
+					<el-table-column v-if="show_Lvwangbu_count"
+		                    prop="total_Lvwangbu_count"
+		                    label="片数" >
+	                </el-table-column >
 	            </el-table >
 	        </div >
 
@@ -363,6 +368,7 @@
 				    dateEnd: '',
 				    task_content_id: '',
 				    keywords: '',
+					Lvwangbu_count: '',
 			    },
 
 			    pickerOpt: {
@@ -415,7 +421,7 @@
 			    loadingUI: false,
 			    loadingDetailUI: false,
 
-
+				show_Lvwangbu_count:false,
 		    }
 	    },
 	    methods: {
@@ -667,6 +673,19 @@
 			    }
 			    _this.queryFilters.dateStart = new Date(_this.queryFilters.dateStart).format('yyyy-MM-dd hh:mm:ss');
 			    _this.queryFilters.dateEnd = new Date(_this.queryFilters.dateEnd).format('yyyy-MM-dd hh:mm:ss');
+
+				if( this.$options.filters.convertTaskContentName(_this.queryFilters.task_content_id).indexOf("滤网布") != -1 )
+				{
+					_this.show_Lvwangbu_count = true;
+
+					_this.queryFilters.Lvwangbu_count = '1';
+				}
+				else{
+					_this.show_Lvwangbu_count = false;
+					_this.queryFilters.Lvwangbu_count ='';
+				}
+				
+
 			    $.ajax({
 				    url: _this.queryDataUrl,
 				    type: 'POST',
@@ -674,6 +693,8 @@
 				    data: _this.queryFilters,
 				    success: function (data) {
 					    _this.loadingUI = false;
+						_this.queryFilters.Lvwangbu_count ='';
+
 					    if (data.status) {
 						    _this.tasTrainList = data.info.taskStatisticsTrain;
 
@@ -688,7 +709,11 @@
 							    }
 						    }
 					    }
-				    }
+				    },
+					error:function(data)
+					{
+						_this.queryFilters.Lvwangbu_count ='';
+					},
 			    })
 		    },
 

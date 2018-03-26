@@ -164,12 +164,26 @@ class TaskPlanController extends Controller
     public function getTaskStatistics()
     {
         $taskSummary = D('TaskPlan')->getTaskStatistics($_POST);
+
+        if ($_POST) {
+            if ($_POST['Lvwangbu_count'] && $_POST['Lvwangbu_count'] =='1') {                
+                for($k = 0; $k < count($taskSummary); $k++)
+                {
+                    //task_date
+                    $querydate['datetime'] = $taskSummary[$k]['task_date'];
+                    $resFilterClothData = D('FilterClothStatistics')->getTrainLWSummaryByDate($querydate);
+                    $taskSummary[$k]['total_Lvwangbu_count'] = count($resFilterClothData)==0?0:$resFilterClothData[0]['task_number'];
+                }
+            }
+        }
+
         $resData['taskStatisticsDate'] = $taskSummary;
 
         $condition['is_group_train'] = ture;
         $condition = array_merge($condition, $_POST);
         $taskStatisticsTrain = D('TaskPlan')->getTaskStatistics($condition);
         $resData['taskStatisticsTrain'] = $taskStatisticsTrain;
+
         unset($condition);
         if ($resData) {
             $this->success($resData, null, true);
