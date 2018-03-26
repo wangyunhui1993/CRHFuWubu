@@ -109,6 +109,9 @@
                     <el-table-column
 		                    prop="date"
 		                    label="日期" >
+						<template scope="scope" >
+							<el-button type="text" @click="showDateDetail(scope.row.date)" >{{scope.row.date}}</el-button>
+            			</template >
                     </el-table-column >
                     <el-table-column
 		                    prop="task_number"
@@ -138,12 +141,78 @@
                 </el-pagination >
             </div >
         </el-col >
+
+		<el-dialog v-model="detailDialogVisible" size="normal" >
+			<div id="printContent"  class="table-responsive" style="text-align: center;margin-top: -10px">
+				<h3 >CRH2型动车滤网布工作量统计</h3>
+				<h5 style="text-align: right;margin:20px;">_______分公司__________动车服务部</h5>
+				<h5 style="text-align: right;margin:20px;">{{showDetailDialogDate}}</h5>
+				<el-table :data="detailForm.data"
+						border
+						style="width: 100%"
+						max-height="400"
+						v-loading="dialogLoading"
+						>
+					<el-table-column
+							width = "120" 							
+							label="序号">
+							<template scope="scope">
+								<span>{{scope.$index + 1}}</span>
+							</template>
+
+					</el-table-column>
+				
+					<el-table-column
+							width = "200" 
+							prop="train_column"
+							label="车组号">
+					</el-table-column>
+					
+					<el-table-column
+							width = "160" 
+							prop="number"
+							label="标准组数量"
+							>
+					</el-table-column>
+					<el-table-column
+							width = "160" 
+							prop="problem"
+							label="动车所检查发现问题"
+							>
+					</el-table-column>
+				</el-table> 
+				<el-col :span="12">
+            		<el-row :span="2" style="margin-top: 33px">
+                		<el-col>
+							<h5 style="text-align: left;">升亮公司代表签认：</h5>
+                		</el-col>
+            		</el-row>
+        		</el-col>
+				<el-col :span="12">
+            		<el-row>
+                		<el-col>
+							<h5 style="text-align: left;">动车所工长签认：</h5>
+                		</el-col>
+            		</el-row>
+					<el-row>
+                		<el-col>
+							<h5 style="text-align: left;">动车所质检签认：</h5>
+                		</el-col>
+            		</el-row>
+        		</el-col>
+				<div slot="footer" class="dialog-footer" style="margin-top: 50px;text-align: right;" >
+					<el-button type="primary" @click="PrintDateDetialData" >打 印</el-button >
+					<el-button type="primary" @click="onExportDetail" >导 出</el-button >
+				</div >
+			</div>
+		</el-dialog >
     </div >
 </template >
 
 <script >
     import Vue from 'vue'
 	import {Loading} from 'element-ui';
+	import XLSX from 'xlsx';
     var _this;
     export default {
 	    name: "train_lw_summary",
@@ -155,6 +224,12 @@
 			    queryCountUrl: HOME + "Statistics/getTrainLWSummaryCount",
 			    queryDataUrl: HOME + "Statistics/getTrainLWSummary",
 				exportUrl: HOME + "Statistics/exportLWStatics",
+
+				queryDataByDateUrl: HOME + "Statistics/QueryTrainLWStatisticsByDate",				
+				queryDateFilters: {
+				    date: ''
+			    },
+
 			    isError: false,
 			    errorMsg: '',
 			    queryFilters: {
@@ -198,6 +273,19 @@
 			    formLabelWidth: '100px',
 			    loadingUI: false,
 
+				detailDialogVisible: false,
+				showDetailDialogDate:'',
+				showDetailDialog: null,
+				detailForm:{
+					data:[{
+						date:'',
+						id:'',
+						number: 0,
+						problem:'',
+						train_column: '',						
+					}],
+				},
+				dialogLoading:'',
 		    }
 	    },
 	    methods: {
@@ -332,6 +420,75 @@
 				    },
 			    })
 		    },
+			
+			showDateDetail(date){
+				_this.detailDialogVisible = true;
+				_this.showDetailDialogDate = new Date(date).format('yyyy 年 MM 月 dd 日');
+
+				_this.queryDateFilters.date = date;
+			    $.ajax({
+				    url: _this.queryDataByDateUrl,
+				    type: 'POST',
+				    dataType: 'json',
+				    data: _this.queryDateFilters,
+				    success: function (data) {
+					    _this.loadingUI = false;
+					    if (data.status) {
+							_this.detailForm.data = data.info;
+					    }
+				    }
+			    })
+			},
+			printContent(e){ 
+               let subOutputRankPrint = document.getElementById('printContent');  
+               console.log(subOutputRankPrint.innerHTML);  
+               let newContent =subOutputRankPrint.innerHTML;  
+               let oldContent = document.body.innerHTML;  
+               document.body.innerHTML = newContent;  
+               window.print();  
+               window.location.reload();  
+               document.body.innerHTML = oldContent;  
+               return false;  
+           } ,
+		    PrintDateDetialData()
+			{
+				console.log('1234679');
+				this.printContent();
+			},
+		
+			onExportDetail()
+			{
+				var _headers = { A6: { v: '序号' },B6: { v: '车组号' },C6: { v: '标准组数量' }, D6: { v: '动车所检查发现问题' }};
+
+				var _data={};
+				for(var i =0; i < _this.detailForm.data.length; i++ )
+				{
+					var obj=_data;
+					//obj['A'+ (i+7)] = {v:_this.detailForm.data[i].id};
+					obj['A'+ (i+7)] = {v:i};
+					obj['B' + (i+7)] = {v:_this.detailForm.data[i].train_column};
+					obj['C' + (i+7)] = {v:_this.detailForm.data[i].number};
+					obj['D' + (i+7)] = {v:_this.detailForm.data[i].problem};			
+				}
+
+				// 合并 headers 和 data
+				var output = Object.assign({}, _headers, _data);
+				// 获取所有单元格的位置
+				var outputPos = Object.keys(output);
+				// 计算出范围
+				var ref = outputPos[0] + ':' + outputPos[outputPos.length - 1];
+
+				// 构建 workbook 对象
+				var wb = {
+					SheetNames: ['滤网布工作量统计'],
+					Sheets: {
+						'滤网布工作量统计': Object.assign({}, output, { '!ref': ref })
+					}
+				};
+
+				// 导出 Excel
+				XLSX.writeFile(wb, '滤网布工作量统计.xlsx');
+			},
 	    },
 	    computed: {},
 	    filters: {

@@ -159,6 +159,10 @@
 		                    prop="train_column_name"
 		                    label="计划车组号" >
                     </el-table-column >
+					<el-table-column
+		                    prop="task_count"
+		                    label="数量" >
+                    </el-table-column >
                     <el-table-column
 		                    prop="train_column_name"
 		                    label="实际车组号" >
@@ -311,15 +315,18 @@
 			    _this.onSearchRecordCounts();
 		    },
 			onDateChange(){
-				var dateDiff = _this.queryFilters.dateEnd.getTime() - _this.queryFilters.dateStart.getTime();
+				var endDate   = (Date)(_this.queryFilters.dateEnd);
+				var startDate = (Date)(_this.queryFilters.dateStart);
+
+				var dateDiff = endDate.getTime() - startDate.getTime();
 				var days = Math.floor(dateDiff / (24 * 3600 * 1000));
-				var ds = _this.queryFilters.dateStart.format("yyyy-MM-dd");
-				var de = _this.queryFilters.dateEnd.format("yyyy-MM-dd");
+				var ds = startDate.format("yyyy-MM-dd");
+				var de = endDate.format("yyyy-MM-dd");
 				//console.log("days:" + days);
 				//console.log("ds:" + ds);
 				//console.log("de:" + de);
-				var dsh = _this.queryFilters.dateStart.format("hh");
-				var dse = _this.queryFilters.dateEnd.format("hh");
+				var dsh = startDate.format("hh");
+				var dse = endDate.format("hh");
 				//console.log("dsh: " + dsh);
 				//console.log("dse: " + dse);
 				if(days <= 1 && (dsh == dse) && (dsh == "08")){
