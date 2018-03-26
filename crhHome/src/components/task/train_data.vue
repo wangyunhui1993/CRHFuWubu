@@ -230,7 +230,7 @@
     </el-col>
     <el-dialog  v-model="checkTaskDetailVisible" size="full" >
     	 <div id="subOutputRank-print">
-       <div  style="width:982px">
+		<div style="width:1000px">
       <h2 style="font-weight: bold;text-align: center; font-size: x-large">一车一档查询</h2>
       <el-table
               :data="selectedTaskInfo"
@@ -292,10 +292,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-                width="200"
-                align="center"
-                label="修程项目">
+				<el-table-column  align="center" label="修程项目">
           <template scope="scope">
             <el-tag
                     style="margin-left:2px;" 
@@ -428,10 +425,7 @@
               </ul>
             </template>
           </el-table-column>
-          <el-table-column
-                  prop="b_right"
-                  :label="portName.b_right"
-                  min-width="80">
+					<el-table-column prop="b_right" :label="portName.b_right">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.b_right">
