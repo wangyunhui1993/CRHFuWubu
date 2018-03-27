@@ -147,8 +147,7 @@
 				<h5 style="text-align: right;margin:20px;">{{showDetailDialogDate}}</h5>
 				<el-table :data="detailForm.data"
 						border
-						style="width: 100%"
-						max-height="400"
+						style="width: 100%; text-align:left"						
 						v-loading="dialogLoading"
 						>
 					<el-table-column
@@ -173,7 +172,7 @@
 							>
 					</el-table-column>
 					<el-table-column
-							width = "160" 
+							width = "165" 
 							prop="problem"
 							label="备注"
 							>
