@@ -437,7 +437,7 @@
 			},
 			printContent(e){ 
                let subOutputRankPrint = document.getElementById('printContent');  
-               console.log(subOutputRankPrint.innerHTML);  
+               //console.log(subOutputRankPrint.innerHTML);  
                let newContent =subOutputRankPrint.innerHTML;  
                let oldContent = document.body.innerHTML;  
                document.body.innerHTML = newContent;  
