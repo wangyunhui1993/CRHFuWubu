@@ -360,27 +360,21 @@
                   prop="trouble_maintain_id"
                   label="故障状态"
                   align="center"
-                  width="70">
-            <template scope="scope">
-              <ul style="list-style: none; margin-top: 10px">
-                <li style="margin-left: -20px; margin-top: 3px" v-for=" item in scope.row.trouble_maintain_id">
-                  <el-tag type="danger" href="#" :title="item | filterTroubleName" >{{item | filterTroubleName}}</el-tag>
-                </li>
-              </ul>
-            </template>
+                  width="109">
+              <template scope="scope">
+                    <el-tag v-if=" scope.row.trouble_maintain_id !=' '&& scope.row.trouble_maintain_id !='' " type="danger"  href="#" :title="scope.row.trouble_maintain_id">
+                      {{scope.row.trouble_maintain_id}}</el-tag>
+              </template>
           </el-table-column>
           <el-table-column
                   prop="situation_content_id"
                   label="情况说明"
                   align="center"
-                  width="70">
-            <template scope="scope">
-              <ul style="list-style: none;margin-top: 10px">
-                <li style="margin-left: -20px; margin-top: 3px" v-for=" item in scope.row.situation_content_id">
-                  <el-tag type="warning" href="#" :title="item | filterSituationName">{{item | filterSituationName}}</el-tag>
-                </li>
-              </ul>
-            </template>
+                  width="109">
+              <template scope="scope">
+                    <el-tag v-if=" scope.row.situation_content_id !=' '&& scope.row.situation_content_id !='' " type="warning" href="#" :title="scope.row.situation_content_id">
+                      {{scope.row.situation_content_id}}</el-tag>
+              </template>
           </el-table-column>
         </el-table-column>
 
@@ -389,7 +383,7 @@
                   prop="a_left"
                   align="center"
                   :label="portName.a_left"
-                  width="70">
+                  width="60">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.a_left">
@@ -402,7 +396,7 @@
                   prop="a_right"
                   align="center"
                   :label="portName.a_right"
-                  width="70">
+                  width="60">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.a_right">
@@ -416,7 +410,7 @@
                   prop="b_left"
                   align="center"
                   :label="portName.b_left"
-                  width="70">
+                  width="60">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.b_left">
@@ -425,7 +419,8 @@
               </ul>
             </template>
           </el-table-column>
-					<el-table-column prop="b_right" :label="portName.b_right">
+					<el-table-column prop="b_right" :label="portName.b_right" 
+                 width="60">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.b_right">
@@ -441,7 +436,7 @@
                   prop="a_leader"
                   align="center"
                   :label="portName.a_leader"
-                  width="70">
+                  width="60">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.a_leader">
@@ -454,7 +449,7 @@
                   prop="b_leader"
                   align="center"
                   :label="portName.b_leader"
-                  width="70">
+                  width="60">
             <template scope="scope">
               <ul style="list-style: none;">
                 <li style="margin-left: -20px" v-for=" item in scope.row.b_leader">
@@ -1036,7 +1031,7 @@
             break;
           }
         }
-        return result;
+        return result==''?account:result;
       },
       filterTaskContentStatusName(value){
         let result = '';

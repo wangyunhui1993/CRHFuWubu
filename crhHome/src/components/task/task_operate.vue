@@ -196,11 +196,8 @@
                             label="故障状态"
                             min-width="100">
                       <template scope="scope">
-                        <ul style="list-style: none; margin-top: 10px">
-                          <li style="margin-left: -40px; margin-top: 3px" v-for=" item in scope.row.trouble_maintain_id">
-                            <el-tag v-if=" item !=' '&& item !='' " type="danger"  href="#" :title="item | filterTroubleName">{{item | filterTroubleName}}</el-tag>
-                          </li>
-                        </ul>
+                            <el-tag v-if=" scope.row.trouble_maintain_id !=' '&& scope.row.trouble_maintain_id !='' " type="danger"  href="#" :title="scope.row.trouble_maintain_id">
+                                {{scope.row.trouble_maintain_id}}</el-tag>
                       </template>
                     </el-table-column>
                     <el-table-column
@@ -208,11 +205,8 @@
                             label="情况说明"
                             min-width="100">
                       <template scope="scope">
-                        <ul style="list-style: none;margin-top: 10px">
-                          <li style="margin-left: -40px; margin-top: 3px" v-for=" item in scope.row.situation_content_id">
-                            <el-tag v-if=" item !=' '&& item !='' " type="warning" href="#" :title="item | filterSituationName">{{item | filterSituationName}}</el-tag>
-                          </li>
-                        </ul>
+                            <el-tag v-if=" scope.row.situation_content_id !=' '&& scope.row.situation_content_id !='' " type="warning" href="#" :title="scope.row.situation_content_id">
+                                {{scope.row.situation_content_id}}</el-tag>
                       </template>
                     </el-table-column>
                 </el-table-column>
