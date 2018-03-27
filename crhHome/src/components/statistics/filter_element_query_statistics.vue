@@ -172,7 +172,7 @@
 							>
 					</el-table-column>
 					<el-table-column
-							width = "165" 
+							width = "230" 
 							prop="problem"
 							label="备注"
 							>

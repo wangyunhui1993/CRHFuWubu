@@ -174,7 +174,7 @@
 							>
 					</el-table-column>
 					<el-table-column
-							width = "165" 
+							width = "230" 
 							prop="problem"
 							label="动车所检查发现问题"
 							>
