@@ -115,8 +115,8 @@ export default
                         { path: '/home/basic_data/train_num', component: TrainNum, name: 'train_num', meta:'车列号管理'},
                         { path: '/home/basic_data/task_port', component: TaskPort, name: 'task_port',meta:'作业端名称' },
                         { path: '/home/basic_data/task_content', component: TaskContent, name: 'task_content',meta:'作业内容' },
-                        { path: '/home/basic_data/maintain', component: Maintain, name: 'maintain',meta:'故障维护' },
-                        { path: '/home/basic_data/status_report', component: StatusReport, name: 'status_report',meta:'情况说明' }
+                        //{ path: '/home/basic_data/maintain', component: Maintain, name: 'maintain',meta:'故障维护' },
+                        //{ path: '/home/basic_data/status_report', component: StatusReport, name: 'status_report',meta:'情况说明' }
                     ],
                     meta:"基础数据"
                 },
