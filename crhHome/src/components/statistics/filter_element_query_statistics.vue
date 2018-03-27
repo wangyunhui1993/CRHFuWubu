@@ -197,11 +197,12 @@
                 		</el-col>
             		</el-row>
         		</el-col>
-				<div slot="footer" class="dialog-footer" style="margin-top: 50px;text-align: right;" >
-					<el-button type="primary" @click="PrintDateDetialData" >打 印</el-button >
-					<el-button type="primary" @click="onExportDetail" >导 出</el-button >
-				</div >
 			</div>
+			
+			<div slot="footer" class="dialog-footer" style="margin-top: 50px;text-align: right;" >
+				<el-button type="primary" @click="PrintDateDetialData" >打 印</el-button >
+				<el-button type="primary" @click="onExportDetail" >导 出</el-button >
+			</div >
 		</el-dialog >
     </div >
 </template >
