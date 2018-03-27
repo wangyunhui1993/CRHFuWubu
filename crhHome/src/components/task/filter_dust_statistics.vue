@@ -30,108 +30,41 @@
                         prop="id"
                         label="序号">
                 </el-table-column>
-                <el-table-column :label="trainModels[0]" header-align="center">
-                    <el-table-column
-                            width="200"
-                            prop="train_column"
-                            label="车列号">
-                        <template scope="scope">
-                            <!--  <el-input type="text" v-model="scope.row.train_group" auto-complete="off" placeholder="账号"></el-input > -->
-                            <el-select v-model="scope.row.train_model_data[0].train_column" filterable
-                                       placeholder="搜索车列号">
-                                <el-option
-                                        v-for="item in trainColumns"
-                                        :label="item.train_column"
-                                        :value="item.id">
-                                </el-option>
-                            </el-select>
-                        </template>
+
+                <template v-for="(Model, idx) in trainModels">
+                    <el-table-column  :label="Model" header-align="center" >
+
+                        <el-table-column
+                                width="200"
+                                prop="train_model_data[idx].train_column"
+                                label="车列号">
+                            <template scope="scope">
+                                <!--  <el-input type="text" v-model="scope.row.train_group" auto-complete="off" placeholder="账号"></el-input > -->
+                                <el-select v-model="scope.row.train_model_data[idx].train_column" filterable
+                                        placeholder="搜索车列号">
+                                    <el-option
+                                            v-for="item in trainColumns"
+                                            :label="item.train_column"
+                                            :value="item.id">
+                                    </el-option>
+                                </el-select>
+                            </template>
+                        </el-table-column>
+
+                        <el-table-column
+                                width="200"
+                                prop="train_model_data[idx].number"
+                                label="标准组数量(组)">
+                            <template scope="scope">
+                                <div style="margin-top:8px">
+                                    <el-input-number type="number" v-model="scope.row.train_model_data[idx].number"
+                                                    :min="1"></el-input-number>
+                                </div>
+                            </template>
+                        </el-table-column>
 
                     </el-table-column>
-
-                    <el-table-column
-                            width="200"
-                            prop="number"
-                            label="标准组数量(组)"
-                    >
-                        <template scope="scope">
-                            <div style="margin-top:8px">
-                                <el-input-number type="number" v-model="scope.row.train_model_data[0].number"
-                                                 :min="1"></el-input-number>
-                            </div>
-
-                        </template>
-                    </el-table-column>
-                </el-table-column>
-
-                <el-table-column :label="trainModels[1]" header-align="center">
-                    <el-table-column
-                            width="200"
-                            prop="train_column"
-                            label="车列号">
-                        <template scope="scope">
-                            <!--  <el-input type="text" v-model="scope.row.train_group" auto-complete="off" placeholder="账号"></el-input > -->
-                            <el-select v-model="scope.row.train_model_data[1].train_column" filterable
-                                       placeholder="搜索车列号">
-                                <el-option
-                                        v-for="item in trainColumns"
-                                        :label="item.train_column"
-                                        :value="item.id">
-                                </el-option>
-                            </el-select>
-                        </template>
-
-                    </el-table-column>
-
-                    <el-table-column
-                            width="200"
-                            prop="number"
-                            label="标准组数量(组)"
-                    >
-                        <template scope="scope">
-                            <div style="margin-top:8px">
-                                <el-input-number type="number" v-model="scope.row.train_model_data[1].number"
-                                                 :min="1"></el-input-number>
-                            </div>
-
-                        </template>
-                    </el-table-column>
-                </el-table-column>
-
-                <el-table-column :label="trainModels[2]" header-align="center">
-                    <el-table-column
-                            width="200"
-                            prop="train_column"
-                            label="车列号">
-                        <template scope="scope">
-                            <!--  <el-input type="text" v-model="scope.row.train_group" auto-complete="off" placeholder="账号"></el-input > -->
-                            <el-select v-model="scope.row.train_model_data[2].train_column" filterable
-                                       placeholder="搜索车列号">
-                                <el-option
-                                        v-for="item in trainColumns"
-                                        :label="item.train_column"
-                                        :value="item.id">
-                                </el-option>
-                            </el-select>
-                        </template>
-
-                    </el-table-column>
-
-                    <el-table-column
-                            width="200"
-                            prop="number"
-                            label="标准组数量(组)"
-                    >
-                        <template scope="scope">
-                            <div style="margin-top:8px">
-                                <el-input-number width="100" type="number"
-                                                 v-model="scope.row.train_model_data[2].number"
-                                                 :min="1"></el-input-number>
-                            </div>
-
-                        </template>
-                    </el-table-column>
-                </el-table-column>
+                </template>
 
                 <el-table-column
                         width="300"
