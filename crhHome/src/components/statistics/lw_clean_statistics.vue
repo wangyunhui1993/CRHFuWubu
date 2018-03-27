@@ -169,7 +169,7 @@
                     暂无记录~~~</p >
             </div >
 
-            <div class="block" style="text-align: center; margin-top: 20px" >
+            <!--div class="block" style="text-align: center; margin-top: 20px" >
                 <el-pagination
 		                @current-change="handleCurrentChange"
 		                :current-page="currentPage"
@@ -178,7 +178,7 @@
 		                :total="totalRecords"
                 >
                 </el-pagination >
-            </div >
+            </div -->
         </el-col >
     </div >
 </template >
