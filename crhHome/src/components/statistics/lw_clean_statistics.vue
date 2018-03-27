@@ -112,7 +112,34 @@
 		                    label="日期" >
                     </el-table-column >
 
-	                <el-table-column :label="trainModels[0]" header-align="center" >
+					<template v-for="(Model, idx) in trainModels"> 
+
+						<el-table-column  :label="Model" header-align="center" >
+							<el-table-column
+									prop="train_model_data[idx].task_number"
+									label="数量(组)" >
+								<template scope="scope" >
+									<div >
+									{{scope.row.train_model_data[idx].task_number}}
+									</div >
+								</template >
+							</el-table-column >
+
+							<el-table-column
+									prop="train_model_data[idx].total_task_number"
+									label="累计数量(组)" >
+								<template scope="scope" >
+									<div >
+									{{scope.row.train_model_data[idx].total_task_number}}
+									</div >
+								</template >
+	                    	</el-table-column >
+
+						</el-table-column>
+
+					</template>
+
+					  <!--el-table-column :label="trainModels[0]" header-align="center" >
 	                    <el-table-column
 			                    prop="train_model_data[0].task_number"
 			                    label="数量(组)" >
@@ -131,47 +158,7 @@
 			                    </div >
 		                    </template >
 	                    </el-table-column >
-                    </el-table-column >
-	                <el-table-column :label="trainModels[1]" header-align="center" >
-	                    <el-table-column
-			                    prop="train_model_data[1].task_number"
-			                    label="数量(组)" >
-		                     <template scope="scope" >
-			                    <div >
-			                    {{scope.row.train_model_data[1].task_number}}
-			                    </div >
-		                    </template >
-	                    </el-table-column >
-	                    <el-table-column
-			                    prop="train_model_data[1].total_task_number"
-			                    label="累计数量(组)" >
-		                     <template scope="scope" >
-			                    <div >
-			                    {{scope.row.train_model_data[1].total_task_number}}
-			                    </div >
-		                    </template >
-	                    </el-table-column >
-                    </el-table-column >
-	                <el-table-column :label="trainModels[2]" header-align="center" >
-	                    <el-table-column
-			                    prop="train_model_data[2].task_number"
-			                    label="数量(组)" >
-		                     <template scope="scope" >
-			                    <div >
-			                    {{scope.row.train_model_data[2].task_number}}
-			                    </div >
-		                    </template >
-	                    </el-table-column >
-	                    <el-table-column
-			                    prop="train_model_data[2].total_task_number"
-			                    label="累计数量(组)" >
-		                     <template scope="scope" >
-			                    <div >
-			                    {{scope.row.train_model_data[2].total_task_number}}
-			                    </div >
-		                    </template >
-	                    </el-table-column >
-                    </el-table-column >
+                    </el-table-column -->
 
                     <el-table-column
 		                    label="备注" >
