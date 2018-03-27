@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-16 01:40:50
+Date: 2018-03-27 13:16:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,14 +33,14 @@ CREATE TABLE `cooler_maintain_statistics` (
 -- Records of cooler_maintain_statistics
 -- ----------------------------
 INSERT INTO `cooler_maintain_statistics` VALUES ('1', '2017-05-31', '15', '1', '');
-INSERT INTO `cooler_maintain_statistics` VALUES ('2', '2017-05-31', '41', '1', '');
+INSERT INTO `cooler_maintain_statistics` VALUES ('2', '2017-05-31', '41', '444', '哈哈哈哈 ');
 INSERT INTO `cooler_maintain_statistics` VALUES ('3', '2017-05-31', '17', '1', '');
 INSERT INTO `cooler_maintain_statistics` VALUES ('4', '2017-05-31', '46', '1', '');
-INSERT INTO `cooler_maintain_statistics` VALUES ('5', '2017-05-31', '47', '1', '');
+INSERT INTO `cooler_maintain_statistics` VALUES ('5', '2017-05-31', '47', '1', '对方的');
 INSERT INTO `cooler_maintain_statistics` VALUES ('6', '2017-06-01', '44', '1', '');
 INSERT INTO `cooler_maintain_statistics` VALUES ('7', '2017-06-01', '45', '1', '');
 INSERT INTO `cooler_maintain_statistics` VALUES ('8', '2017-06-01', '28', '1', '');
-INSERT INTO `cooler_maintain_statistics` VALUES ('9', '2017-06-01', '57', '1', '');
+INSERT INTO `cooler_maintain_statistics` VALUES ('9', '2017-06-01', '57', '1', '  郭德纲的方法');
 INSERT INTO `cooler_maintain_statistics` VALUES ('10', '2017-06-01', '55', '1', '');
 INSERT INTO `cooler_maintain_statistics` VALUES ('11', '2017-06-02', '39', '1', '');
 INSERT INTO `cooler_maintain_statistics` VALUES ('12', '2017-06-02', '48', '1', '');
@@ -760,7 +760,7 @@ CREATE TABLE `filter_cloth_statistics` (
 -- ----------------------------
 -- Records of filter_cloth_statistics
 -- ----------------------------
-INSERT INTO `filter_cloth_statistics` VALUES ('2', '2017-05-31', '15', '96', '');
+INSERT INTO `filter_cloth_statistics` VALUES ('2', '2017-05-31', '15', '96', '哈哈哈哈哈');
 INSERT INTO `filter_cloth_statistics` VALUES ('3', '2017-05-31', '41', '96', '');
 INSERT INTO `filter_cloth_statistics` VALUES ('4', '2017-05-31', '17', '96', '');
 INSERT INTO `filter_cloth_statistics` VALUES ('5', '2017-05-31', '29', '96', '');
@@ -779,7 +779,7 @@ INSERT INTO `filter_cloth_statistics` VALUES ('17', '2017-05-31', '61', '96', ''
 INSERT INTO `filter_cloth_statistics` VALUES ('18', '2017-05-31', '13', '48', '');
 INSERT INTO `filter_cloth_statistics` VALUES ('19', '2017-05-31', '21', '96', '');
 INSERT INTO `filter_cloth_statistics` VALUES ('20', '2017-05-31', '59', '48', '');
-INSERT INTO `filter_cloth_statistics` VALUES ('21', '2017-05-31', '60', '96', '');
+INSERT INTO `filter_cloth_statistics` VALUES ('21', '2017-05-31', '60', '96', '灌灌灌灌灌');
 INSERT INTO `filter_cloth_statistics` VALUES ('22', '2017-06-01', '44', '96', '');
 INSERT INTO `filter_cloth_statistics` VALUES ('23', '2017-06-01', '45', '48', '');
 INSERT INTO `filter_cloth_statistics` VALUES ('24', '2017-06-01', '28', '96', '');
@@ -4729,13 +4729,13 @@ CREATE TABLE `filter_element_statistics` (
 -- ----------------------------
 -- Records of filter_element_statistics
 -- ----------------------------
-INSERT INTO `filter_element_statistics` VALUES ('1', '2017-05-31', '61', '24', '');
+INSERT INTO `filter_element_statistics` VALUES ('1', '2017-05-31', '61', '24', '烦烦烦烦烦烦烦烦烦烦烦烦烦烦烦');
 INSERT INTO `filter_element_statistics` VALUES ('2', '2017-05-31', '21', '24', '');
 INSERT INTO `filter_element_statistics` VALUES ('3', '2017-05-31', '60', '24', '');
 INSERT INTO `filter_element_statistics` VALUES ('4', '2017-06-01', '54', '24', '');
 INSERT INTO `filter_element_statistics` VALUES ('5', '2017-06-01', '12', '24', '');
 INSERT INTO `filter_element_statistics` VALUES ('6', '2017-06-01', '57', '24', '');
-INSERT INTO `filter_element_statistics` VALUES ('7', '2017-06-01', '55', '24', '');
+INSERT INTO `filter_element_statistics` VALUES ('7', '2017-06-01', '55', '18', '');
 INSERT INTO `filter_element_statistics` VALUES ('10', '2017-06-02', '46', '24', '');
 INSERT INTO `filter_element_statistics` VALUES ('11', '2017-06-02', '13', '24', '');
 INSERT INTO `filter_element_statistics` VALUES ('12', '2017-06-03', '45', '24', '');
@@ -5293,7 +5293,7 @@ CREATE TABLE `task_plan` (
   `state` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_task_number` (`task_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=3544 DEFAULT CHARSET=utf8 COMMENT='作业计划';
+) ENGINE=InnoDB AUTO_INCREMENT=3545 DEFAULT CHARSET=utf8 COMMENT='作业计划';
 
 -- ----------------------------
 -- Records of task_plan
@@ -5301,7 +5301,7 @@ CREATE TABLE `task_plan` (
 INSERT INTO `task_plan` VALUES ('16', '15', '00100101', '13', '', '13', '1', '', '2', '17', '2017-04-07', '13:00:00', '3');
 INSERT INTO `task_plan` VALUES ('17', '16', '00100101', '14', '', '16', '1', '', '1', '35', '2017-04-07', '08:00:00', '3');
 INSERT INTO `task_plan` VALUES ('19', '18', '00100102', '14', '', '19', '1', '', '1', '56', '2017-04-12', '07:30:00', '3');
-INSERT INTO `task_plan` VALUES ('20', '19', '00100102', '14', '', '18', '1', '', '1', '58', '2017-04-12', '08:00:00', '3');
+INSERT INTO `task_plan` VALUES ('20', '19', '00100102', '14', '', '18', '1', '', '1', '53', '2017-04-12', '08:00:00', '3');
 INSERT INTO `task_plan` VALUES ('21', '20', '00100102', '14', '', '15', '1', '', '1', '27', '2017-04-12', '13:00:00', '3');
 INSERT INTO `task_plan` VALUES ('24', '23', '00100102', '14', '', '19', '1', '', '1', '47', '2017-04-13', '07:30:00', '3');
 INSERT INTO `task_plan` VALUES ('26', '24', '00100102', '14', '', '18', '1', '', '1', '39', '2017-04-14', '08:00:00', '3');
@@ -8789,6 +8789,7 @@ INSERT INTO `task_plan` VALUES ('3540', '3527', '00100102', '14', '辅助电源�
 INSERT INTO `task_plan` VALUES ('3541', '3528', '00100102', '14', '空调换气装置滤芯,空调蒸发器,牵引电机进风口', '14', '1', '', '1', '13', '2017-11-05', '01:25:54', '4');
 INSERT INTO `task_plan` VALUES ('3542', '3529', '00100102', '14', '空调冷凝器,牵引变流器,牵引电机进风口,牵引电机冷风机', '14', '1', '', '1', '14', '2017-11-05', '02:36:18', '4');
 INSERT INTO `task_plan` VALUES ('3543', '3530', '00100102', '14', '空调冷凝器,牵引变流器,牵引电机进风口,牵引电机冷风机', '14', '1', '', '1', '14', '2017-11-05', '02:37:18', '4');
+INSERT INTO `task_plan` VALUES ('3544', '3531', '00100101', '13', '换气装置逆变器风机过滤器,空调换气装置滤芯', '14', '1', '5566', '1', '12', '2018-01-20', '18:55:58', '3');
 
 -- ----------------------------
 -- Table structure for `task_plan_detail`
@@ -8813,7 +8814,7 @@ CREATE TABLE `task_plan_detail` (
   `b_quality` text,
   PRIMARY KEY (`id`),
   KEY `index_detail_task_number` (`task_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=17839 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17843 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of task_plan_detail
@@ -26337,6 +26338,10 @@ INSERT INTO `task_plan_detail` VALUES ('17835', '3530', '20', '1', null, null, n
 INSERT INTO `task_plan_detail` VALUES ('17836', '3530', '23', '1', null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `task_plan_detail` VALUES ('17837', '3530', '21', '1', null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `task_plan_detail` VALUES ('17838', '3530', '22', '1', null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `task_plan_detail` VALUES ('17839', '3531', '7', '3', '2018-01-20 18:59:10', '2018-01-20 19:00:05', ' ', ' ', '', '', '', '', '', '', '', '');
+INSERT INTO `task_plan_detail` VALUES ('17840', '3531', '14', '3', '2018-03-27 09:40:32', '2018-03-27 10:38:53', '故障状态烦烦烦', ' 情况说明首发式发生', '101008,141009', '', '', '', '', '', '', '');
+INSERT INTO `task_plan_detail` VALUES ('17841', '3531', '15', '3', null, '2018-03-27 10:39:10', ' ', ' ', '', '', '', '', '', '', '', '');
+INSERT INTO `task_plan_detail` VALUES ('17842', '3531', '18', '3', null, '2018-03-27 10:39:16', ' ', ' ', '', '', '', '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for `task_port`
