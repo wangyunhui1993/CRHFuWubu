@@ -25,13 +25,14 @@ class FilterDustStatisticsModel extends Model
                 $data['number'] = $condition['data'][$i]['number'];
                 $data['problem'] = $condition['data'][$i]['problem'];
                 $data['train_model'] = $condition['data'][$i]['train_model'];
+                $data['guid'] = $condition['data'][$i]['guid'];
 //                if (!$data['train_column'] || !$data['number'] || $data['number'] < 0) {
 //                    # code...
 //                    continue;
 //                }
-                if (!$data['train_column']) {
-                    $data['number'] = 1;
-                }
+                //if (!$data['train_column']) {
+                    //$data['number'] = 1;
+                //}
                 $result = $m->data($data)->add();
                 if (!$result) {
                     $m->rollback();
@@ -199,9 +200,15 @@ class FilterDustStatisticsModel extends Model
                 if (isset($info['train_column'])) {
                     $data['train_column'] = $info['train_column'];
                 }
-                if (!$info['train_column']) {
-                    $data['number'] = 1;
+
+                // if (!$info['train_column']) {
+                //     $data['number'] = 1;
+                // }
+
+                if (isset($info['guid'])) {
+                    $data['guid'] =$info['guid'];
                 }
+
                 $result = $m->data($data)->save();
                 if (!is_numeric($result)) {
                     $m->rollback();
@@ -231,7 +238,8 @@ class FilterDustStatisticsModel extends Model
                 f.date,
                 SUM(f.number) AS task_number,
                 f.train_column,
-                f.train_model
+                f.train_model,
+                f.guid
             FROM
                 filter_dust_statistics f
                 $whereSql

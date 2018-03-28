@@ -337,3 +337,8 @@ function downloadFile(document, url) {
 	}
 	return true;
 }
+
+function generateQuickGuid() {
+    return Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15);
+}

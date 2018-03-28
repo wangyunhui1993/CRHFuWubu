@@ -135,16 +135,19 @@
                                 train_column: '',
                                 number: 1,
                                 train_model: 0,
+                                guid:'',
                             },
                             {
                                 train_column: '',
                                 number: 1,
                                 train_model: 1,
+                                guid:'',
                             },
                             {
                                 train_column: '',
                                 number: 1,
                                 train_model: 2,
+                                guid:'',
                             }
                         ],
                         problem: '',
@@ -215,23 +218,31 @@
                 if (_this.isError)
                     return;
 
-                for(var i = 0; i < _this.dynamicValidateForm.data.length ; i++)
-                {
-                    _this.dynamicValidateForm.data[i].date = _this.myDate;
+                // for(var i = 0; i < _this.dynamicValidateForm.data.length ; i++)
+                // {
+                //     _this.dynamicValidateForm.data[i].date = _this.myDate;
 
-                };
+                // };
 
                 var submitData = {data: []};
                 for (var i = 0; i < _this.dynamicValidateForm.data.length; i++) {
                     var item = _this.dynamicValidateForm.data[i];
+                    item.date = _this.myDate;
+                    item.guid = generateQuickGuid();
+
                     for (var j = 0; j < item.train_model_data.length; j++) {
-                        submitData.data.push({
-                            train_column: item.train_model_data[j].train_column,
-                            number: isStringEmpty(item.train_model_data[j].train_column) ? 1 : item.train_model_data[j].number,
-                            train_model: item.train_model_data[j].train_model,
-                            problem: item.problem,
-                            date:item.date,
-                        });
+
+                        if(!isStringEmpty(item.train_model_data[j].train_column))
+                        {
+                            submitData.data.push({
+                                train_column: item.train_model_data[j].train_column,
+                                number: item.train_model_data[j].number,
+                                train_model: item.train_model_data[j].train_model,
+                                problem: item.problem,
+                                date:item.date,
+                                guid:item.guid,
+                            });
+                        }
                     }
                 }
 
@@ -312,7 +323,7 @@
                 var iserror = false;
                 var isTrainError = true;
                 for (var i = formObj.data.length - 1; i >= 0; i--) {
-                    var item = formObj.data[i];
+                    var item = formObj.data[i];                    
                     for (var j = 0; j < item.train_model_data.length; j++) {
                         if (!isStringEmpty(item.train_model_data[j].train_column)) {
                             isTrainError = false;
@@ -326,7 +337,7 @@
                         }
                     if (isTrainError == true) {
                         iserror = true;
-                        this.errorMsg = '第' + (i + 1).toString() + '行车列数据不能为空，请检查！';
+                        this.errorMsg = '行车列数据不能全部为空，请检查！';
                         break;
                     }
                 }
