@@ -47,11 +47,15 @@ function getTrainModel() {
 		{
 			value: 2,
 			text: 'CRH3型'
-		}//,
-		// {
-		// 	value: 3,
-		// 	text: 'CRH6'
-		// }
+		},
+		 {
+		 	value: 3,
+		 	text: 'CRH6'
+		 },
+		 {
+			value: 4,
+			text: 'CRH400BF'
+		 },
 		
 		);
 }
