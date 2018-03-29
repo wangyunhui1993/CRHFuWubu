@@ -133,7 +133,7 @@
                         train_model_data: [
                             {
                                 train_column: '',
-                                number: 1,
+                                number: 0,
                                 train_model: 0,
                                 guid:'',
                             },  
@@ -230,18 +230,14 @@
                     item.guid = generateQuickGuid();
 
                     for (var j = 0; j < item.train_model_data.length; j++) {
-
-                        if(!isStringEmpty(item.train_model_data[j].train_column))
-                        {
-                            submitData.data.push({
-                                train_column: item.train_model_data[j].train_column,
-                                number: item.train_model_data[j].number,
-                                train_model: item.train_model_data[j].train_model,
-                                problem: item.problem,
-                                date:item.date,
-                                guid:item.guid,
-                            });
-                        }
+                        submitData.data.push({
+                            train_column: item.train_model_data[j].train_column,
+                            number: item.train_model_data[j].number,
+                            train_model: item.train_model_data[j].train_model,
+                            problem: item.problem,
+                            date:item.date,
+                            guid:item.guid,
+                        });
                     }
                 }
 

@@ -117,7 +117,7 @@
                         <template scope="scope" >
                             <div style="margin-top:8px" >
                                 <el-input-number type="number" v-model="scope.row.train_model_data[0].number"
-                                                 :min="1" ></el-input-number >
+                                                 :min="0" ></el-input-number >
                             </div >
 
                         </template >
@@ -151,7 +151,7 @@
                         <template scope="scope" >
                             <div style="margin-top:8px" >
                                 <el-input-number type="number" v-model="scope.row.train_model_data[1].number"
-                                                 :min="1" ></el-input-number >
+                                                 :min="0" ></el-input-number >
                             </div >
 
                         </template >
@@ -186,7 +186,7 @@
                             <div style="margin-top:8px" >
                                 <el-input-number width="100" type="number"
                                                  v-model="scope.row.train_model_data[2].number"
-                                                 :min="1" ></el-input-number >
+                                                 :min="0" ></el-input-number >
                             </div >
 
                         </template >
@@ -473,29 +473,31 @@
 									var problem = datainfo[i]['problem'];	
 									var submitdate = datainfo[i]['date'];	
 
-									var notInitedTMode = [];
-									for(var k = 0; k < _this.trainModels.length; k++)
-									{
-										notInitedTMode[k] = true;
-									}
+									var notInitedTMode = new Array(_this.trainModels.length).fill(true);
+
+									// myArray = new Array(24).fill(0)
+									// for(var k = 0; k < _this.trainModels.length; k++)
+									// {
+									// 	notInitedTMode[k] = true;
+									// }
 
 									var Tmodeldata = [];									
 
 									for(var iM = 0;iM < _this.trainModels.length; iM++)
 									{
 										//var indx = i + iM;										
-										var indx = i;									
-
-										var itemT = new Object();
-										if(guid == datainfo[indx]['guid'])
+										var indx = i;
+										
+										if(datainfo[indx] !=null && guid == datainfo[indx]['guid'])
 										{
 											i++;
 
+											var itemT = new Object();
 											itemT.guid = guid;
 											itemT.problem = problem;
 
 											itemT.id = datainfo[indx]['id'];
-											itemT.train_column = datainfo[indx]['train_column'] == 0 ? '' : datainfo[indx]['train_column'];
+											itemT.train_column = datainfo[indx]['train_column']==0?'':datainfo[indx]['train_column'];
 											itemT.number = parseInt(datainfo[indx]['number']);
 											itemT.train_model = datainfo[indx]['train_model'];	
 

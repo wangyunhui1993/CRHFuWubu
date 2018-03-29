@@ -18,6 +18,9 @@ class FilterDustStatisticsModel extends Model
         $m = M('filter_dust_statistics');
         if ($condition['data']) {
             $result = true;
+            $guid = '-1';
+            $msectime='';
+
             for ($i = 0; $i < count($condition['data']); $i++) {
                 # code...
                 $data['train_column'] = $condition['data'][$i]['train_column'];
@@ -25,14 +28,17 @@ class FilterDustStatisticsModel extends Model
                 $data['number'] = $condition['data'][$i]['number'];
                 $data['problem'] = $condition['data'][$i]['problem'];
                 $data['train_model'] = $condition['data'][$i]['train_model'];
-                $data['guid'] = $condition['data'][$i]['guid'];
-//                if (!$data['train_column'] || !$data['number'] || $data['number'] < 0) {
-//                    # code...
-//                    continue;
-//                }
-                //if (!$data['train_column']) {
-                    //$data['number'] = 1;
-                //}
+               
+                if( $guid != $condition['data'][$i]['guid'])
+                {
+                    list($msec, $sec) = explode(' ', microtime());
+                    $msectime =  (float)sprintf('%015.0f', (floatval($msec) + floatval($sec)) * 1000);
+                    
+                    $guid = $condition['data'][$i]['guid'];
+                }
+                
+                $data['guid'] = $msectime.'-'.substr($guid,0,3);
+
                 $result = $m->data($data)->add();
                 if (!$result) {
                     $m->rollback();
@@ -170,7 +176,7 @@ class FilterDustStatisticsModel extends Model
         }
         $list = M('filter_dust_statistics')
             ->where($data)
-            ->order("guid desc,id desc")
+            ->order("guid desc")
             ->select();
         return $list;
     }
