@@ -58,7 +58,7 @@
                             <template scope="scope">
                                 <div style="margin-top:8px">
                                     <el-input-number type="number" v-model="scope.row.train_model_data[idx].number"
-                                                    :min="1"></el-input-number>
+                                                    :min="0"></el-input-number>
                                 </div>
                             </template>
                         </el-table-column>
@@ -136,20 +136,19 @@
                                 number: 1,
                                 train_model: 0,
                                 guid:'',
-                            },
-                            {
+                            },  
+/*                          {
+                               train_column: '',
+                                number: 1,
+                                train_model: 0,
+                                guid:'',
+                            },                            {
                                 train_column: '',
                                 number: 1,
-                                train_model: 1,
+                                train_model: 0,
                                 guid:'',
-                            },
-                            {
-                                train_column: '',
-                                number: 1,
-                                train_model: 2,
-                                guid:'',
-                            }
-                        ],
+                            },*/
+                        ],//e.g
                         problem: '',
                         date:''
                     }]
@@ -190,25 +189,25 @@
         },
         methods: {
             addStatistics() {
+                
+                var Tmodeldata = [];
+                
+                for(var j = 0; j < _this.trainModels.length; j++)
+                {//insert dummy items
+                    var itemT = new Object;
+                    itemT.guid = '';
+                    itemT.problem = '';
+
+                    itemT.train_column = '';
+                    itemT.number = 0;
+                    itemT.train_model = j;
+
+                    Tmodeldata.push(itemT);
+                }
+
                 _this.dynamicValidateForm.data.push({
                     id: _this.dynamicValidateForm.data.length + 1,
-                    train_model_data: [
-                        {
-                            train_column: '',
-                            number: 1,
-                            train_model: 0,
-                        },
-                        {
-                            train_column: '',
-                            number: 1,
-                            train_model: 1,
-                        },
-                        {
-                            train_column: '',
-                            number: 1,
-                            train_model: 2,
-                        }
-                    ],
+                    train_model_data: Tmodeldata,
                     problem: '',
                     date:''
                 });
@@ -226,7 +225,7 @@
 
                 var submitData = {data: []};
                 for (var i = 0; i < _this.dynamicValidateForm.data.length; i++) {
-                    var item = _this.dynamicValidateForm.data[i];
+                    var item  = _this.dynamicValidateForm.data[i];
                     item.date = _this.myDate;
                     item.guid = generateQuickGuid();
 
@@ -266,29 +265,30 @@
                                 type: 'error'
                             });
                         }
+
+                        var Tmodeldata = [];
+                        
+                        for(var j = 0; j < _this.trainModels.length; j++)
+                        {//insert dummy items
+                            var itemT = new Object;
+                            {
+                                itemT.guid = '';
+                                itemT.problem = '';
+
+                                itemT.train_column = '';
+                                itemT.number = 0;
+                                itemT.train_model = j;
+
+                                Tmodeldata.push(itemT);
+                            }
+                        }
+
                         _this.dynamicValidateForm.data = [{
                             id: '1',
-                            train_model_data: [
-                                {
-                                    train_column: '',
-                                    number: 1,
-                                    train_model: 0,
-                                },
-                                {
-                                    train_column: '',
-                                    number: 1,
-                                    train_model: 1,
-                                },
-                                {
-                                    train_column: '',
-                                    number: 1,
-                                    train_model: 2,
-                                }
-                            ],
+                            train_model_data: Tmodeldata,
                             problem: '',
                             date:_this.myDate,
                         }];
-
                     },
                 })
             },
@@ -391,6 +391,31 @@
             
             var tempDate = new Date().format('yyyy-MM-dd');
             _this.myDate = tempDate;//.toLocaleDateString();
+
+            var Tmodeldata = [];
+            
+            for(var j = 0; j < _this.trainModels.length; j++)
+            {//insert dummy items
+                var itemT = new Object;
+                {
+                    itemT.guid = '';
+                    itemT.problem = '';
+
+                    itemT.train_column = '';
+                    itemT.number = 0;
+                    itemT.train_model = j;
+
+                    Tmodeldata.push(itemT);
+                }
+            }
+
+            _this.dynamicValidateForm.data = [{
+                id: '1',
+                train_model_data: Tmodeldata,
+                problem: '',
+                date:_this.myDate,
+            }];
+
         },
         mounted: function () {
 

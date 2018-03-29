@@ -466,34 +466,73 @@
 					  if (data.status) {
 						  _this.modifyForm.data = [];
 						  var datainfo = data.info;
-						  for (var i = 0; i < datainfo.length; i++) {
-							  if (parseInt(datainfo[i]['train_model']) == 0) {
-								  var itemdata = {
-									  train_model_data: [
-										  {
-											  id: datainfo[i]['id'],
-                                                train_column: datainfo[i]['train_column'] == 0 ? '' : datainfo[i]['train_column'],
-											  number: parseInt(datainfo[i]['number']),
-											  train_model: datainfo[i]['train_model'],
-										  },
-										  {
-											  id: datainfo[i + 1]['id'],
-                                                train_column: datainfo[i + 1]['train_column'] == 0 ? '' : datainfo[i + 1]['train_column'],
-											  number: parseInt(datainfo[i + 1]['number']),
-											  train_model: datainfo[i + 1]['train_model'],
-										  },
-										  {
-											  id: datainfo[i + 2]['id'],
-                                                train_column: datainfo[i + 2]['train_column'] == 0 ? '' : datainfo[i + 2]['train_column'],
-											  number: parseInt(datainfo[i + 2]['number']),
-											  train_model: datainfo[i + 2]['train_model'],
-										  },
-									  ],
-									  problem: datainfo[i]['problem'],
-								  };
-								  _this.modifyForm.data.push(itemdata);
-								  i += 2;
-							  }
+						
+						  for (var i = 0; i < datainfo.length; ) {							  	
+									
+									var guid = datainfo[i]['guid'];
+									var problem = datainfo[i]['problem'];	
+									var submitdate = datainfo[i]['date'];	
+
+									var notInitedTMode = [];
+									for(var k = 0; k < _this.trainModels.length; k++)
+									{
+										notInitedTMode[k] = true;
+									}
+
+									var Tmodeldata = [];									
+
+									for(var iM = 0;iM < _this.trainModels.length; iM++)
+									{
+										//var indx = i + iM;										
+										var indx = i;									
+
+										var itemT = new Object();
+										if(guid == datainfo[indx]['guid'])
+										{
+											i++;
+
+											itemT.guid = guid;
+											itemT.problem = problem;
+
+											itemT.id = datainfo[indx]['id'];
+											itemT.train_column = datainfo[indx]['train_column'] == 0 ? '' : datainfo[indx]['train_column'];
+											itemT.number = parseInt(datainfo[indx]['number']);
+											itemT.train_model = datainfo[indx]['train_model'];	
+
+											Tmodeldata.push(itemT);
+
+											notInitedTMode[itemT.train_model] = false;
+										}
+										else{//flag a dummy item
+
+											//notInitedTMode[iM] = true;
+										}										
+									}
+
+									for(var j = 0; j < _this.trainModels.length; j++)
+									{//insert dummy items
+										if(notInitedTMode[j] == true)
+										{
+											itemT = new Object();
+											itemT.guid = guid;
+											itemT.problem = problem;
+
+											itemT.id = '-1';
+											itemT.train_column = '';
+											itemT.number = 0;
+											itemT.train_model = j;
+
+											Tmodeldata.push(itemT);
+										}
+									}
+
+									var itemdataForm = new Object;
+									itemdataForm.problem = problem;
+									itemdataForm.date = submitdate;
+									//itemdataForm.id = id;
+									itemdataForm.train_model_data = Tmodeldata;
+
+									_this.modifyForm.data.push(itemdataForm);
 						  }
 
 					  } else {
@@ -518,7 +557,9 @@
 					  var item = _this.modifyForm.data[i];
 					  for (var j = 0; j < item.train_model_data.length; j++) {
 						  submitData.data.push({
+							  guid:item.train_model_data[j].guid,
 							  id: item.train_model_data[j].id,
+							  date:item.date,
 							  train_column: item.train_model_data[j].train_column,
 							  number: item.train_model_data[j].number,
 							  train_model: item.train_model_data[j].train_model,

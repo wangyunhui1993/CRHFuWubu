@@ -77,7 +77,6 @@ class FilterDustStatisticsModel extends Model
                     $sql .= " where train_column='$train_column' ";
                 }
             }
-
         }
         $list = $this->db->query($sql);
 
@@ -138,8 +137,10 @@ class FilterDustStatisticsModel extends Model
                     for ($j = 0; $j < count($item['train_model_data']); $j++) {
                         $itemdata = $item['train_model_data'][$j];
                         $data['id'] = $itemdata['id'];
-//                        $data['date'] = $itemdata['date'];
-                        $result = M('filter_dust_statistics')->where($data)->delete();
+                        if($itemdata['id'] != '-1')
+                        {
+                            $result = M('filter_dust_statistics')->where($data)->delete();
+                        }                        
                     }
                 } else {
                     $data['date'] = $item['date'];
@@ -160,7 +161,6 @@ class FilterDustStatisticsModel extends Model
 
     public function getStatisticsAtDate($condition)
     {
-
         $data = ' 1 ';
         if ($condition) {
             if ($condition['date']) {
@@ -170,6 +170,7 @@ class FilterDustStatisticsModel extends Model
         }
         $list = M('filter_dust_statistics')
             ->where($data)
+            ->order("guid desc,id desc")
             ->select();
         return $list;
     }
@@ -180,10 +181,19 @@ class FilterDustStatisticsModel extends Model
 
         if ($condition['data']) {
             for ($i = 0; $i < count($condition['data']); $i++) {
-
+                
+                $data = [];
+                $bNeedInsert = false;
                 $info = $condition['data'][$i];
                 if (isset($info['id'])) {
-                    $data['id'] = $info['id'];
+                    if($info['id'] == '-1')
+                    {
+                        $bNeedInsert = true;
+                    }
+                    else
+                    {
+                        $data['id'] = $info['id'];
+                    }
                 }
                 if (isset($info['date'])) {
                     $data['date'] = $info['date'];
@@ -201,18 +211,25 @@ class FilterDustStatisticsModel extends Model
                     $data['train_column'] = $info['train_column'];
                 }
 
-                // if (!$info['train_column']) {
-                //     $data['number'] = 1;
-                // }
-
                 if (isset($info['guid'])) {
                     $data['guid'] =$info['guid'];
                 }
-
-                $result = $m->data($data)->save();
-                if (!is_numeric($result)) {
-                    $m->rollback();
-                    return $result;
+                
+                if($bNeedInsert)
+                {
+                    $result = $m->data($data)->add();
+                    if (!$result) {
+                        $m->rollback();
+                        return $result;
+                    }
+                }
+                else
+                {
+                    $result = $m->data($data)->save();
+                    if (!is_numeric($result)) {
+                        $m->rollback();
+                        return $result;
+                    }
                 }
             }
             $m->commit();
