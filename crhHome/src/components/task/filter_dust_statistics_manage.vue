@@ -84,7 +84,7 @@
               v-loading="dialogLoading"
     >
           <el-table-column
-		          width="50"
+		          width="40"
 		          label="序号" >
 	            <template scope="scope" >
                   <span >{{scope.$index + 1}}</span >
@@ -92,15 +92,15 @@
                 </el-table-column >
 
 				<template v-for="(Model, idx) in trainModels">
-					<el-table-column :label="trainModels[idx]" header-align="center" >
+					<el-table-column :label="Model.text" header-align="center" >
 						<el-table-column
-								width="200"
+								width="140"
 								prop="scope.row.train_model_data[idx].train_column"
 								label="车列号" >
 							<template scope="scope" >
 								<!--  <el-input type="text" v-model="scope.row.train_group" auto-complete="off" placeholder="账号"></el-input > -->
 								<el-select v-model="scope.row.train_model_data[idx].train_column" filterable
-										placeholder="搜索车列号" >
+										placeholder="搜索车列号" style="margin-top:4px;">
 									<el-option
 											v-for="item in trainColumns"
 											:label="item.train_column"
@@ -112,21 +112,19 @@
 						</el-table-column >
 
 						<el-table-column
-								width="200"
+								width="170"
 								prop="scope.row.train_model_data[idx].number"
-								label="标准组数量(组)">
+								label="标准组数量(组)" style="margin-left: 0px;margin-right: 0px;">
 							<template scope="scope" >
-								<div style="margin-top:8px" >
 									<el-input-number type="number" v-model="scope.row.train_model_data[idx].number"
-													:min="0" ></el-input-number >
-								</div >
+													:min="0" style="width:100%"></el-input-number >
 
 							</template >
 						</el-table-column >
 					</el-table-column >
 				</template>
                 <el-table-column
-		                width="300"
+		                width="360"
 		                prop="problem"
 		                label="动车所检查发现问题" >
                     <template scope="scope" >
@@ -136,14 +134,13 @@
                 </el-table-column >
 
 	      <el-table-column
-			      width="100"
 			      label="操作" >
           <template scope="scope" >
             <el-button
 		            size="small"
 		            type="danger"
-                                @click="handleDelete(scope.$index, scope.row)">删除
-                        </el-button>
+					@click="handleDelete(scope.$index, scope.row)">删除
+            </el-button>
           </template >
         </el-table-column >
         
@@ -407,12 +404,6 @@
 
 									var notInitedTMode = new Array(_this.trainModels.length).fill(true);
 
-									// myArray = new Array(24).fill(0)
-									// for(var k = 0; k < _this.trainModels.length; k++)
-									// {
-									// 	notInitedTMode[k] = true;
-									// }
-
 									var Tmodeldata = [];									
 
 									for(var iM = 0;iM < _this.trainModels.length; iM++)
@@ -433,7 +424,7 @@
 											itemT.number = parseInt(datainfo[indx]['number']);
 											itemT.train_model = datainfo[indx]['train_model'];	
 
-											Tmodeldata.push(itemT);
+											Tmodeldata[itemT.train_model] = itemT;
 
 											notInitedTMode[itemT.train_model] = false;
 										}
@@ -456,7 +447,7 @@
 											itemT.number = 0;
 											itemT.train_model = j;
 
-											Tmodeldata.push(itemT);
+											Tmodeldata[j] = itemT;
 										}
 									}
 

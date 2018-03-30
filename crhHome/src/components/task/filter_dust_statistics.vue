@@ -22,8 +22,7 @@
             <el-table :data="dynamicValidateForm.data"
                       border
                       style="width: 100%"
-                      max-height="350"
-            >
+                      max-height="350">
 
                 <el-table-column
                         width="50"
@@ -32,16 +31,16 @@
                 </el-table-column>
 
                 <template v-for="(Model, idx) in trainModels">
-                    <el-table-column  :label="Model" header-align="center" >
+                    <el-table-column  :label="Model.text" header-align="center" >
 
                         <el-table-column
-                                width="200"
+                                width="140"
                                 prop="train_model_data[idx].train_column"
                                 label="车列号">
                             <template scope="scope">
                                 <!--  <el-input type="text" v-model="scope.row.train_group" auto-complete="off" placeholder="账号"></el-input > -->
                                 <el-select v-model="scope.row.train_model_data[idx].train_column" filterable
-                                        placeholder="搜索车列号">
+                                        placeholder="搜索车列号" style="margin-top:4px;">
                                     <el-option
                                             v-for="item in trainColumns"
                                             :label="item.train_column"
@@ -52,14 +51,12 @@
                         </el-table-column>
 
                         <el-table-column
-                                width="200"
+                                width="170"
                                 prop="train_model_data[idx].number"
-                                label="标准组数量(组)">
+                                label="标准组数量(组)" style="margin-left: 0px;margin-right: 0px;">
                             <template scope="scope">
-                                <div style="margin-top:8px">
-                                    <el-input-number type="number" v-model="scope.row.train_model_data[idx].number"
-                                                    :min="0"></el-input-number>
-                                </div>
+                                    <el-input-number type="number"  v-model="scope.row.train_model_data[idx].number"
+                                     :min="0" style="width:100%"></el-input-number>
                             </template>
                         </el-table-column>
 
@@ -67,7 +64,7 @@
                 </template>
 
                 <el-table-column
-                        width="300"
+                        width="370"
                         prop="problem"
                         label="动车所检查发现问题">
                     <template scope="scope">
@@ -75,8 +72,7 @@
                                   placeholder="动车所检查发现问题"></el-input>
                     </template>
                 </el-table-column>
-                <el-table-column
-                        width = "100"
+                <el-table-column                        
                         label="操作">
                     <template scope="scope">
                         <el-button

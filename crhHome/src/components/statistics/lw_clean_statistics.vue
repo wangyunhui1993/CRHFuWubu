@@ -114,7 +114,7 @@
 
 					<template v-for="(Model, idx) in trainModels"> 
 
-						<el-table-column  :label="Model" header-align="center" >
+						<el-table-column  :label="Model.text" header-align="center" >
 							<el-table-column
 									prop="train_model_data[idx].task_number"
 									label="数量(组)" >
@@ -355,35 +355,57 @@
 				    success: function (data) {
 					    _this.loadingUI = false;
 					    if (data.status) {
-//						    _this.tableData = data.info;
+
 						    _this.tableData = [];
 						    var datainfo = data.info;
-						    for (var i = 0; i < datainfo.length; i++) {
-							    if (parseInt(datainfo[i]['train_model']) == 0) {
-								    var itemdata = {
-									    train_model_data: [
-										    {
-											    total_task_number: 0,
-											    task_number: parseInt(datainfo[i]['task_number']),
-											    train_model: datainfo[i]['train_model'],
-										    },
-										    {
-											    total_task_number: 0,
-											    task_number: parseInt(datainfo[i + 1]['task_number']),
-											    train_model: datainfo[i + 1]['train_model'],
-										    },
-										    {
-											    total_task_number: 0,
-											    task_number: parseInt(datainfo[i + 2]['task_number']),
-											    train_model: datainfo[i + 2]['train_model'],
-										    },
-									    ],
-									    date: datainfo[i]['date'],
-								    };
-								    _this.tableData.push(itemdata);
-								    i += 2;
-							    }
-						    }
+							/////////////////////////////////////////////////////
+							for (var i = 0; i < datainfo.length; ) {
+								var submitdate = datainfo[i]['date'];
+
+								var notInitedTMode = new Array(_this.trainModels.length).fill(true);
+
+								var Tmodeldata = [];									
+
+								for(var iM = 0;iM < _this.trainModels.length; iM++)
+								{
+									//var indx = i + iM;										
+									var indx = i;
+									if(datainfo[indx] !=null && submitdate == datainfo[indx]['date'])
+									{
+										i++;
+
+										var itemT = new Object();
+
+										itemT.task_number = parseInt(datainfo[indx]['task_number']);
+										itemT.train_model = datainfo[indx]['train_model'];	
+										itemT.total_task_number = 0;
+										Tmodeldata[itemT.train_model] = itemT;
+
+										notInitedTMode[itemT.train_model] = false;
+									}
+								}
+
+								for(var j = 0; j < _this.trainModels.length; j++)
+								{//insert dummy items
+									if(notInitedTMode[j] == true)
+									{
+										itemT = new Object();
+
+										itemT.task_number = 0;
+										itemT.train_model = j;
+										itemT.total_task_number = 0;
+										Tmodeldata[j] = itemT;
+									}
+								}
+
+								var itemdataForm = new Object;
+
+								itemdataForm.date = submitdate;
+								itemdataForm.train_model_data = Tmodeldata;
+
+								_this.tableData.push(itemdataForm);
+							}
+							/////////////////////////////////////////////////////
 						    for (var j = 0; j < _this.tableData.length; j++) {
 							    if (j == 0) {
 								    var item = _this.tableData[j].train_model_data;
@@ -416,7 +438,7 @@
 				    data: _this.queryFilters,
 				    success: function (data) {
 					    if (data.status) {
-						    _this.totalRecords = parseInt(data.info.totalrecords / 3);
+						    _this.totalRecords = parseInt(data.info.totalrecords);
 						    _this.onSearchDetailData();
 					    }
 				    },

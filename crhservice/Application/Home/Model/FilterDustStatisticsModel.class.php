@@ -260,9 +260,7 @@ class FilterDustStatisticsModel extends Model
             SELECT
                 f.date,
                 SUM(f.number) AS task_number,
-                f.train_column,
-                f.train_model,
-                f.guid
+                f.train_model
             FROM
                 filter_dust_statistics f
                 $whereSql
