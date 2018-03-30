@@ -174,9 +174,14 @@ class FilterDustStatisticsModel extends Model
                 $data .= " AND date='$str' ";
             }
         }
+
+        //left join `train_column` on((`cooler_maintain_statistics`.`train_column` = `train_column`.`id`)) 
         $list = M('filter_dust_statistics')
             ->where($data)
+            ->field('filter_dust_statistics.id,date,filter_dust_statistics.train_column,number,problem,
+            filter_dust_statistics.train_model,guid,train_column.train_column as train_columnName')
             ->order("guid desc")
+            ->join('LEFT JOIN train_column ON filter_dust_statistics.train_column = train_column.id')
             ->select();
         return $list;
     }

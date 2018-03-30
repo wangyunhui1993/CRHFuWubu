@@ -164,18 +164,17 @@
             </div -->
         </el-col >
 
-		<el-dialog v-model="detailDialogVisible" size="normal" >
-			<div id="printContent"  class="table-responsive" style="text-align: center;margin-top: -10px">
-				<h3 >动车组滤尘网清洗拆装工作量统计</h3>
+		<el-dialog v-model="detailDialogVisible" >
+			<div id="printContent"  class="table-responsive" style="width:%100;text-align: center;margin-top: -10px">
+				<h3 style="margin-left:auto; margin-right:auto; ">动车组滤尘网清洗拆装工作量统计</h3>
 				<h5 style="text-align: right;margin:20px;">_______分公司__________动车服务部</h5>
 				<h5 style="text-align: right;margin:20px;">{{showDetailDialogDate}}</h5>
-<!-- //////////////////-->
+				<!-- //////////////////-->
 				<el-table :data="detailForm.data"
 						border
-						style="width: 100%"
-						max-height="350"
-						v-loading="dialogLoading"
-				>
+						style="width: 100%; text-align:left"
+						v-loading="dialogLoading">
+
 					<el-table-column
 							width="40"
 							label="序号" >
@@ -187,48 +186,30 @@
 							<template v-for="(Model, idx) in trainModels">
 								<el-table-column :label="Model.text" header-align="center" >
 									<el-table-column
-											width="140"
-											prop="scope.row.train_model_data[idx].train_column"
-											label="车列号" >											
+											width="80"
+											label="车列号" >
 											<template scope="scope" >
-											{{scope.row.train_model_data[idx].train_column}}
+												{{scope.row.train_model_data[idx].train_columnname}}
 											</template>
 									</el-table-column >
 
 									<el-table-column
-											width="170"
-											prop="scope.row.train_model_data[idx].number"
-											label="标准组数量(组)" style="margin-left: 0px;margin-right: 0px;">
-										<template scope="scope" >
-												<el-input-number type="number" v-model="scope.row.train_model_data[idx].number"
-																:min="0" style="width:100%"></el-input-number >
-										</template >
+											width="75"
+											label="标准组数量" style="margin-left: 0px;margin-right: 0px;">											
+											<template scope="scope" >
+												{{scope.row.train_model_data[idx].number}}
+											</template>
 									</el-table-column >
 								</el-table-column >
 							</template>
-							<el-table-column
-									width="360"
-									prop="problem"
-									label="动车所检查发现问题" >
-								<template scope="scope" >
-									<el-input type="textarea" v-model="scope.row.problem" auto-complete="off"
-											placeholder="动车所检查发现问题" ></el-input >
-								</template >
-							</el-table-column >
 
-					<el-table-column
-							label="操作" >
-					<template scope="scope" >
-						<el-button
-								size="small"
-								type="danger"
-								@click="handleDelete(scope.$index, scope.row)">删除
-						</el-button>
-					</template >
-					</el-table-column >
-					
+							<el-table-column
+									width="225"
+									prop="problem"
+									label="动车所检查发现问题" >								
+							</el-table-column >					
 				</el-table >
-  <!-- //////////////////-->
+  				<!-- //////////////////-->
 				<el-col :span="12">
             		<el-row :span="2" style="margin-top: 33px">
                 		<el-col>
@@ -241,6 +222,9 @@
                 		<el-col>
 							<h5 style="text-align: left;">动车所工长签认：</h5>
                 		</el-col>
+            		</el-row>
+					<el-row>
+						<h5 style="text-align: left;"></h5>
             		</el-row>
 					<el-row>
                 		<el-col>
@@ -354,9 +338,9 @@
 									{
 										number:0 ,
 										problem:'',
-										train_column:'',
+										train_columnname:'',
 										train_model:'0'
-									}]
+									},]
 							}]
 				},
 				dialogLoading: true,
@@ -579,42 +563,35 @@
 										{
 											i++;
 
-											var itemT = new Object();
-											itemT.problem = problem;
-											itemT.train_column = datainfo[indx]['train_column']==0?'':datainfo[indx]['train_column'];
-											itemT.number = parseInt(datainfo[indx]['number']);
-											itemT.train_model = datainfo[indx]['train_model'];
+											Tmodeldata[datainfo[indx]['train_model']] = { 
+												problem : problem,
+												train_columnname : datainfo[indx]['train_columnname']==null?'':datainfo[indx]['train_columnname'],
+												number: parseInt(datainfo[indx]['number']),
+												train_model : datainfo[indx]['train_model']
+											};
 
-											Tmodeldata[itemT.train_model] = itemT;
-
-											notInitedTMode[itemT.train_model] = false;
-										}
-										else{//flag a dummy item
-
-											//notInitedTMode[iM] = true;
-										}										
+											notInitedTMode[datainfo[indx]['train_model']] = false;
+										}									
 									}
 
 									for(var j = 0; j < _this.trainModels.length; j++)
 									{//insert dummy items
 										if(notInitedTMode[j] == true)
 										{
-											itemT = new Object();
-
-											itemT.problem = problem;
-											itemT.train_column = '';
-											itemT.number = 0;
-											itemT.train_model = j;
-
-											Tmodeldata[j] = itemT;
+											Tmodeldata[j] = { 
+												problem : problem,
+												train_columnname : '',
+												number: 0,
+												train_model : j
+											};
 										}
 									}
 
-									var itemdataForm = new Object;
-									itemdataForm.problem = problem;
-									itemdataForm.train_model_data = Tmodeldata;
-
-									_this.detailForm.data.push(itemdataForm);
+									_this.detailForm.data.push(
+										{
+											problem:problem,
+											train_model_data:Tmodeldata
+										});
 						  }
 
 					  } else {
@@ -699,6 +676,25 @@
 	    created: function () {
 		    this.userInfo = JSON.parse(sessionStorage.getItem('user'));
 		    _this.trainModels = getTrainModel();
+
+			_this.detailForm.data =[];
+			var Tmodeldata = [];
+            
+            for(var j = 0; j < _this.trainModels.length; j++)
+            {//insert dummy items
+				Tmodeldata.push({
+                    problem: '',
+                    train_columnname: '',
+                    number:0,
+                    train_model:j
+                });
+            }
+
+            _this.detailForm.data = [{
+                train_model_data: Tmodeldata,
+                problem: '',
+            }];
+
 	    },
 	    mounted: function () {
 		    this.onMonth();
