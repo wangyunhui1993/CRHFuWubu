@@ -107,9 +107,13 @@
 		                        {{scope.$index+1}}
 	                        </template >
                     </el-table-column >
+
                     <el-table-column
 		                    prop="date"
 		                    label="日期" >
+						<template scope="scope" >
+							<el-button type="text" @click="showDateDetail(scope.row.date)" >{{scope.row.date}}</el-button>
+            			</template >
                     </el-table-column >
 
 					<template v-for="(Model, idx) in trainModels"> 
@@ -139,27 +143,6 @@
 
 					</template>
 
-					  <!--el-table-column :label="trainModels[0]" header-align="center" >
-	                    <el-table-column
-			                    prop="train_model_data[0].task_number"
-			                    label="数量(组)" >
-		                      <template scope="scope" >
-			                    <div >
-			                    {{scope.row.train_model_data[0].task_number}}
-			                    </div >
-		                    </template >
-	                    </el-table-column >
-	                    <el-table-column
-			                    prop="train_model_data[0].total_task_number"
-			                    label="累计数量(组)" >
-		                    <template scope="scope" >
-			                    <div >
-			                    {{scope.row.train_model_data[0].total_task_number}}
-			                    </div >
-		                    </template >
-	                    </el-table-column >
-                    </el-table-column -->
-
                     <el-table-column
 		                    label="备注" >
                     </el-table-column >
@@ -180,6 +163,98 @@
                 </el-pagination >
             </div -->
         </el-col >
+
+		<el-dialog v-model="detailDialogVisible" size="normal" >
+			<div id="printContent"  class="table-responsive" style="text-align: center;margin-top: -10px">
+				<h3 >动车组滤尘网清洗拆装工作量统计</h3>
+				<h5 style="text-align: right;margin:20px;">_______分公司__________动车服务部</h5>
+				<h5 style="text-align: right;margin:20px;">{{showDetailDialogDate}}</h5>
+<!-- //////////////////-->
+				<el-table :data="detailForm.data"
+						border
+						style="width: 100%"
+						max-height="350"
+						v-loading="dialogLoading"
+				>
+					<el-table-column
+							width="40"
+							label="序号" >
+							<template scope="scope" >
+							<span >{{scope.$index + 1}}</span >
+							</template >
+							</el-table-column >
+
+							<template v-for="(Model, idx) in trainModels">
+								<el-table-column :label="Model.text" header-align="center" >
+									<el-table-column
+											width="140"
+											prop="scope.row.train_model_data[idx].train_column"
+											label="车列号" >											
+											<template scope="scope" >
+											{{scope.row.train_model_data[idx].train_column}}
+											</template>
+									</el-table-column >
+
+									<el-table-column
+											width="170"
+											prop="scope.row.train_model_data[idx].number"
+											label="标准组数量(组)" style="margin-left: 0px;margin-right: 0px;">
+										<template scope="scope" >
+												<el-input-number type="number" v-model="scope.row.train_model_data[idx].number"
+																:min="0" style="width:100%"></el-input-number >
+										</template >
+									</el-table-column >
+								</el-table-column >
+							</template>
+							<el-table-column
+									width="360"
+									prop="problem"
+									label="动车所检查发现问题" >
+								<template scope="scope" >
+									<el-input type="textarea" v-model="scope.row.problem" auto-complete="off"
+											placeholder="动车所检查发现问题" ></el-input >
+								</template >
+							</el-table-column >
+
+					<el-table-column
+							label="操作" >
+					<template scope="scope" >
+						<el-button
+								size="small"
+								type="danger"
+								@click="handleDelete(scope.$index, scope.row)">删除
+						</el-button>
+					</template >
+					</el-table-column >
+					
+				</el-table >
+  <!-- //////////////////-->
+				<el-col :span="12">
+            		<el-row :span="2" style="margin-top: 33px">
+                		<el-col>
+							<h5 style="text-align: left;">升亮公司代表签认：</h5>
+                		</el-col>
+            		</el-row>
+        		</el-col>
+				<el-col :span="12">
+            		<el-row>
+                		<el-col>
+							<h5 style="text-align: left;">动车所工长签认：</h5>
+                		</el-col>
+            		</el-row>
+					<el-row>
+                		<el-col>
+							<h5 style="text-align: left;">动车所质检签认：</h5>
+                		</el-col>
+            		</el-row>
+        		</el-col>
+			</div>
+
+			<div slot="footer" class="dialog-footer" style="margin-top: 50px;text-align: right;" >
+				<el-button type="primary" @click="PrintDateDetialData" >打 印</el-button >
+				<el-button type="primary" @click="onExportDetail" >导 出</el-button >
+			</div >
+		</el-dialog >
     </div >
 </template >
 
@@ -197,6 +272,12 @@
 			    queryCountUrl: HOME + "FilterDustStatistics/getLWCleanStatisticsCount",
 			    queryDataUrl: HOME + "FilterDustStatistics/getLWCleanStatistics",
 			    exportUrl: HOME + "FilterDustStatistics/exportLWCleanStatistics",
+
+				queryDataByDateUrl: HOME + "filterDustStatistics/getStatisticsAtDate",
+				queryDateFilters: {
+				    date: ''
+			    },
+
 			    isError: false,
 			    errorMsg: '',
 			    queryFilters: {
@@ -263,6 +344,23 @@
 			    loadingUI: false,
 			    trainModels: [],
 
+				detailDialogVisible: false,
+				showDetailDialogDate:'',
+				showDetailDialog: null,
+				detailForm:{
+					data: [{
+								problem:'',
+								train_model_data:[
+									{
+										number:0 ,
+										problem:'',
+										train_column: '',
+										train_model,					
+									},
+								],
+							},]
+				},
+				dialogLoading: true,
 		    }
 	    },
 	    methods: {
@@ -444,6 +542,152 @@
 				    },
 			    })
 		    },
+			//show the details at specified date
+			showDateDetail(date){
+				_this.detailDialogVisible = true;
+				_this.showDetailDialogDate = new Date(date).format('yyyy 年 MM 月 dd 日');
+
+				_this.queryDateFilters.date = date;
+			    $.ajax({
+				    url: _this.queryDataByDateUrl,
+				    type: 'POST',
+				    dataType: 'json',
+				    data: _this.queryDateFilters,
+				    success: function (data) {
+
+					  _this.loadingUI = false;
+
+					  if (data.status) {
+						  _this.detailForm.data = [];
+						  var datainfo = data.info;
+						
+						  for (var i = 0; i < datainfo.length; ) {							  	
+
+									var guid = datainfo[i]['guid'];
+									var problem = datainfo[i]['problem'];	
+									var submitdate = datainfo[i]['date'];	
+
+									var notInitedTMode = new Array(_this.trainModels.length).fill(true);
+
+									var Tmodeldata = [];									
+
+									for(var iM = 0;iM < _this.trainModels.length; iM++)
+									{
+										//var indx = i + iM;										
+										var indx = i;
+										
+										if(datainfo[indx] !=null && guid == datainfo[indx]['guid'])
+										{
+											i++;
+
+											var itemT = new Object();
+											itemT.problem = problem;
+											itemT.train_column = datainfo[indx]['train_column']==0?'':datainfo[indx]['train_column'];
+											itemT.number = parseInt(datainfo[indx]['number']);
+											itemT.train_model = datainfo[indx]['train_model'];
+
+											Tmodeldata[itemT.train_model] = itemT;
+
+											notInitedTMode[itemT.train_model] = false;
+										}
+										else{//flag a dummy item
+
+											//notInitedTMode[iM] = true;
+										}										
+									}
+
+									for(var j = 0; j < _this.trainModels.length; j++)
+									{//insert dummy items
+										if(notInitedTMode[j] == true)
+										{
+											itemT = new Object();
+
+											itemT.problem = problem;
+											itemT.train_column = '';
+											itemT.number = 0;
+											itemT.train_model = j;
+
+											Tmodeldata[j] = itemT;
+										}
+									}
+
+									var itemdataForm = new Object;
+									itemdataForm.problem = problem;
+									itemdataForm.train_model_data = Tmodeldata;
+
+									_this.detailForm.data.push(itemdataForm);
+						  }
+
+					  } else {
+						  Notification({
+							  title: '失败',
+							  message: '获取日期下工作量信息失败',
+							  type: 'error'
+						  });
+					  }
+					  _this.dialogLoading = false;
+
+				    }
+			    })
+			},
+			printContent(e){ 
+               let subOutputRankPrint = document.getElementById('printContent');  
+               //console.log(subOutputRankPrint.innerHTML);  
+               let newContent =subOutputRankPrint.innerHTML;  
+               let oldContent = document.body.innerHTML;  
+               document.body.innerHTML = newContent;  
+               window.print();  
+               window.location.reload();  
+               document.body.innerHTML = oldContent;  
+               return false;  
+           } ,
+		    PrintDateDetialData()
+			{
+				console.log('1234679');
+				this.printContent();
+			},
+		
+			onExportDetail()
+			{
+				var _headers = {
+					A1: { v: '' },
+					B2: { v: 'CRH2型动车组散热设备清洁保养工作量统计' },
+					A6: { v: '序号' },B6: { v: '车组号' },C6: { v: '标准组数量' }, D6: { v: '动车所检查发现问题' },
+					};
+//
+				var _data={};
+				for(var i =0; i < _this.detailForm.data.length; i++ )
+				{
+					var obj=_data;
+					//obj['A'+ (i+7)] = {v:_this.detailForm.data[i].id};
+					obj['A'+ (i+7)] = {v:i};
+					obj['B' + (i+7)] = {v:_this.detailForm.data[i].train_columnname};
+					obj['C' + (i+7)] = {v:_this.detailForm.data[i].number};
+					obj['D' + (i+7)] = {v:_this.detailForm.data[i].problem};			
+				}
+
+				_headers['A'+(i+7+3)] = { v: '升亮公司代表签认：'};
+				_headers['D'+(i+7+2)] = { v: '动车所工长签认：'};
+				_headers['D'+(i+7+4)] = { v: '动车所质检签认：'};
+
+				// 合并 headers 和 data
+				var output = Object.assign({}, _headers, _data);
+				// 获取所有单元格的位置
+				var outputPos = Object.keys(output);
+				// 计算出范围
+				var ref = 'A1:'+('D'+(i+7+4));//outputPos[0] + ':' + outputPos[outputPos.length - 1];
+
+				// 构建 workbook 对象
+				var wb = {
+					SheetNames: ['散热设备保养统计'],
+					Sheets: {
+						'散热设备保养统计': Object.assign({}, output, { '!ref': ref })
+					}
+				};
+
+				// 导出 Excel
+				XLSX.writeFile(wb, '散热设备保养统计.xlsx');
+			},
 	    },
 	    computed: {},
 	    filters: {

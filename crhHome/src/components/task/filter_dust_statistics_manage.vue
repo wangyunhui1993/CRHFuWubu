@@ -208,19 +208,7 @@
 //								  train_column: '',
 //								  number: 1,
 //								  train_model: 0,
-//							  },
-//							  {
-// 					              id: '1',
-//								  train_column: '',
-//								  number: 1,
-//								  train_model: 1,
-//							  },
-//							  {
-// 					              id: '1',
-//								  train_column: '',
-//								  number: 1,
-//								  train_model: 2,
-//							  }
+//							  },//e.g
 //						  ],
 //						  problem: '',
 //					  }

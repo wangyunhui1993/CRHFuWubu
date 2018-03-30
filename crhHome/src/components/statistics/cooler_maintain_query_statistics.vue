@@ -453,7 +453,7 @@
            } ,
 		    PrintDateDetialData()
 			{
-				console.log('1234679');
+				//console.log('1234679');
 				this.printContent();
 			},
 		
