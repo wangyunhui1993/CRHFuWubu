@@ -354,11 +354,10 @@
 									{
 										number:0 ,
 										problem:'',
-										train_column: '',
-										train_model,					
-									},
-								],
-							},]
+										train_column:'',
+										train_model:'0'
+									}]
+							}]
 				},
 				dialogLoading: true,
 		    }
