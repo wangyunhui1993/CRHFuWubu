@@ -164,9 +164,15 @@
             </div -->
         </el-col >
 
-		<el-dialog v-model="detailDialogVisible" >
-			<div id="printContent"  class="table-responsive" style="width:%100;text-align: center;margin-top: -10px">
-				<h3 style="margin-left:auto; margin-right:auto; ">动车组滤尘网清洗拆装工作量统计</h3>
+		<!--dialog class="detailDialog"  id="detailDialog" style = "
+		border: 1px solid rgba(255, 0, 0, 0.3);
+		border-radius: 6px;style="text-align: center;"
+		box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+		background-color: rgba(0, 0, 0, 0.8);class="table-responsive" border: 1px solid rgba(255, 0, 0, 0.3);background-color: rgba(0, 0, 0, 0.8); 
+		width:1070px; "</dialog-->
+  		<el-dialog class="table-responsive" custom-class="detailDialog" v-model="detailDialogVisible" >
+			<div id="printContent" style="width:100%;text-align: center;margin-top: -10px ;">
+				<h3>动车组滤尘网清洗拆装工作量统计</h3>
 				<h5 style="text-align: right;margin:20px;">_______分公司__________动车服务部</h5>
 				<h5 style="text-align: right;margin:20px;">{{showDetailDialogDate}}</h5>
 				<!-- //////////////////-->
@@ -175,41 +181,40 @@
 						style="width: 100%; text-align:left"
 						v-loading="dialogLoading">
 
-					<el-table-column
-							width="40"
-							label="序号" >
+					<el-table-column width="40" label="序号" >
 							<template scope="scope" >
-							<span >{{scope.$index + 1}}</span >
+								<span >{{scope.$index + 1}}</span >
 							</template >
+					</el-table-column >
+
+					<template v-for="(Model, idx) in trainModels">
+						<el-table-column :label="Model.text" header-align="center" >
+							<el-table-column
+									width="80"
+									label="车列号" >
+									<template scope="scope" >
+										{{scope.row.train_model_data[idx].train_columnname}}
+									</template>
 							</el-table-column >
 
-							<template v-for="(Model, idx) in trainModels">
-								<el-table-column :label="Model.text" header-align="center" >
-									<el-table-column
-											width="80"
-											label="车列号" >
-											<template scope="scope" >
-												{{scope.row.train_model_data[idx].train_columnname}}
-											</template>
-									</el-table-column >
-
-									<el-table-column
-											width="75"
-											label="标准组数量" style="margin-left: 0px;margin-right: 0px;">											
-											<template scope="scope" >
-												{{scope.row.train_model_data[idx].number}}
-											</template>
-									</el-table-column >
-								</el-table-column >
-							</template>
-
 							<el-table-column
-									width="225"
-									prop="problem"
-									label="动车所检查发现问题" >								
-							</el-table-column >					
+									width="75"
+									label="标准组数量" style="margin-left: 0px;margin-right: 0px;">											
+									<template scope="scope" >
+										{{scope.row.train_model_data[idx].number}}
+									</template>
+							</el-table-column >
+						</el-table-column >
+					</template>
+
+					<el-table-column
+							style="width:%100"
+							
+							prop="problem"
+							label="动车所检查发现问题" >
+					</el-table-column >
 				</el-table >
-  				<!-- //////////////////-->
+  				<!-- //////////////////  width="%100"-->
 				<el-col :span="12">
             		<el-row :span="2" style="margin-top: 33px">
                 		<el-col>
@@ -220,15 +225,15 @@
 				<el-col :span="12">
             		<el-row>
                 		<el-col>
-							<h5 style="text-align: left;">动车所工长签认：</h5>
+							<h5 style="text-align: right;margin-right: 30px">动车所工长签认：</h5>
                 		</el-col>
             		</el-row>
 					<el-row>
-						<h5 style="text-align: left;"></h5>
+						<h5 style="text-align: right;margin-right: 30px"></h5>
             		</el-row>
 					<el-row>
                 		<el-col>
-							<h5 style="text-align: left;">动车所质检签认：</h5>
+							<h5 style="text-align: right;margin-right: 30px">动车所质检签认：</h5>
                 		</el-col>
             		</el-row>
         		</el-col>
@@ -239,6 +244,7 @@
 				<el-button type="primary" @click="onExportDetail" >导 出</el-button >
 			</div >
 		</el-dialog >
+
     </div >
 </template >
 
@@ -527,9 +533,13 @@
 		    },
 			//show the details at specified date
 			showDateDetail(date){
+
+				//$( "#detailDialog" ).show();
+				//$( "#detailDialog" ).close(value);
+				
 				_this.detailDialogVisible = true;
 				_this.showDetailDialogDate = new Date(date).format('yyyy 年 MM 月 dd 日');
-
+				
 				_this.queryDateFilters.date = date;
 			    $.ajax({
 				    url: _this.queryDataByDateUrl,
@@ -607,19 +617,18 @@
 			    })
 			},
 			printContent(e){ 
-               let subOutputRankPrint = document.getElementById('printContent');  
-               //console.log(subOutputRankPrint.innerHTML);  
-               let newContent =subOutputRankPrint.innerHTML;  
+
+               let newContent = document.getElementById('printContent').outerHTML;  
                let oldContent = document.body.innerHTML;  
-               document.body.innerHTML = newContent;  
-               window.print();  
-               window.location.reload();  
-               document.body.innerHTML = oldContent;  
+               document.body.innerHTML = newContent;
+
+               window.print();
+
+               window.location.reload();
                return false;  
            } ,
 		    PrintDateDetialData()
 			{
-				console.log('1234679');
 				this.printContent();
 			},
 		
@@ -720,4 +729,8 @@
 	    color: #475669;
 	    font-weight: bold
     }
+
+	.detailDialog {
+		width:1080px;
+		}
 </style >
