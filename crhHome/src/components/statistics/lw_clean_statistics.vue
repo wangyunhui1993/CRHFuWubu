@@ -251,8 +251,9 @@
 </template >
 
 <script >
-    import Vue from 'vue'
+    import Vue from 'vue';
     import {Loading} from 'element-ui';
+	import XLSX from 'xlsx';
     var _this;
     export default {
 	    name: "lw_clean_statistics",
@@ -664,44 +665,117 @@
 		
 			onExportDetail()
 			{
-				var _headers = {
-					A1: { v: '' },
-					B2: { v: 'CRH2型动车组散热设备清洁保养工作量统计' },
-					A6: { v: '序号' },B6: { v: '车组号' },C6: { v: '标准组数量' }, D6: { v: '动车所检查发现问题' },
-					};
-//
+				var _headers = new Object;//
+				
+				_headers.A1 =  { v: '' };
+				_headers.B2 =  { v: '动车组滤尘网清洗拆卸工作量统计' };
+				
+				var rowStart = 6;
+				var crhColStart = 66;//'B';
+				var crhColEnd = crhColStart + _this.trainModels.length*2;//'B';
+				var crhColEndChr = String.fromCharCode(crhColStart + _this.trainModels.length*2);//'B';
+
+				_headers['A'+rowStart] =  { v: '序号1' };
+				_headers['A'+(rowStart+1)] =  { v: '序号' };
+
+				//console.log(JSON.stringify(_this.trainModels));
+				for(var j = 0; j < _this.trainModels.length; j++)
+				{
+					var lableCol = String.fromCharCode(crhColStart+j*2);
+
+					_headers[lableCol+rowStart] = { v: _this.trainModels[j].text};
+					_headers[lableCol+(rowStart+1)] = { v: '车组号'};
+
+					lableCol = String.fromCharCode(crhColStart+j*2+1);					
+					_headers[lableCol+rowStart] = { v: '标准组数量'};
+					_headers[lableCol+(rowStart+1)] = { v: '标准组数量'};
+				}
+				_headers[crhColEndChr+rowStart] = { v: '动车所检查发现问题' };
+				_headers[crhColEndChr+(rowStart+1)] = { v: '动车所检查发现问题' };
+				rowStart = 7;
+
+/*
+				rowStart = 7;
+				_headers['A'+rowStart] =  { v: '序号' };
+				for(var j = 0; j < _this.trainModels.length; j++)
+				{
+					var k = String.fromCharCode(crhColStart+j*2)+rowStart;
+
+					_headers[k] = { v: '车组号'};
+
+					var k2 = String.fromCharCode(crhColStart+j*2+1)+rowStart;
+					_headers[k2] = { v: '标准组数量'};
+
+					//console.log(k + JSON.stringify(te[k]) + k2 + JSON.stringify(te[k2]));
+				}
+				var k2 = crhColEndChr+rowStart;
+				_headers[k2] = { v: '动车所检查发现问题' };
+
+				//console.log(JSON.stringify(_headers));
+*/
+
+			   	rowStart = 8;
 				var _data={};
+				
+				var trainModeDataSum = [];
 				for(var i =0; i < _this.detailForm.data.length; i++ )
 				{
-					var obj=_data;
-					//obj['A'+ (i+7)] = {v:_this.detailForm.data[i].id};
-					obj['A'+ (i+7)] = {v:i};
-					obj['B' + (i+7)] = {v:_this.detailForm.data[i].train_columnname};
-					obj['C' + (i+7)] = {v:_this.detailForm.data[i].number};
-					obj['D' + (i+7)] = {v:_this.detailForm.data[i].problem};			
-				}
+					var obj = _data;
 
-				_headers['A'+(i+7+3)] = { v: '升亮公司代表签认：'};
-				_headers['D'+(i+7+2)] = { v: '动车所工长签认：'};
-				_headers['D'+(i+7+4)] = { v: '动车所质检签认：'};
+					obj['A'+ (i+rowStart)] = {v:i+1};
+
+					for(var j = 0; j < _this.trainModels.length; j++)
+					{
+						var crhTrainColum = String.fromCharCode(crhColStart+j*2)+(rowStart+i);
+						var crhNumber = String.fromCharCode(crhColStart+j*2+1)+(rowStart+i);
+
+						obj[crhTrainColum] = {v:_this.detailForm.data[i].train_model_data[j].train_columnname};
+					    obj[crhNumber] = {v:_this.detailForm.data[i].train_model_data[j].number};
+			
+						trainModeDataSum[j] = (trainModeDataSum[j]==null?0:trainModeDataSum[j]) + parseInt(obj[crhNumber].v);
+					}
+
+					var problem = crhColEndChr+(rowStart+i);
+					obj[ problem ] = {v:_this.detailForm.data[i].problem};			
+				}
+				
+				var rowEnd = (rowStart+i);
+				
+				var obj = _data;;
+
+				obj['A'+rowEnd] = {v:'总计'};
+				for(var j = 0; j < _this.trainModels.length; j++)
+				{
+					var k2 = String.fromCharCode(crhColStart+j*2+1)+(rowEnd);
+
+					obj[k2] = {v:trainModeDataSum[j]};
+				}
+				rowEnd = rowEnd +1;
+
+				//console.log(JSON.stringify(_data));
+
+				_headers['A'+(rowEnd+2)] = { v: '升亮公司代表签认：'};
+				_headers[String.fromCharCode(crhColStart + (crhColEnd-crhColStart)/2) +(rowEnd+1)] = { v: '动车所工长签认：'};
+				_headers[String.fromCharCode(crhColStart + (crhColEnd-crhColStart)/2) +(rowEnd+3)] = { v: '动车所质检签认：'};
+				rowEnd = rowEnd+4;
 
 				// 合并 headers 和 data
 				var output = Object.assign({}, _headers, _data);
 				// 获取所有单元格的位置
 				var outputPos = Object.keys(output);
 				// 计算出范围
-				var ref = 'A1:'+('D'+(i+7+4));//outputPos[0] + ':' + outputPos[outputPos.length - 1];
+				var ref = 'A1:'+ crhColEndChr+rowEnd;
 
 				// 构建 workbook 对象
 				var wb = {
-					SheetNames: ['散热设备保养统计'],
+					SheetNames: ['动车组滤尘网清洗拆卸工作量统计'],
 					Sheets: {
-						'散热设备保养统计': Object.assign({}, output, { '!ref': ref })
+						'动车组滤尘网清洗拆卸工作量统计': Object.assign({}, output, { '!ref': ref })
 					}
 				};
 
 				// 导出 Excel
-				XLSX.writeFile(wb, '散热设备保养统计.xlsx');
+				XLSX.writeFile(wb, '动车组滤尘网清洗拆卸工作量统计.xlsx');
 			},
 	    },
 	    computed: {},
