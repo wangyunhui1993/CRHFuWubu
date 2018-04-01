@@ -18,6 +18,7 @@
                                                     v-model="queryFilters.dateStart"
                                                     :picker-options="pickerOpt"
                                                     max-width="200px;"
+													@change="onDateChange"
                                     >
 
                                     </el-date-picker >
@@ -30,6 +31,7 @@
                                                     v-model="queryFilters.dateEnd"
                                                     :picker-options="pickerOpt"
                                                     max-width="200px;"
+													@change="onDateChange"
                                     >
 
                                     </el-date-picker >
@@ -242,7 +244,7 @@
 			    errorMsg: '',
 			    queryFilters: {
 				    department_no: '',
-				    dateStart: '',
+				    dateStart:'' ,
 				    dateEnd: '',
 				    task_content_id: '',
 				    keywords: '',
@@ -315,24 +317,24 @@
 			    _this.onSearchRecordCounts();
 		    },
 			onDateChange(){
-				var endDate   = (Date)(_this.queryFilters.dateEnd);
-				var startDate = (Date)(_this.queryFilters.dateStart);
+				var endDate   = Date.parse(_this.queryFilters.dateEnd);
+				var startDate = Date.parse(_this.queryFilters.dateStart);
 
-				var dateDiff = endDate.getTime() - startDate.getTime();
+				var dateDiff = endDate- startDate;
 				var days = Math.floor(dateDiff / (24 * 3600 * 1000));
-				var ds = startDate.format("yyyy-MM-dd");
-				var de = endDate.format("yyyy-MM-dd");
+				var ds = new Date(startDate);
+				var de = new Date(endDate);
 				//console.log("days:" + days);
 				//console.log("ds:" + ds);
 				//console.log("de:" + de);
-				var dsh = startDate.format("hh");
-				var dse = endDate.format("hh");
+				var dsh = ds.format("hh");
+				var dse = de.format("hh");
 				//console.log("dsh: " + dsh);
 				//console.log("dse: " + dse);
 				if(days <= 1 && (dsh == dse) && (dsh == "08")){
-					_this.workDate = ds;
+					_this.workDate = ds.format("yyyy-MM-dd");
 				}else{
-					_this.workDate = ds + '至' + de;
+					_this.workDate = ds.format("yyyy-MM-dd") + '至' + de.format("yyyy-MM-dd");
 				}
 			},
 
@@ -481,12 +483,13 @@
 	    },
 	    computed: {},
 		watch:{
+			/*
 			'queryFilters.dateStart' : function(){
 				_this.onDateChange();
 			},
 			'queryFilters.dateEnd' : function(){
 				_this.onDateChange();
-			},
+			},*/
 		},
 	    filters: {
 		    filterDepartmentName(id) {

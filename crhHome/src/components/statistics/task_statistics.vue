@@ -16,6 +16,7 @@
 						      <el-form-item prop="dateStart" >
 						        <el-date-picker type="datetime" placeholder="起始日期" format="yyyy-MM-dd hh:mm:ss"
 						                        v-model="queryFilters.dateStart"
+												@change="onDateChange"
 						                        :picker-options="pickerOpt"
 						                        style="width: 200px;" >
 
@@ -27,6 +28,7 @@
 						      <el-form-item prop="dateEnd" >
 						        <el-date-picker type="datetime" placeholder="结束日期" format="yyyy-MM-dd hh:mm:ss"
 						                        v-model="queryFilters.dateEnd"
+												@change="onDateChange"
 						                        :picker-options="pickerOpt"
 						                        style="width: 200px;" >
 
@@ -126,18 +128,12 @@
 			        <el-col :span="6"
 			                v-show="queryFilters.dateStart&&queryFilters.dateEnd"
 			                style="float: right" >
-							 <label class="panel-lable" >
-								 作业日期:
-							 </label >
-					         <label class="panel-lable" >
-						         {{queryFilters.dateStart|converterDate}}
-					         </label >
-				              <label class="panel-lable" >
-						        至
-					         </label >
-				              <label class="panel-lable" >
-						         {{queryFilters.dateEnd|converterDate}}
-					         </label >
+							<label class="panel-lable" >
+								作业日期:
+							</label >
+							<label class="panel-lable" >
+								{{workDate}}
+							</label >
 			        </el-col >
 
 		        </div >
@@ -370,7 +366,8 @@
 				    keywords: '',
 					Lvwangbu_count: '',
 			    },
-
+				
+				workDate: '',
 			    pickerOpt: {
 				    disabledDate(time) {
 					    //return time.getTime() < Date.now() - 8.64e7;
@@ -448,7 +445,27 @@
 		    onSearch() {
 			    _this.onSearchRecordCounts();
 		    },
+			onDateChange(){
+				var endDate   = Date.parse(_this.queryFilters.dateEnd);
+				var startDate = Date.parse(_this.queryFilters.dateStart);
 
+				var dateDiff = endDate- startDate;
+				var days = Math.floor(dateDiff / (24 * 3600 * 1000));
+				var ds = new Date(startDate);
+				var de = new Date(endDate);
+				//console.log("days:" + days);
+				//console.log("ds:" + ds);
+				//console.log("de:" + de);
+				var dsh = ds.format("hh");
+				var dse = de.format("hh");
+				//console.log("dsh: " + dsh);
+				//console.log("dse: " + dse);
+				if(days <= 1 && (dsh == dse) && (dsh == "08")){
+					_this.workDate = ds.format("yyyy-MM-dd");
+				}else{
+					_this.workDate = ds.format("yyyy-MM-dd") + '至' + de.format("yyyy-MM-dd");
+				}
+			},
 		    onExport()
 		    {
 			     _this.detailFilters = copyObject(_this.queryFilters);
