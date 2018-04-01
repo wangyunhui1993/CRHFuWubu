@@ -470,15 +470,15 @@
 			    })
 			},
 			printContent(e){ 
-               let subOutputRankPrint = document.getElementById('printContent');  
-               //console.log(subOutputRankPrint.innerHTML);  
-               let newContent =subOutputRankPrint.innerHTML;  
-               let oldContent = document.body.innerHTML;  
-               document.body.innerHTML = newContent;  
-               window.print();  
-               window.location.reload();  
-               document.body.innerHTML = oldContent;  
-               return false;  
+				
+               let newContent = document.getElementById('printContent').outerHTML;  
+               let oldContent = document.body.innerHTML;
+               document.body.innerHTML = newContent;
+
+               window.print();
+
+               window.location.reload();
+               return false;
            } ,
 		    PrintDateDetialData()
 			{
@@ -494,26 +494,34 @@
 					A6: { v: '序号' },B6: { v: '车组号' },C6: { v: '标准组数量' }, D6: { v: '动车所检查发现问题' }};
 
 				var _data={};
+				var trainSum = 0;
 				for(var i =0; i < _this.detailForm.data.length; i++ )
 				{
 					var obj=_data;
 					//obj['A'+ (i+7)] = {v:_this.detailForm.data[i].id};
-					obj['A'+ (i+7)] = {v:i};
+					obj['A'+ (i+7)] = {v:i+1};
 					obj['B' + (i+7)] = {v:_this.detailForm.data[i].train_columnname};
 					obj['C' + (i+7)] = {v:_this.detailForm.data[i].number};
-					obj['D' + (i+7)] = {v:_this.detailForm.data[i].problem};			
-				}
+					obj['D' + (i+7)] = {v:_this.detailForm.data[i].problem};	
 
-				_headers['A'+(i+7+3)] = { v: '升亮公司代表签认：'};
-				_headers['D'+(i+7+2)] = { v: '动车所工长签认：'};
-				_headers['D'+(i+7+4)] = { v: '动车所质检签认：'};
+					trainSum = trainSum + parseInt((obj['C' + (i+7)]).v);		
+				}
+				var rowEnd = i+7;
+
+				obj['A'+rowEnd] = {v:'总计'};
+				obj['C'+(rowEnd)] = {v:trainSum};
+
+				_headers['A'+(rowEnd+3)] = { v: '升亮公司代表签认：'};
+				_headers['D'+(rowEnd+2)] = { v: '动车所工长签认：'};
+				_headers['D'+(rowEnd+4)] = { v: '动车所质检签认：'};
+				rowEnd = rowEnd+4;
 
 				// 合并 headers 和 data
 				var output = Object.assign({}, _headers, _data);
 				// 获取所有单元格的位置
 				var outputPos = Object.keys(output);
 				// 计算出范围
-				var ref = 'A1:'+('D'+(i+7+4));//outputPos[0] + ':' + outputPos[outputPos.length - 1];
+				var ref = 'A1:'+('D'+rowEnd);//outputPos[0] + ':' + outputPos[outputPos.length - 1];
 
 				// 构建 workbook 对象
 				var wb = {

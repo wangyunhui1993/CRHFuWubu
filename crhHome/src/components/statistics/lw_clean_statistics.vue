@@ -650,7 +650,7 @@
 			printContent(e){ 
 
                let newContent = document.getElementById('printContent').outerHTML;  
-               let oldContent = document.body.innerHTML;  
+               let oldContent = document.body.innerHTML;
                document.body.innerHTML = newContent;
 
                window.print();
