@@ -492,6 +492,10 @@
 					B2: { v: 'CRH2型动车组散热设备清洁保养工作量统计' },
 					A6: { v: '序号' },B6: { v: '车组号' },C6: { v: '标准组数量' }, D6: { v: '动车所检查发现问题' },
 					};
+				
+				var mergedCells = [];
+				////title
+				mergedCells.push({s:{r:1,c:(1)},e:{r:1,c:(0+4)}});
 
 				var rowStart = 7;
 //
@@ -510,6 +514,8 @@
 				
 				_headers['D'+  (rowStart - 2)] =  { v:  _this.showDetailDialogDate };
 				_headers['D'+  (rowStart - 3)] =  { v: '_______分公司__________动车服务部' };
+				mergedCells.push({s:{r:(rowStart - 2-1),c:(4-1)},e:{r:(rowStart - 2-1),c:(4-1+2)}});// date
+				mergedCells.push({s:{r:(rowStart - 3-1),c:(4-1)},e:{r:(rowStart - 3-1),c:(4-1+2)}});
 
 				var rowEnd = i+rowStart;
 
@@ -517,8 +523,14 @@
 				obj['C'+(rowEnd)] = {v:trainSum};
 		
 				_headers['A'+(rowEnd+3)] = { v: '升亮公司代表签认：'};
+				mergedCells.push({s:{r:rowEnd+3-1,c:(0)},e:{r:rowEnd+3-1,c:(0+2)}});
+
 				_headers['D'+(rowEnd+2)] = { v: '动车所工长签认：'};
+				mergedCells.push({s:{r:rowEnd+2-1,c:(3)},e:{r:rowEnd+2-1,c:(3+2)}});
+
 				_headers['D'+(rowEnd+4)] = { v: '动车所质检签认：'};
+				mergedCells.push({s:{r:rowEnd+4-1,c:(3)},e:{r:rowEnd+4-1,c:(3+2)}});
+				
 				rowEnd = rowEnd+4;
 
 				// 合并 headers 和 data
@@ -532,7 +544,8 @@
 				var wb = {
 					SheetNames: ['散热设备保养统计'],
 					Sheets: {
-						'散热设备保养统计': Object.assign({}, output, { '!ref': ref })
+						'散热设备保养统计': Object.assign({}, output, { '!ref': ref },
+														{"!merges":mergedCells})
 					}
 				};
 
