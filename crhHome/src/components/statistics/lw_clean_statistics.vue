@@ -668,7 +668,6 @@
 				var _headers = new Object;//
 				
 				_headers.A1 =  { v: '' };
-				_headers.B2 =  { v: '动车组滤尘网清洗拆卸工作量统计' };
 				
 				var rowStart = 6;
 				var crhColStart = 66;//'B';
@@ -692,7 +691,13 @@
 				}
 				_headers[crhColEndChr+rowStart] = { v: '动车所检查发现问题' };
 				_headers[crhColEndChr+(rowStart+1)] = { v: '动车所检查发现问题' };
+
+				_headers[String.fromCharCode(crhColStart + (crhColEnd-crhColStart)/2 -2)+2] =  { v: '动车组滤尘网清洗拆卸工作量统计' };
+				_headers[String.fromCharCode(crhColEnd-1) +  (rowStart - 2)] =  { v:  _this.showDetailDialogDate };
+				_headers[String.fromCharCode(crhColEnd-2) +  (rowStart - 3)] =  { v: '_______分公司__________动车服务部' };
+
 				rowStart = 7;
+
 
 /*
 				rowStart = 7;

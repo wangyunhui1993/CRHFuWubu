@@ -492,20 +492,26 @@
 					B2: { v: 'CRH2型动车组散热设备清洁保养工作量统计' },
 					A6: { v: '序号' },B6: { v: '车组号' },C6: { v: '标准组数量' }, D6: { v: '动车所检查发现问题' },
 					};
+
+				var rowStart = 7;
 //
 				var _data={};
 				var trainSum = 0;
 				for(var i =0; i < _this.detailForm.data.length; i++ )
 				{
 					var obj=_data;
-					obj['A'+ (i+7)] = {v:i+1};
-					obj['B' + (i+7)] = {v:_this.detailForm.data[i].train_columnname};
-					obj['C' + (i+7)] = {v:_this.detailForm.data[i].number};
-					obj['D' + (i+7)] = {v:_this.detailForm.data[i].problem};
+					obj['A'+ (i+rowStart)] = {v:i+1};
+					obj['B' + (i+rowStart)] = {v:_this.detailForm.data[i].train_columnname};
+					obj['C' + (i+rowStart)] = {v:_this.detailForm.data[i].number};
+					obj['D' + (i+rowStart)] = {v:_this.detailForm.data[i].problem};
 
-					trainSum = trainSum + parseInt((obj['C' + (i+7)]).v);
+					trainSum = trainSum + parseInt((obj['C' + (i+rowStart)]).v);
 				}
-				var rowEnd = i+7;
+				
+				_headers['D'+  (rowStart - 2)] =  { v:  _this.showDetailDialogDate };
+				_headers['D'+  (rowStart - 3)] =  { v: '_______分公司__________动车服务部' };
+
+				var rowEnd = i+rowStart;
 
 				obj['A'+rowEnd] = {v:'总计'};
 				obj['C'+(rowEnd)] = {v:trainSum};
