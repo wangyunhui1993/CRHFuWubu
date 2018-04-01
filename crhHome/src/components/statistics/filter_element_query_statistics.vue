@@ -146,6 +146,8 @@
 				<h5 style="text-align: right;margin:20px;">_______分公司__________动车服务部</h5>
 				<h5 style="text-align: right;margin:20px;">{{showDetailDialogDate}}</h5>
 				<el-table :data="detailForm.data"
+						:summary-method="getSummaries"
+						show-summary
 						border
 						style="width: 100%; text-align:left"						
 						v-loading="dialogLoading"
@@ -434,6 +436,34 @@
 					    }
 				    }
 			    })
+			},	
+			getSummaries(param) {
+				const { columns, data } = param;
+				const sums = new Array(columns.length).fill('');
+
+				console.log('getSummaries-begin');
+
+				columns.forEach((column, indexCol) => {
+					if (indexCol === 0) {
+						sums[indexCol] = '总计';
+						return;
+					}
+
+					if( column.label =='数量(只)')
+					{
+						var sum = 0;
+						data.forEach( (item , indexdata)=>
+						{
+							sum = sum + parseInt( item.number ); 
+						});
+
+						sums[indexCol] = sum;		
+					}
+				});
+
+				//console.log('getSummaries-end');
+
+				return sums;
 			},
 			printContent(e){ 
                let subOutputRankPrint = document.getElementById('printContent');  

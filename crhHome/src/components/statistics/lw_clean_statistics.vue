@@ -177,7 +177,9 @@
 				<h5 style="text-align: right;margin:20px;">{{showDetailDialogDate}}</h5>
 				<!-- //////////////////-->
 				<el-table :data="detailForm.data"
-						border
+						border						
+						:summary-method="getSummaries"
+						show-summary
 						style="width: 100%; text-align:left"
 						v-loading="dialogLoading">
 
@@ -615,6 +617,34 @@
 
 				    }
 			    })
+			},
+			getSummaries(param) {
+				const { columns, data } = param;
+				const sums = new Array(columns.length).fill('');
+
+				//console.log('getSummaries-begin');
+
+				columns.forEach((column, indexCol) => {
+					if (indexCol === 0) {
+						sums[indexCol] = '总计';
+						return;
+					}					
+
+					if( column.label =='标准组数量')
+					{
+						var sum = 0;
+						data.forEach( (item , indexdata)=>
+						{
+							sum = sum + parseInt( item.train_model_data[((indexCol)/2-1)].number ); 
+						});
+
+						sums[indexCol] = sum;		
+					}
+				});
+
+				//console.log('getSummaries-end');
+
+				return sums;
 			},
 			printContent(e){ 
 
