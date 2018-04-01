@@ -668,7 +668,8 @@
 				var _headers = new Object;//
 				
 				_headers.A1 =  { v: '' };
-				
+				var mergedCells = [];
+
 				var rowStart = 6;
 				var crhColStart = 66;//'B';
 				var crhColEnd = crhColStart + _this.trainModels.length*2;//'B';
@@ -676,6 +677,17 @@
 
 				_headers['A'+rowStart] =  { v: '序号1' };
 				_headers['A'+(rowStart+1)] =  { v: '序号' };
+				mergedCells.push({s:{r:rowStart-1,c:(0)},e:{r:rowStart,c:(0)}});
+
+				_headers[String.fromCharCode(crhColStart + (crhColEnd-crhColStart)/2 -2)+2] =  { v: '动车组滤尘网清洗拆卸工作量统计' };
+				_headers[String.fromCharCode(crhColEnd-1) +  (rowStart - 2)] =  { v:  _this.showDetailDialogDate };
+				_headers[String.fromCharCode(crhColEnd-2) +  (rowStart - 3)] =  { v: '_______分公司__________动车服务部' };
+
+				mergedCells.push({s:{r:1,c:((crhColEnd-crhColStart)/2 -1)},e:{r:1,c:((crhColEnd-crhColStart)/2 + 1)}});
+				mergedCells.push({s:{r:(rowStart - 3),c:((crhColEnd-crhColStart)-1 + 1)},e:{r:(rowStart - 3),c:((crhColEnd-crhColStart)-1+2)}});
+				mergedCells.push({s:{r:(rowStart - 3 -1),c:((crhColEnd-crhColStart)-1)},e:{r:(rowStart - 3-1),c:((crhColEnd-crhColStart)-1+2)}});
+
+				
 
 				//console.log(JSON.stringify(_this.trainModels));
 				for(var j = 0; j < _this.trainModels.length; j++)
@@ -683,21 +695,19 @@
 					var lableCol = String.fromCharCode(crhColStart+j*2);
 
 					_headers[lableCol+rowStart] = { v: _this.trainModels[j].text};
-					_headers[lableCol+(rowStart+1)] = { v: '车组号'};
-
-					lableCol = String.fromCharCode(crhColStart+j*2+1);					
+					lableCol = String.fromCharCode(crhColStart+j*2+1);
 					_headers[lableCol+rowStart] = { v: '标准组数量'};
+					mergedCells.push({s:{r:(rowStart-1),c:((crhColStart-65)+j*2-1 +1)},e:{r:(rowStart-1),c:((crhColStart-65)+j*2-1 + 2)}});
+
+					lableCol = String.fromCharCode(crhColStart+j*2);
+					_headers[lableCol+(rowStart+1)] = { v: '车组号'};
+					lableCol = String.fromCharCode(crhColStart+j*2+1);
 					_headers[lableCol+(rowStart+1)] = { v: '标准组数量'};
 				}
 				_headers[crhColEndChr+rowStart] = { v: '动车所检查发现问题' };
 				_headers[crhColEndChr+(rowStart+1)] = { v: '动车所检查发现问题' };
-
-				_headers[String.fromCharCode(crhColStart + (crhColEnd-crhColStart)/2 -2)+2] =  { v: '动车组滤尘网清洗拆卸工作量统计' };
-				_headers[String.fromCharCode(crhColEnd-1) +  (rowStart - 2)] =  { v:  _this.showDetailDialogDate };
-				_headers[String.fromCharCode(crhColEnd-2) +  (rowStart - 3)] =  { v: '_______分公司__________动车服务部' };
-
+				mergedCells.push({s:{r:rowStart-1,c:((crhColEnd-crhColStart)-1 + 1+1)},e:{r:rowStart,c:((crhColEnd-crhColStart)-1 + 1+1)}});
 				rowStart = 7;
-
 
 /*
 				rowStart = 7;
@@ -762,8 +772,18 @@
 				_headers['A'+(rowEnd+2)] = { v: '升亮公司代表签认：'};
 				_headers[String.fromCharCode(crhColStart + (crhColEnd-crhColStart)/2) +(rowEnd+1)] = { v: '动车所工长签认：'};
 				_headers[String.fromCharCode(crhColStart + (crhColEnd-crhColStart)/2) +(rowEnd+3)] = { v: '动车所质检签认：'};
+
+				mergedCells.push({s:{r:(rowEnd+2-1),c:(0)},e:{r:(rowEnd+2-1),c:(2)}});//动车所工长签认：
+
+				mergedCells.push({s:{r:(rowEnd+1 -1),c:((crhColEnd-crhColStart)/2 -1 + 2)},e:{r:(rowEnd+1-1),c:((crhColEnd-crhColStart)/2 -1+3)}});
+
+				mergedCells.push({s:{r:(rowEnd+3 -1),c:((crhColEnd-crhColStart)/2 -1 + 2)},e:{r:(rowEnd+3-1),c:((crhColEnd-crhColStart)/2 -1+3)}});//动车所质检签认：
+
 				rowEnd = rowEnd+4;
 
+				//console.log(mergedCells);
+				
+				
 				// 合并 headers 和 data
 				var output = Object.assign({}, _headers, _data);
 				// 获取所有单元格的位置
@@ -775,12 +795,31 @@
 				var wb = {
 					SheetNames: ['动车组滤尘网清洗拆卸工作量统计'],
 					Sheets: {
-						'动车组滤尘网清洗拆卸工作量统计': Object.assign({}, output, { '!ref': ref })
+						'动车组滤尘网清洗拆卸工作量统计':
+													   Object.assign({}, 
+													   output, 
+													   { '!ref': ref },
+													   {"!merges":mergedCells
+														}
+													   )//merge from E2:H2												
+									
 					}
 				};
 
+
 				// 导出 Excel
 				XLSX.writeFile(wb, '动车组滤尘网清洗拆卸工作量统计.xlsx');
+/*
+			    var merge_format = wb.add_format({
+					'bold':     True,
+					'border':   6,
+					'align':    'center',
+					'valign':   'vcenter',
+					'fg_color': '#D7E4BC',
+				});
+
+				wb.worksheet.merge_range('E2:H2', '动车组滤尘网清洗拆卸工作量统计', merge_format);
+				*/
 			},
 	    },
 	    computed: {},
