@@ -55,7 +55,7 @@ function getTrainModel() {
 		 {
 			value: 4,
 			text: 'CRH400BF'
-		 },
+		 }
 		
 		);
 }

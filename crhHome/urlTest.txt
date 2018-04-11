@@ -14,3 +14,4 @@ http://localhost/crhservice/index.php/home/UserRole/getRecords
 http://localhost/crhservice/index.php/home/UserRole/getRecordsCount
 
 http://127.0.0.1/github/crhfuwubu/crhservice/index.php/home/UserRole/getRecords
+http://10.128.152.19:8080/crhservice/index.php/home/User/getRecords
