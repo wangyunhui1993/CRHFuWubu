@@ -230,275 +230,275 @@
     </el-col>
     <el-dialog  v-model="checkTaskDetailVisible" size="full" >
     	 <div id="subOutputRank-print">
-		<div style="width:1000px">
-      <h2 style="font-weight: bold;text-align: center; font-size: x-large">一车一档查询</h2>
-      <el-table
-              :data="selectedTaskInfo"
-              border
-              style="width: 100%">
-        <el-table-column
-                width="110"
-                prop="task_date"
-                align="center"
-                label="作业日期">
-        </el-table-column>
-        <el-table-column
-                width="110"
-                prop="task_time"
-                align="center"
-                label="作业时间">
-        </el-table-column>
-        <el-table-column
-                prop="train_column"
-                width="110"
-                align="center"
-                label="车列号">
-          <template scope="scope">
-            <div>
-              {{scope.row.train_column | filterTrainColumnName}}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-                prop="train_model"
-                width="120"
-                align="center"
-                label="车型">
-          <template scope="scope">
-            <div>
-              {{scope.row.train_model| filterTrainModelName}}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-                prop="station_track_no"
-                align="center"
-                width="110"
-                label="股道">
-          <template scope="scope">
-            <div>
-              {{scope.row.station_track_no | filterStationTrackName}}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-                width="110"
-                align="center"
-                prop="repair_id"
-                label="修程">
-          <template scope="scope">
-            <div>
-              {{scope.row.repair_id | filterRepairName}}
-            </div>
-          </template>
-        </el-table-column>
-				<el-table-column  align="center" label="修程项目">
-          <template scope="scope">
-            <el-tag
-                    style="margin-left:2px;" 
-                    href="#" :title="tag"
-                    v-for="tag in scope.row.repair_category!=null&&scope.row.repair_category!=''?scope.row.repair_category.split(','):new Array()"
-                    :key="tag"
-                    :closable="false"
-            >
-              {{tag}}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
-                width="110"
-                align="center"
-                prop="train_group"
-                label="车组类型">
-          <template scope="scope">
-            <div>
-              {{scope.row.train_group | filterTrainGroup}}
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div class="title" style="margin-top: 50px; margin-bottom: 10px; margin-left: 5px">作业情况</div>
-      <el-table
-              :data="taskContentData"
-              border
-              class="setPadding"
-              style="width: 100%;text-align:center">
-        <el-table-column
-                prop="id"
-                align="center"
-                label="序号"
-                width="50">
-          <template scope="scope">
-            <span >{{scope.$index +1}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" label="作业信息">
-          <el-table-column
-                  prop="task_content_id"
-                  label="作业内容"
-                  align="center"
-                  width="70">
-            <template scope="scope">
-              <div>
-                {{scope.row.task_content_id | filterTaskContent}}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column
-                  prop="begin_time"
-                  label="开始时间"
-                  align="center"
-                  width="80">
-          </el-table-column>
-          <el-table-column
-                  prop="end_time"
-                  label="结束时间"
-                  align="center"
-                  width="80">
-          </el-table-column>
-          <el-table-column
-                  prop="trouble_maintain_id"
-                  label="故障状态"
-                  align="center"
-                  width="109">
-              <template scope="scope">
-                    <el-tag v-if=" scope.row.trouble_maintain_id !=' '&& scope.row.trouble_maintain_id !='' " type="danger"  href="#" :title="scope.row.trouble_maintain_id">
-                      {{scope.row.trouble_maintain_id}}</el-tag>
-              </template>
-          </el-table-column>
-          <el-table-column
-                  prop="situation_content_id"
-                  label="情况说明"
-                  align="center"
-                  width="109">
-              <template scope="scope">
-                    <el-tag v-if=" scope.row.situation_content_id !=' '&& scope.row.situation_content_id !='' " type="warning" href="#" :title="scope.row.situation_content_id">
-                      {{scope.row.situation_content_id}}</el-tag>
-              </template>
-          </el-table-column>
-        </el-table-column>
+          <div style="width:1000px">
+            <h2 style="font-weight: bold;text-align: center; font-size: x-large">一车一档查询</h2>
+            <el-table
+                    :data="selectedTaskInfo"
+                    border
+                    style="width: 100%">
+              <el-table-column
+                      width="110"
+                      prop="task_date"
+                      align="center"
+                      label="作业日期">
+              </el-table-column>
+              <el-table-column
+                      width="110"
+                      prop="task_time"
+                      align="center"
+                      label="作业时间">
+              </el-table-column>
+              <el-table-column
+                      prop="train_column"
+                      width="110"
+                      align="center"
+                      label="车列号">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.train_column | filterTrainColumnName}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                      prop="train_model"
+                      width="120"
+                      align="center"
+                      label="车型">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.train_model| filterTrainModelName}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                      prop="station_track_no"
+                      align="center"
+                      width="110"
+                      label="股道">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.station_track_no | filterStationTrackName}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                      width="110"
+                      align="center"
+                      prop="repair_id"
+                      label="修程">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.repair_id | filterRepairName}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column  align="center" label="修程项目">
+                <template scope="scope">
+                  <el-tag
+                          style="margin-left:2px;" 
+                          href="#" :title="tag"
+                          v-for="tag in scope.row.repair_category!=null&&scope.row.repair_category!=''?scope.row.repair_category.split(','):new Array()"
+                          :key="tag"
+                          :closable="false"
+                  >
+                    {{tag}}
+                  </el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column
+                      width="110"
+                      align="center"
+                      prop="train_group"
+                      label="车组类型">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.train_group | filterTrainGroup}}
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+            <div class="title" style="margin-top: 50px; margin-bottom: 10px; margin-left: 5px">作业情况</div>
+            <el-table
+                    :data="taskContentData"
+                    border
+                    class="setPadding"
+                    style="width: 100%;text-align:center">
+              <el-table-column
+                      prop="id"
+                      align="center"
+                      label="序号"
+                      width="50">
+                <template scope="scope">
+                  <span >{{scope.$index +1}}</span>
+                </template>
+              </el-table-column>
+              <el-table-column align="center" label="作业信息">
+                <el-table-column
+                        prop="task_content_id"
+                        label="作业内容"
+                        align="center"
+                        width="70">
+                  <template scope="scope">
+                    <div>
+                      {{scope.row.task_content_id | filterTaskContent}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                        prop="begin_time"
+                        label="开始时间"
+                        align="center"
+                        width="80">
+                </el-table-column>
+                <el-table-column
+                        prop="end_time"
+                        label="结束时间"
+                        align="center"
+                        width="80">
+                </el-table-column>
+                <el-table-column
+                        prop="trouble_maintain_id"
+                        label="故障状态"
+                        align="center"
+                        width="109">
+                    <template scope="scope">
+                          <el-tag v-if=" scope.row.trouble_maintain_id !=' '&& scope.row.trouble_maintain_id !='' " type="danger"  href="#" :title="scope.row.trouble_maintain_id">
+                            {{scope.row.trouble_maintain_id}}</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        prop="situation_content_id"
+                        label="情况说明"
+                        align="center"
+                        width="109">
+                    <template scope="scope">
+                          <el-tag v-if=" scope.row.situation_content_id !=' '&& scope.row.situation_content_id !='' " type="warning" href="#" :title="scope.row.situation_content_id">
+                            {{scope.row.situation_content_id}}</el-tag>
+                    </template>
+                </el-table-column>
+              </el-table-column>
 
-        <el-table-column align="center" label="作业人员">
-          <el-table-column
-                  prop="a_left"
-                  align="center"
-                  :label="portName.a_left"
-                  width="60">
-            <template scope="scope">
-              <ul style="list-style: none;">
-                <li style="margin-left: -20px" v-for=" item in scope.row.a_left">
-                  <el-tag >{{item | filterUserName}}</el-tag>
-                </li>
-              </ul>
-            </template>
-          </el-table-column>
-          <el-table-column
-                  prop="a_right"
-                  align="center"
-                  :label="portName.a_right"
-                  width="60">
-            <template scope="scope">
-              <ul style="list-style: none;">
-                <li style="margin-left: -20px" v-for=" item in scope.row.a_right">
-                  <el-tag >{{item | filterUserName}}</el-tag>
-                </li>
-              </ul>
-            </template>
-          </el-table-column>
+              <el-table-column align="center" label="作业人员">
+                <el-table-column
+                        prop="a_left"
+                        align="center"
+                        :label="portName.a_left"
+                        width="60">
+                  <template scope="scope">
+                    <ul style="list-style: none;">
+                      <li style="margin-left: -20px" v-for=" item in scope.row.a_left">
+                        <el-tag >{{item | filterUserName}}</el-tag>
+                      </li>
+                    </ul>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                        prop="a_right"
+                        align="center"
+                        :label="portName.a_right"
+                        width="60">
+                  <template scope="scope">
+                    <ul style="list-style: none;">
+                      <li style="margin-left: -20px" v-for=" item in scope.row.a_right">
+                        <el-tag >{{item | filterUserName}}</el-tag>
+                      </li>
+                    </ul>
+                  </template>
+                </el-table-column>
 
-          <el-table-column
-                  prop="b_left"
-                  align="center"
-                  :label="portName.b_left"
-                  width="60">
-            <template scope="scope">
-              <ul style="list-style: none;">
-                <li style="margin-left: -20px" v-for=" item in scope.row.b_left">
-                  <el-tag>{{item | filterUserName}}</el-tag>
-                </li>
-              </ul>
-            </template>
-          </el-table-column>
-					<el-table-column prop="b_right" :label="portName.b_right" 
-                 width="60">
-            <template scope="scope">
-              <ul style="list-style: none;">
-                <li style="margin-left: -20px" v-for=" item in scope.row.b_right">
-                  <el-tag >{{item | filterUserName}}</el-tag>
-                </li>
-              </ul>
-            </template>
-          </el-table-column>
-        </el-table-column>
+                <el-table-column
+                        prop="b_left"
+                        align="center"
+                        :label="portName.b_left"
+                        width="60">
+                  <template scope="scope">
+                    <ul style="list-style: none;">
+                      <li style="margin-left: -20px" v-for=" item in scope.row.b_left">
+                        <el-tag>{{item | filterUserName}}</el-tag>
+                      </li>
+                    </ul>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="b_right" :label="portName.b_right" 
+                      width="60">
+                  <template scope="scope">
+                    <ul style="list-style: none;">
+                      <li style="margin-left: -20px" v-for=" item in scope.row.b_right">
+                        <el-tag >{{item | filterUserName}}</el-tag>
+                      </li>
+                    </ul>
+                  </template>
+                </el-table-column>
+              </el-table-column>
 
-        <el-table-column align="center" label="作业组长">
-          <el-table-column
-                  prop="a_leader"
-                  align="center"
-                  :label="portName.a_leader"
-                  width="60">
-            <template scope="scope">
-              <ul style="list-style: none;">
-                <li style="margin-left: -20px" v-for=" item in scope.row.a_leader">
-                  <el-tag >{{item | filterUserName}}</el-tag>
-                </li>
-              </ul>
-            </template>
-          </el-table-column>
-          <el-table-column
-                  prop="b_leader"
-                  align="center"
-                  :label="portName.b_leader"
-                  width="60">
-            <template scope="scope">
-              <ul style="list-style: none;">
-                <li style="margin-left: -20px" v-for=" item in scope.row.b_leader">
-                  <el-tag >{{item | filterUserName}}</el-tag>
-                </li>
-              </ul>
-            </template>
-          </el-table-column>
-        </el-table-column>
-        </el-table-column>
+              <el-table-column align="center" label="作业组长">
+                <el-table-column
+                        prop="a_leader"
+                        align="center"
+                        :label="portName.a_leader"
+                        width="60">
+                  <template scope="scope">
+                    <ul style="list-style: none;">
+                      <li style="margin-left: -20px" v-for=" item in scope.row.a_leader">
+                        <el-tag >{{item | filterUserName}}</el-tag>
+                      </li>
+                    </ul>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                        prop="b_leader"
+                        align="center"
+                        :label="portName.b_leader"
+                        width="60">
+                  <template scope="scope">
+                    <ul style="list-style: none;">
+                      <li style="margin-left: -20px" v-for=" item in scope.row.b_leader">
+                        <el-tag >{{item | filterUserName}}</el-tag>
+                      </li>
+                    </ul>
+                  </template>
+                </el-table-column>
+              </el-table-column>
+              </el-table-column>
 
 
-        <el-table-column align="center" label="质检人员">
-          <el-table-column
-                  prop="a_quality"
-                  align="center"
-                  :label="portName.a_quality"
-                  width="70">
-            <template scope="scope">
-              <ul style="list-style: none;">
-                <li style="margin-left: -20px" v-for=" item in scope.row.a_quality">
-                  <el-tag >{{item | filterUserName}}</el-tag>
-                </li>
-              </ul>
-            </template>
-          </el-table-column>
-          <el-table-column
-                  prop="b_quality"
-                  align="center"
-                  :label="portName.b_quality"
-                  width="70">
-            <template scope="scope">
-              <ul style="list-style: none;">
-                <li style="margin-left: -20px" v-for=" item in scope.row.b_quality">
-                  <el-tag >{{item | filterUserName}}</el-tag>
-                </li>
-              </ul>
-            </template>
-          </el-table-column>
-        </el-table-column>
-      </el-table>
-      <el-row :gutter="20" style="margin-top:10px;">
-      <el-col :span="6">工长：</el-col>
-      <el-col :span="6">调度员：</el-col>
-      <el-col :span="6">值班主任：</el-col>
-      <el-col :span="6">值班员：</el-col>
-    </el-row>
-      </div>
-      </div>
+              <el-table-column align="center" label="质检人员">
+                <el-table-column
+                        prop="a_quality"
+                        align="center"
+                        :label="portName.a_quality"
+                        width="70">
+                  <template scope="scope">
+                    <ul style="list-style: none;">
+                      <li style="margin-left: -20px" v-for=" item in scope.row.a_quality">
+                        <el-tag >{{item | filterUserName}}</el-tag>
+                      </li>
+                    </ul>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                        prop="b_quality"
+                        align="center"
+                        :label="portName.b_quality"
+                        width="70">
+                  <template scope="scope">
+                    <ul style="list-style: none;">
+                      <li style="margin-left: -20px" v-for=" item in scope.row.b_quality">
+                        <el-tag >{{item | filterUserName}}</el-tag>
+                      </li>
+                    </ul>
+                  </template>
+                </el-table-column>
+              </el-table-column>
+            </el-table>
+            <el-row :gutter="20" style="margin-top:10px;">
+              <el-col :span="6">工长：</el-col>
+              <el-col :span="6">调度员：</el-col>
+              <el-col :span="6">值班主任：</el-col>
+              <el-col :span="6">值班员：</el-col>
+            </el-row>
+          </div>
+        </div>
       <span slot="footer" class="dialog-footer" >
       <el-button @click="PrintYicheYiDang" type="primary">打印</el-button >
 	    <el-button @click="checkTaskDetailVisible = false" type="primary">返回</el-button >
@@ -590,15 +590,15 @@
         this.startRecord = this.pageSize * (this.currentPage -1)
         this.fetchTaskCount();
       },
-     printContent(e){  
+     printContent(e){
                let subOutputRankPrint = document.getElementById('subOutputRank-print');  
                //console.log(subOutputRankPrint.innerHTML);  
-               let newContent =subOutputRankPrint.innerHTML;  
+               let newContent =subOutputRankPrint.outerHTML;  
                let oldContent = document.body.innerHTML;  
                document.body.innerHTML = newContent;  
                window.print();  
-               window.location.reload();  
-               document.body.innerHTML = oldContent;  
+               window.location.reload();
+               //document.body.innerHTML = oldContent;  
                return false;  
            } ,
       PrintYicheYiDang()
@@ -1134,4 +1134,20 @@
     word-break: break-all;
     word-spacing: normal;
   }
+
+  #subOutputRank-print .cell{
+  	padding-top: 1;
+  	padding-bottom: 1;
+  	line-height: 16px;
+  }
+  #subOutputRank-print .el-table th{
+  	height: auto;
+  }
+  #subOutputRank-print div, #subOutputRank-print td, #subOutputRank-print th{
+  	border-color: #000;
+  }
+
 </style>
+<!--   #subOutputRank-print .el-table::before,#subOutputRank-print .el-table::after{
+  	height: 0;
+  } -->
