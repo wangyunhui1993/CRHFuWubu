@@ -195,6 +195,15 @@
                     <el-table-column
 		                    prop="task_count"
 		                    label="数量" >
+							<template scope="scope" >
+								<el-button
+										style="min-width: 50px;float: left"
+										@click.native.prevent="onCleanQuery(scope.row.task_content)"
+										type="text"
+								>
+								{{scope.row.task_count}}
+								</el-button >
+							</template >
                     </el-table-column >
                     <el-table-column
 		                    prop="department_name"
@@ -405,6 +414,12 @@
 				    },
 			    })
 		    },
+			
+			onCleanQuery(taskcontet)
+			{
+				this.$router.push({path: '/home/statistics/clean_query',
+				query: { DateStart: _this.queryFilters.dateStart, DateEnd:_this.queryFilters.dateEnd, department_no:_this.queryFilters.department_no, taskItem:taskcontet}});
+			}
 	    },
 	    computed: {
 		    currentDepartmentStr(){

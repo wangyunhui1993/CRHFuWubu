@@ -289,7 +289,7 @@
 			    startRecord: 0,
 			    formLabelWidth: '100px',
 			    loadingUI: false,
-
+				autoSearch: false,
 		    }
 	    },
 	    methods: {
@@ -399,6 +399,38 @@
 			    this.onSearchDetailData();
 		    },
 
+			prepareQueryFilter()
+			{
+				//
+				///_this.autoSearch = false;
+
+				var param = this.parseUrl();//解析所有参数
+				if(param && param['DateStart'])
+				{
+					_this.queryFilters.dateStart = param['DateStart'];//就是你要的结果
+
+					_this.autoSearch = true;
+				}
+				
+				if(param && param['DateEnd'])
+				{
+					_this.queryFilters.dateEnd = param['DateEnd'];//就是你要的结果
+					_this.autoSearch = true;
+				}
+				
+				if(param && param['department_no'])
+				{
+					_this.queryFilters.department_no = param['department_no'];//就是你要的结果
+					_this.autoSearch = true;
+				}
+				if(param && param['taskItem'])
+				{
+					var id = _this.convertTaskContentName2ID(param['taskItem']);//就是你要的结果
+					_this.queryFilters.task_content_id = id;
+					_this.autoSearch = true;
+				}
+				//
+			},
 		    initTaskContentList()
 		    {
 			    var list = JSON.parse(sessionStorage.getItem('taskContentList'));
@@ -415,6 +447,8 @@
 						    _this.taskContentList.push(copyObject(list[i]));
 					    }
 				    }
+
+					_this.prepareQueryFilter();
 			    }
 		    },
 
@@ -429,6 +463,8 @@
 					    if (data.status) {
 						    sessionStorage.setItem('taskContentList', JSON.stringify(data.info));//save to session
 						    _this.taskContentList = data.info;
+							
+							_this.prepareQueryFilter();
 					    }
 				    }
 			    })
@@ -479,7 +515,40 @@
 			onYicheYiDangQuery(train_column_name)
 			{
 				this.$router.push({path: '/home/task/train_data',query: { train_column_n: train_column_name }});
-			}
+			},     
+			
+			 parseUrl(){
+				var url=location.href;
+
+				url = decodeURIComponent(url);
+				var i=url.indexOf('?');
+				if(i==-1)return;
+				var querystr=url.substr(i+1);
+				var arr1=querystr.split('&');
+				var arr2=new Object();
+				for  (i=0; i < arr1.length; i++)
+				{
+					var strtemp = arr1[i];
+					if(strtemp && strtemp != "")
+					{
+						var ta = strtemp.split('=');
+						arr2[ta[0]]=ta[1];
+					}
+				}
+				return arr2;
+      		},
+
+			convertTaskContentName2ID(taskname)
+		    {
+			    let result = ''
+			    for (let i = 0; i < _this.taskContentList.length; i++) {
+				    if (taskname == _this.taskContentList[i].task_content) {
+					    result = _this.taskContentList[i].id;
+					    break;
+				    }
+			    }
+			    return result;
+		    },
 	    },
 	    computed: {},
 		watch:{
@@ -520,6 +589,8 @@
 		    }
 	    },
 	    created: function () {
+
+
 		    this.userInfo = JSON.parse(sessionStorage.getItem('user'));
 		    if (this.userInfo != null && this.userInfo.department_no != "001") {
 			    //非公司管理员
@@ -549,11 +620,15 @@
 				    },
 			    });
 		    }
+
 		    _this.initTaskContentList();
 	    },
 	    mounted: function () {
 		    this.onSearchRecordCounts();
-		    this.onMonth();
+			if(!_this.autoSearch)
+			{
+			    this.onMonth();
+			}
 	    },
     }
 
