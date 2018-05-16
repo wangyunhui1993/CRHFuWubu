@@ -14,7 +14,7 @@
                         <el-form-item label="作业日期:" >
                             <el-col :span="5" >
                                 <el-form-item prop="dateStart" >
-                                    <el-date-picker type="datetime" placeholder="起始日期" format="yyyy-MM-dd hh:mm:ss"
+                                    <el-date-picker type="datetime" placeholder="起始日期" format="yyyy-MM-dd HH:mm:ss"
                                                     v-model="queryFilters.dateStart"
                                                     :picker-options="pickerOpt"
                                                     max-width="200px;"
@@ -27,7 +27,7 @@
                             <el-col class="line" :span="1" style="margin-left: 25px;" >至</el-col >
                             <el-col :span="5" style="margin-left: 13px;" >
                                 <el-form-item prop="dateEnd" >
-                                    <el-date-picker type="datetime" placeholder="结束日期" format="yyyy-MM-dd hh:mm:ss"
+                                    <el-date-picker type="datetime" placeholder="结束日期" format="yyyy-MM-dd HH:mm:ss"
                                                     v-model="queryFilters.dateEnd"
                                                     :picker-options="pickerOpt"
                                                     max-width="200px;"
