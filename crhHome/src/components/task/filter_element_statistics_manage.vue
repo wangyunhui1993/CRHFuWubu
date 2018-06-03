@@ -19,6 +19,21 @@
                         :value="item.id">
                 </el-option>
          </el-select>
+
+        <el-col :span="6" v-show="userInfo.department_no == '001' " >
+            <el-form-item label="部门:"  >
+                <el-select v-model="form.department_no"
+                            clearable
+                            style="width: 200px;" >
+                    <el-option
+                        v-for="item in departmentList"
+                        v-bind:value="item.department_no"
+                        v-bind:label="item.department_name" >
+                    </el-option >
+                </el-select >
+            </el-form-item >
+        </el-col >
+
         <el-button type="primary" icon="search" @click="search" >查询</el-button>
       </el-col>
         <br>
@@ -170,6 +185,7 @@
       _this = this;
       return {
         userInfo:{},
+        fetchSubDepartmentsURL: HOME + "DepartmentInfo/fetchSubDepartments",
         queryDataUrl: HOME + "FilterElementStatistics/getStatisticsData",
         queryCountUrl: HOME + "FilterElementStatistics/getRecordsCount",
 			  deleteUrl: HOME + "FilterElementStatistics/delete",
@@ -182,9 +198,11 @@
           start_records:0,
           length:10,
           train_column:'',
+          department_no: "",
         },
         
         tableData:[],
+        departmentList: [],
 
         multipleSelection: [],
         total: 0,
@@ -452,6 +470,37 @@
 	  computed: {},
 
     created: function () {
+
+      	this.userInfo = JSON.parse(sessionStorage.getItem('user'));
+		    if (this.userInfo != null && this.userInfo.department_no != "001") {
+			    //非公司管理员
+			    _this.departmentList.push({
+				    "department_no": this.userInfo.department_no,
+				    "department_name": this.userInfo.department_name
+			    })
+			    _this.queryFilters.department_no = this.userInfo.department_no;
+		    } else {
+
+			    $.ajax({
+				    url: _this.fetchSubDepartmentsURL,
+				    type: 'POST',
+				    dataType: 'json',
+				    data: {},
+				    success: function (data) {
+					    if (data.status != 0) {
+						    var list = data.info;
+						    for (var i = 0; i < list.length; i++) {
+							    _this.departmentList.push(copyObject(list[i]));
+						    }
+					    }
+//					    _this.departmentList.unshift({
+//						    "department_no": '',
+//						    "department_name": '全选',
+//					    });
+				    },
+			    });
+		    }
+
       this.onSearchRecordCounts();
       _this.getAllTrainColumn();
     },

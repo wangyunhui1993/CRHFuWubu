@@ -23,6 +23,8 @@ class FilterClothStatisticsModel extends Model
                 $data['date'] = $condition['data'][$i]['date'];
                 $data['number'] = $condition['data'][$i]['number'];
                 $data['problem'] = $condition['data'][$i]['problem'];
+                $data['department_no'] = $condition['data'][$i]['department_no'];
+                
                 if (!$data['train_column']||!$data['number']||$data['number']<0) {
                     # code...
                     continue;
@@ -69,6 +71,16 @@ class FilterClothStatisticsModel extends Model
                 }else{
                     $sql .= " where train_column='$train_column' ";
                 }
+
+                $hasWhere = true;
+            }
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                if ($hasWhere) {
+                    $sql .= " AND (`department_no`='$departmentStr')";
+                }else{
+                    $sql .= " where department_no='$departmentStr' ";
+                }
             }
 
         }
@@ -102,6 +114,16 @@ class FilterClothStatisticsModel extends Model
                     $sql .= " AND train_column='$train_column' ";
                 }else{
                     $sql .= " where train_column='$train_column' ";
+                }
+                $hasWhere = true;
+            }
+
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                if ($hasWhere) {
+                    $sql .= " AND (`department_no`='$departmentStr')";
+                }else{
+                    $sql .= " where department_no='$departmentStr' ";
                 }
             }
             $sql .= " ORDER BY date DESC";
@@ -147,16 +169,21 @@ class FilterClothStatisticsModel extends Model
 
     public function getStatisticsAtDate($condition)
     {
-
-        $data = ' 1 ';
+        $whereSql = ' 1 ';
         if ($condition) {
             if ($condition['date']) {
                 $str = $condition['date'];
-                $data .= " AND date='$str' ";
+                $whereSql .= " AND date='$str' ";
+            }
+
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                $whereSql .= " AND (`department_no`='$departmentStr')";
             }
         }
+        
         $list = M('filter_cloth_statistics')
-            ->where($data)
+            ->where($whereSql)
             ->select();
         return $list;
     }
@@ -204,6 +231,10 @@ class FilterClothStatisticsModel extends Model
                 $dateStr = $condition['date'];
                 $whereSql .= " AND (`date`='$dateStr')";
             }
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                $whereSql .= " AND (`department_no`='$departmentStr')";
+            }
         }
 
         $sql = "
@@ -233,6 +264,10 @@ class FilterClothStatisticsModel extends Model
                 $endStr = $condition['dateEnd'];
                 $whereSql .= " AND (`date`>='$beginStr' AND `date`<='$endStr')";
             }
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                $whereSql .= " AND (`department_no`='$departmentStr')";
+            }
         }
         $sql = "
                 SELECT * FROM
@@ -259,6 +294,11 @@ class FilterClothStatisticsModel extends Model
                     $beginStr = $condition['datetime'];
                     $whereSql .= " AND ( `date`='$beginStr')";
                 }
+                
+                if ($condition['department_no']) {
+                    $departmentStr = $condition['department_no'];
+                    $whereSql .= " AND (`department_no`='$departmentStr')";
+                }
             }
             
             $sql = "SELECT * FROM ((SELECT date, SUM(`number`) AS task_number FROM filter_cloth_statistics GROUP BY `$groupby`) AS tlws) $whereSql";
@@ -276,6 +316,11 @@ class FilterClothStatisticsModel extends Model
                 $beginStr = $condition['dateStart'];
                 $endStr = $condition['dateEnd'];
                 $whereSql .= " AND (`date`>='$beginStr' AND `date`<='$endStr')";
+            }
+
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                $whereSql .= " AND (`department_no`='$departmentStr')";
             }
         }
 

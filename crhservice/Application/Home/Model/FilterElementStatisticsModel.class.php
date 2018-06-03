@@ -23,6 +23,8 @@ class FilterElementStatisticsModel extends Model
                 $data['date'] = $condition['data'][$i]['date'];
                 $data['number'] = $condition['data'][$i]['number'];
                 $data['problem'] = $condition['data'][$i]['problem'];
+                $data['department_no'] = $condition['data'][$i]['department_no'];
+
                 if (!$data['train_column']||!$data['number']||$data['number']<0) {
                     # code...
                     continue;
@@ -69,6 +71,17 @@ class FilterElementStatisticsModel extends Model
                 }else{
                     $sql .= " where train_column='$train_column' ";
                 }
+
+                $hasWhere = true;
+            }
+
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                if ($hasWhere) {
+                    $sql .= " AND (`department_no`='$departmentStr')";
+                }else{
+                    $sql .= " where department_no='$departmentStr' ";
+                }
             }
 
         }
@@ -103,7 +116,18 @@ class FilterElementStatisticsModel extends Model
                 }else{
                     $sql .= " where train_column='$train_column' ";
                 }
+                $hasWhere = true;
             }
+
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                if ($hasWhere) {
+                    $sql .= " AND (`department_no`='$departmentStr')";
+                }else{
+                    $sql .= " where department_no='$departmentStr' ";
+                }
+            }
+
             $sql .= " ORDER BY date DESC";
             if ($condition['length']) {
                 # code...
@@ -150,15 +174,20 @@ class FilterElementStatisticsModel extends Model
     public function getStatisticsAtDate($condition)
     {
 
-        $data = ' 1 ';
+        $whereSql = ' 1 ';
         if ($condition) {
             if ($condition['date']) {
                 $str = $condition['date'];
-                $data .= " AND date='$str' ";
+                $whereSql .= " AND date='$str' ";
+            }
+
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                $whereSql .= " AND (`department_no`='$departmentStr')";
             }
         }
         $list = M('filter_element_statistics')
-            ->where($data)
+            ->where($whereSql)
             ->select();
         return $list;
     }
@@ -205,6 +234,10 @@ class FilterElementStatisticsModel extends Model
                 $dateStr = $condition['date'];
                 $whereSql .= " AND (`date`='$dateStr')";
             }
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                $whereSql .= " AND (`department_no`='$departmentStr')";
+            }
         }
         $sql = "
                 SELECT filter_element_statistics.date,filter_element_statistics.id,filter_element_statistics.number,filter_element_statistics.problem,
@@ -232,6 +265,11 @@ class FilterElementStatisticsModel extends Model
                 $endStr = $condition['dateEnd'];
                 $whereSql .= " AND (`date`>='$beginStr' AND `date`<='$endStr')";
             }
+
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                $whereSql .= " AND (`department_no`='$departmentStr')";
+            }
         }
         $sql = "
                 SELECT * FROM
@@ -257,6 +295,10 @@ class FilterElementStatisticsModel extends Model
                 $beginStr = $condition['dateStart'];
                 $endStr = $condition['dateEnd'];
                 $whereSql .= " AND (`date`>='$beginStr' AND `date`<='$endStr')";
+            }
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                $whereSql .= " AND (`department_no`='$departmentStr')";
             }
         }
 

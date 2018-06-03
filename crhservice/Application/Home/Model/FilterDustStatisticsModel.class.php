@@ -28,7 +28,8 @@ class FilterDustStatisticsModel extends Model
                 $data['number'] = $condition['data'][$i]['number'];
                 $data['problem'] = $condition['data'][$i]['problem'];
                 $data['train_model'] = $condition['data'][$i]['train_model'];
-               
+                $data['department_no'] = $condition['data'][$i]['department_no'];
+
                 if( $guid != $condition['data'][$i]['guid'])
                 {
                     list($msec, $sec) = explode(' ', microtime());
@@ -83,6 +84,15 @@ class FilterDustStatisticsModel extends Model
                     $sql .= " where train_column='$train_column' ";
                 }
             }
+
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                if ($hasWhere) {
+                    $sql .= " AND (`department_no`='$departmentStr')";
+                }else{
+                    $sql .= " where department_no='$departmentStr' ";
+                }
+            }
         }
         $list = $this->db->query($sql);
 
@@ -116,6 +126,17 @@ class FilterDustStatisticsModel extends Model
                     $sql .= " AND train_column='$train_column' ";
                 } else {
                     $sql .= " where train_column='$train_column' ";
+                }
+
+                $hasWhere = true;
+            }
+
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                if ($hasWhere) {
+                    $sql .= " AND (`department_no`='$departmentStr')";
+                }else{
+                    $sql .= " where department_no='$departmentStr' ";
                 }
             }
             $sql .= " ORDER BY date DESC";
@@ -167,11 +188,16 @@ class FilterDustStatisticsModel extends Model
 
     public function getStatisticsAtDate($condition)
     {
-        $data = ' 1 ';
+        $whereSql = ' 1 ';
         if ($condition) {
             if ($condition['date']) {
                 $str = $condition['date'];
-                $data .= " AND date='$str' ";
+                $whereSql .= " AND date='$str' ";
+            }
+
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                $whereSql .= " AND (`department_no`='$departmentStr')";
             }
         }
 
@@ -260,6 +286,10 @@ class FilterDustStatisticsModel extends Model
                 $endStr = $condition['dateEnd'];
                 $whereSql .= " AND (`date`>='$beginStr' AND `date`<='$endStr')";
             }
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                $whereSql .= " AND (`department_no`='$departmentStr')";
+            }
         }
         $sql = "
             SELECT
@@ -293,6 +323,10 @@ class FilterDustStatisticsModel extends Model
                 $beginStr = $condition['dateStart'];
                 $endStr = $condition['dateEnd'];
                 $whereSql .= " AND (`date`>='$beginStr' AND `date`<='$endStr')";
+            }
+            if ($condition['department_no']) {
+                $departmentStr = $condition['department_no'];
+                $whereSql .= " AND (`department_no`='$departmentStr')";
             }
         }
         $sql = "
