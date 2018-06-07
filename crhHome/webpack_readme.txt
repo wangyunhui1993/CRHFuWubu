@@ -26,3 +26,13 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 cnpm install --save-dev node-sass
 说明：--save-dev自动将node-sass加入到项目文件夹下的package.json中
 
+//////////////////
+
+安装淘宝镜像
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+安装webpack
+cnpm install webpack -g
+
+安装vue脚手架
+npm install vue-cli -g
