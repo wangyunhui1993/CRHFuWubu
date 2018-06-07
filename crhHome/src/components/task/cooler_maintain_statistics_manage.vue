@@ -31,9 +31,8 @@
             type="selection"
             width="55">
           </el-table-column>
-          <el-table-column
-            label="日期"
-            >
+
+          <el-table-column label="日期">
             <template scope="scope">{{ scope.row.date }}</template>
           </el-table-column>
           <el-table-column label="编辑" >
@@ -147,7 +146,7 @@
       </el-alert>
       <div slot="footer" class="dialog-footer" style="margin-bottom: 20px; margin-right: 30px" >
         <el-button @click="modifyDialogVisible = false" >取 消</el-button >
-        <el-button type="primary" @click="onEdit" >确 定</el-button >
+        <el-button type="primary" @click="onEditOK" >确 定</el-button >
       </div >
     </el-dialog >
 	   <el-dialog v-model="deleteVisible" >
@@ -350,7 +349,8 @@
           }
         })
       },
-      editAtDate(index, data){
+      editAtDate(index, data){        
+
         _this.modifyDialogVisible = true;
         _this.isError = false;
         _this.errorMsg = '';
@@ -373,7 +373,7 @@
             },
           })  
       },
-      onEdit(){
+      onEditOK(){
         _this.isError = this.validateForm(this.modifyForm);
         if (!_this.isError) {
           $.ajax({

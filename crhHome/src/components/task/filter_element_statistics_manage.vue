@@ -166,7 +166,7 @@
       </el-alert>
       <div slot="footer" class="dialog-footer" style="margin-bottom: 20px; margin-right: 30px" >
         <el-button @click="modifyDialogVisible = false" >取 消</el-button >
-        <el-button type="primary" @click="onEdit" >确 定</el-button >
+        <el-button type="primary" @click="onEditOK" >确 定</el-button >
       </div >
     </el-dialog >
       <el-dialog v-model="deleteVisible" >
@@ -206,9 +206,6 @@
           department_no: "",
         },
         
-        queryFilters: {
-				    department_no: '',
-			    },
         tableData:[],
         departmentList:[],
 
@@ -376,11 +373,14 @@
         _this.modifyDialogVisible = true;
         _this.isError = false;
         _this.errorMsg = '';
+
+        var queryData = {date:data.date,department_no:_this.form.department_no};
+
           $.ajax({
             url: _this.getStatisticsAtDateUrl,
             type: 'POST',
             dataType: 'json',
-            data: data,
+            data: queryData,
             success: function (data) {
               if (data.status) {
                   _this.modifyForm.data = data.info;      
@@ -395,7 +395,7 @@
             },
           })  
       },
-      onEdit(){
+      onEditOK(){
         _this.isError = this.validateForm(this.modifyForm);
         if (!_this.isError) {
           $.ajax({
