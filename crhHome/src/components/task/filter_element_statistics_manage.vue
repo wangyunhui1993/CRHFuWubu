@@ -5,13 +5,15 @@
     </el-col>
     <el-col class="well well-lg" style="background-color: white;">
       <el-col :span="24">
-        <el-date-picker
+
+           <el-date-picker
                 format="yyyy-MM-dd"
                 v-model="form.formDate"
                 type="daterange"
                 placeholder="选择日期范围">
         </el-date-picker>
         <el-button type="primary" @click="toToday" >今天</el-button>
+
         <el-select v-model="form.train_column" filterable placeholder="搜索车列号" clearable >
                 <el-option
                         v-for="item in trainColumns"
@@ -20,21 +22,24 @@
                 </el-option>
          </el-select>
 
-        <el-col :span="6" v-show="userInfo.department_no == '001' " >
-            <el-form-item label="部门:"  >
-                <el-select v-model="form.department_no"
-                            clearable
-                            style="width: 200px;" >
-                    <el-option
-                        v-for="item in departmentList"
+        <el-col :span="4" >
+         <el-form :model="form" label-position="left" label-width="75px" >
+              <el-form-item label="部门:" >
+                  <el-select v-model="form.department_no"
+                              clearable
+                              style="width: 200px;" >
+                      <el-option
+                          v-for="item in departmentList"
                         v-bind:value="item.department_no"
                         v-bind:label="item.department_name" >
-                    </el-option >
-                </el-select >
-            </el-form-item >
-        </el-col >
+                      </el-option >
+                  </el-select >
+              </el-form-item > 
+            </el-form>
+        </el-col>
 
         <el-button type="primary" icon="search" @click="search" >查询</el-button>
+
       </el-col>
         <br>
         <el-table
@@ -201,8 +206,11 @@
           department_no: "",
         },
         
+        queryFilters: {
+				    department_no: '',
+			    },
         tableData:[],
-        departmentList: [],
+        departmentList:[],
 
         multipleSelection: [],
         total: 0,
@@ -478,7 +486,10 @@
 				    "department_no": this.userInfo.department_no,
 				    "department_name": this.userInfo.department_name
 			    })
-			    _this.queryFilters.department_no = this.userInfo.department_no;
+
+          _this.form.department_no = this.userInfo.department_no;
+
+          this.onSearchRecordCounts();
 		    } else {
 
 			    $.ajax({
@@ -493,16 +504,15 @@
 							    _this.departmentList.push(copyObject(list[i]));
 						    }
 					    }
-//					    _this.departmentList.unshift({
-//						    "department_no": '',
-//						    "department_name": '全选',
-//					    });
+
+              _this.onSearchRecordCounts();
+
 				    },
 			    });
 		    }
+      
+        _this.getAllTrainColumn();
 
-      this.onSearchRecordCounts();
-      _this.getAllTrainColumn();
     },
     mounted: function () {
 
