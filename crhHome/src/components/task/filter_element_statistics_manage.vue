@@ -23,19 +23,18 @@
          </el-select>
 
         <el-col :span="4" >
-         <el-form :model="form" label-position="left" label-width="75px" >
-              <el-form-item label="部门:" >
-                  <el-select v-model="form.department_no"
-                              clearable
-                              style="width: 200px;" >
-                      <el-option
-                          v-for="item in departmentList"
-                        v-bind:value="item.department_no"
-                        v-bind:label="item.department_name" >
-                      </el-option >
-                  </el-select >
-              </el-form-item > 
-            </el-form>
+
+        <label for="depart">部门:</label>
+        <el-select v-model="form.department_no"
+                    clearable
+                    style="width: 200px;" >
+            <el-option
+                v-for="item in departmentList"
+              v-bind:value="item.department_no"
+              v-bind:label="item.department_name" >
+            </el-option >
+          </el-select >
+
         </el-col>
 
         <el-button type="primary" icon="search" @click="search" >查询</el-button>
@@ -147,6 +146,22 @@
                           placeholder="动车所检查发现问题" ></el-input >
             </template>
         </el-table-column>
+
+        <el-table-column  width="280">
+           <template scope="scope">
+              <label for="depart">部门:</label>
+              <el-select id="depart" v-model="scope.row.department_no"
+                          clearable
+                          style="margin-top: 8px; margin-left: 2px ;width: 200px;">
+                  <el-option
+                    v-for="item in departmentList"
+                    v-bind:value="item.department_no"
+                    v-bind:label="item.department_name" >
+                  </el-option >
+              </el-select >
+            </template>
+        </el-table-column>
+
          <el-table-column
 		         width="100"
 		         label="操作" >

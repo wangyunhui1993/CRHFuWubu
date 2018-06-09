@@ -213,6 +213,10 @@ class FilterElementStatisticsModel extends Model
                 if (isset($info['train_column'])) {
                     $data['train_column'] = $info['train_column'];
                 }
+                if (isset($info['department_no'])) {
+                    $data['department_no'] = $info['department_no'];
+                }
+
                 $result = $m->data($data)->save();
                 if (!is_numeric($result))  {
                     $m->rollback();

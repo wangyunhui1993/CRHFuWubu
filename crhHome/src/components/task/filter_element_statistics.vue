@@ -10,15 +10,15 @@
   <el-col :span="24" style="vertical-align:middle;">
      
        <el-col :span="4" >         
-              <label for="depart">部门:</label>
-              <el-select id="depart" v-model="department_no"
-                          clearable
+              <label for="departSel">部门:</label>
+              <el-select id="departSel" ref="departSelRef" v-model="department_no"
+                          :clearable="clearableDepart"
                           style="margin-top: 7px; margin-bottom: 20px; margin-left: 2px ;width: 200px;">
                   <el-option
                       v-for="item in departmentList"
                     v-bind:value="item.department_no"
                     v-bind:label="item.department_name" >
-                  </el-option >
+                  </el-option>
               </el-select >
         </el-col>
      
@@ -149,6 +149,7 @@
           }]
         },
         department_no: "",
+        clearableDepart:true,
         departmentList:[],
          myDate:Date(),
         trainColumns:[],
@@ -266,7 +267,7 @@
 
           for (var i = formObj.data.length - 1; i >= 0; i--) {
            
-            formObj.data[i].department_no =  _this.department_no !='' ? _this.department_no:this.userInfo.department_no;
+            formObj.data[i].department_no =  _this.department_no;
 
             if (isStringEmpty(formObj.data[i].train_column)) {
               iserror = true;
@@ -309,7 +310,11 @@
     },
     created: function () {
 
-      	this.userInfo = JSON.parse(sessionStorage.getItem('user'));
+
+    },
+    mounted: function () {
+
+        this.userInfo = JSON.parse(sessionStorage.getItem('user'));
 		    if (this.userInfo != null && this.userInfo.department_no != "001") {
 			    //非公司管理员
 			    _this.departmentList.push({
@@ -318,6 +323,7 @@
 			    })
 
           _this.department_no = this.userInfo.department_no;
+          _this.clearableDepart = false;
 
 		    } else {
 
@@ -340,10 +346,7 @@
 
       _this.getAllTrainColumn();
       var tempDate = new Date().format('yyyy-MM-dd');
-      _this.myDate = tempDate;//.toLocaleDateString();
-    },
-    mounted: function () {
-
+      _this.myDate = tempDate;//.toLocaleDateString();   
     },
   }
 
