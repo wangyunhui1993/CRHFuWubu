@@ -6,6 +6,20 @@
         <el-col class="well well-lg" style="background-color: white;">
 
         <el-col :span="24" style="vertical-align:middle;">
+
+            <el-col :span="4" >         
+              <label for="departSel">部门:</label>
+              <el-select id="departSel" ref="departSelRef" v-model="department_no"
+                          :clearable="clearableDepart"
+                          style="margin-top: 7px; margin-bottom: 20px; margin-left: 2px ;width: 200px;">
+                  <el-option 
+                    v-for="item in departmentList"
+                    v-bind:value="item.department_no"
+                    v-bind:label="item.department_name" >
+                  </el-option>
+              </el-select >
+            </el-col>
+
             <div class="title" style="max-width:100px;margin-top: 20px; margin-bottom: 20px; margin-left: 5px; margin-right: 0px">填表日期:
             </div>
             <el-date-picker type="date" placeholder="选择日期"
@@ -120,6 +134,7 @@
             var myDate = new Date();
             return {
                 userInfo: {},
+                fetchSubDepartmentsURL: HOME + "DepartmentInfo/fetchSubDepartments",
                 submitUrl: HOME + "FilterDustStatistics/SubmitData",
                 getAllTrainColumnUrl: HOME + "TrainColumn/getRecords",
                 myDate:Date(),
@@ -146,9 +161,13 @@
                             },*/
                         ],//e.g
                         problem: '',
-                        date:''
+                        date:'',
+                        department_no: "",
                     }]
                 },
+                department_no: "",
+                departmentList:[],
+                clearableDepart:true,
                 trainColumns: [],
                 errorMsg: '',
                 isError: false,
@@ -233,6 +252,7 @@
                             problem: item.problem,
                             date:item.date,
                             guid:item.guid,
+                            department_no:_this.department_no,
                         });
                     }
                 }
@@ -315,8 +335,10 @@
                 var iserror = false;
                 var isTrainError = true;
                 for (var i = formObj.data.length - 1; i >= 0; i--) {
-                    var item = formObj.data[i];                    
+                    var item = formObj.data[i];                   
+
                     for (var j = 0; j < item.train_model_data.length; j++) {
+
                         if (!isStringEmpty(item.train_model_data[j].train_column)) {
                             isTrainError = false;
                             break;
@@ -378,6 +400,36 @@
             }
         },
         created: function () {
+
+          this.userInfo = JSON.parse(sessionStorage.getItem('user'));
+		  if (this.userInfo != null && this.userInfo.department_no != "001") {
+			    //非公司管理员
+			    _this.departmentList.push({
+				    "department_no": this.userInfo.department_no,
+				    "department_name": this.userInfo.department_name
+			    })
+
+                _this.department_no = this.userInfo.department_no;
+                _this.clearableDepart = false;
+
+		    } else {
+			    $.ajax({
+				    url: _this.fetchSubDepartmentsURL,
+				    type: 'POST',
+				    dataType: 'json',
+				    data: {},
+				    success: function (data) {
+					    if (data.status != 0) {
+						    var list = data.info;
+						    for (var i = 0; i < list.length; i++) {
+							    _this.departmentList.push(copyObject(list[i]));
+						    }
+					    }
+
+				    },
+			    });
+            }
+
             _this.getAllTrainColumn();
             _this.trainModels = getTrainModel();
             

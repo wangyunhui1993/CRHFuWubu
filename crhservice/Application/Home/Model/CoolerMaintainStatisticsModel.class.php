@@ -214,6 +214,9 @@ class CoolerMaintainStatisticsModel extends Model
                 if (isset($info['train_column'])) {
                     $data['train_column'] = $info['train_column'];
                 }
+                if (isset($info['department_no'])) {
+                    $data['department_no'] = $condition['data'][$i]['department_no'];
+                }
                 $result = $m->data($data)->save();
                 if (!is_numeric($result))  {
                     $m->rollback();

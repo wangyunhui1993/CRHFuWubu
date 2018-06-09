@@ -197,14 +197,14 @@ class FilterDustStatisticsModel extends Model
 
             if ($condition['department_no']) {
                 $departmentStr = $condition['department_no'];
-                $whereSql .= " AND (`department_no`='$departmentStr')";
+                $whereSql .= " AND (filter_dust_statistics.department_no='$departmentStr')";
             }
         }
 
         //left join `train_column` on((`cooler_maintain_statistics`.`train_column` = `train_column`.`id`)) 
         $list = M('filter_dust_statistics')
-            ->where($data)
-            ->field('filter_dust_statistics.id,date,filter_dust_statistics.train_column,number,problem,
+            ->where($whereSql)
+            ->field('filter_dust_statistics.id,date,filter_dust_statistics.train_column,number,problem,filter_dust_statistics.department_no,
             filter_dust_statistics.train_model,guid,train_column.train_column as train_columnName')
             ->order("guid desc")
             ->join('LEFT JOIN train_column ON filter_dust_statistics.train_column = train_column.id')
@@ -250,6 +250,10 @@ class FilterDustStatisticsModel extends Model
 
                 if (isset($info['guid'])) {
                     $data['guid'] =$info['guid'];
+                }
+
+                if (isset($info['department_no'])) {
+                    $data['department_no'] =$info['department_no'];
                 }
                 
                 if($bNeedInsert)

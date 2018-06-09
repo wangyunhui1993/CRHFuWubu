@@ -23,10 +23,9 @@
          </el-select>
 
         <el-col :span="4" >
-
         <label for="depart">部门:</label>
         <el-select v-model="form.department_no"
-                    clearable
+                    :clearable="clearableDepart"
                     style="width: 200px;" >
             <el-option
                 v-for="item in departmentList"
@@ -34,7 +33,6 @@
               v-bind:label="item.department_name" >
             </el-option >
           </el-select >
-
         </el-col>
 
         <el-button type="primary" icon="search" @click="search" >查询</el-button>
@@ -151,7 +149,7 @@
            <template scope="scope">
               <label for="depart">部门:</label>
               <el-select id="depart" v-model="scope.row.department_no"
-                          clearable
+                          :clearable="clearableDepart"
                           style="margin-top: 8px; margin-left: 2px ;width: 200px;">
                   <el-option
                     v-for="item in departmentList"
@@ -223,7 +221,7 @@
         
         tableData:[],
         departmentList:[],
-
+        clearableDepart:true,
         multipleSelection: [],
         total: 0,
         page: 1,
@@ -503,7 +501,7 @@
 			    })
 
           _this.form.department_no = this.userInfo.department_no;
-
+          _this.clearableDepart = false;
           this.onSearchRecordCounts();
 		    } else {
 

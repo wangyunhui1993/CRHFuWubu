@@ -19,6 +19,20 @@
 		                :value="item.id" >
                 </el-option >
          </el-select >
+
+		<el-col :span="4" >
+          <label for="depart">部门:</label>
+          <el-select v-model="form.department_no"
+                    :clearable="clearableDepart"
+                    style="width: 200px;" >
+            <el-option
+                v-for="item in departmentList"
+              v-bind:value="item.department_no"
+              v-bind:label="item.department_name" >
+            </el-option >
+          </el-select >
+        </el-col>
+
         <el-button type="primary" icon="search" @click="search" >查询</el-button >
       </el-col >
         <br >
@@ -123,6 +137,22 @@
 						</el-table-column >
 					</el-table-column >
 				</template>
+
+				<el-table-column  width="280">
+				<template scope="scope">
+					<label for="depart">部门:</label>
+					<el-select id="depart" v-model="scope.row.department_no"
+								:clearable="clearableDepart"
+								style="margin-top: 8px; margin-left: 2px ;width: 200px;">
+						<el-option
+							v-for="item in departmentList"
+							v-bind:value="item.department_no"
+							v-bind:label="item.department_name" >
+						</el-option >
+					</el-select >
+					</template>
+				</el-table-column>
+
                 <el-table-column
 		                width="360"
 		                prop="problem"
@@ -177,6 +207,7 @@
 		  _this = this;
 		  return {
 			  userInfo: {},
+			  fetchSubDepartmentsURL: HOME + "DepartmentInfo/fetchSubDepartments",
 			  queryDataUrl: HOME + "filterDustStatistics/getStatisticsData",
 			  queryCountUrl: HOME + "filterDustStatistics/getRecordsCount",
 			  deleteUrl: HOME + "filterDustStatistics/delete",
@@ -189,10 +220,12 @@
 				  start_records: 0,
 				  length: 10,
 				  train_column: '',
+				  department_no: "",
 			  },
 
 			  tableData: [],
-
+			  departmentList:[],
+			  clearableDepart:true,
 			  multipleSelection: [],
 			  total: 0,
 			  page: 1,
@@ -211,6 +244,7 @@
 //							  },//e.g
 //						  ],
 //						  problem: '',
+//						  department_no: '',
 //					  }
 				  ],
 			  },
@@ -373,12 +407,14 @@
 			  _this.modifyDialogVisible = true;
 			  _this.isError = false;
 			  _this.errorMsg = '';
+			
+			 var queryData = {date:data.date,department_no:_this.form.department_no};
 
 			  $.ajax({
 				  url: _this.getStatisticsAtDateUrl,
 				  type: 'POST',
 				  dataType: 'json',
-				  data: data,
+				  data: queryData,
 				  success: function (data) {
 					  if (data.status) {
 						  _this.modifyForm.data = [];
@@ -389,6 +425,11 @@
 									var guid = datainfo[i]['guid'];
 									var problem = datainfo[i]['problem'];	
 									var submitdate = datainfo[i]['date'];	
+									var department_no = null;
+									if(  datainfo[i]['department_no'] )
+									{
+										department_no = datainfo[i]['department_no'];
+									}
 
 									var notInitedTMode = new Array(_this.trainModels.length).fill(true);
 
@@ -444,6 +485,7 @@
 									itemdataForm.date = submitdate;
 									//itemdataForm.id = id;
 									itemdataForm.train_model_data = Tmodeldata;
+									itemdataForm.department_no = department_no;
 
 									_this.modifyForm.data.push(itemdataForm);
 						  }
@@ -477,6 +519,7 @@
 							  number: item.train_model_data[j].number,
 							  train_model: item.train_model_data[j].train_model,
 							  problem: item.problem,
+							  department_no:item.department_no,
 						  });
 					  }
 				  }
@@ -587,7 +630,39 @@
 	  },
 	  computed: {},
 	  created: function () {
-		  this.onSearchRecordCounts();
+
+     	this.userInfo = JSON.parse(sessionStorage.getItem('user'));
+		    if (this.userInfo != null && this.userInfo.department_no != "001") {
+			    //非公司管理员
+			    _this.departmentList.push({
+				    "department_no": this.userInfo.department_no,
+				    "department_name": this.userInfo.department_name
+			    })
+
+				_this.form.department_no = this.userInfo.department_no;
+				_this.clearableDepart = false;
+				this.onSearchRecordCounts();
+		    } else {
+
+			    $.ajax({
+				    url: _this.fetchSubDepartmentsURL,
+				    type: 'POST',
+				    dataType: 'json',
+				    data: {},
+				    success: function (data) {
+					    if (data.status != 0) {
+						    var list = data.info;
+						    for (var i = 0; i < list.length; i++) {
+							    _this.departmentList.push(copyObject(list[i]));
+						    }
+					    }
+
+              	_this.onSearchRecordCounts();
+
+				    },
+			    });
+		    }
+
 		  _this.getAllTrainColumn();
 		  _this.trainModels = getTrainModel();
 	  },
