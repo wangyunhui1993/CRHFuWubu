@@ -95,6 +95,8 @@ class FilterDustStatisticsController extends Controller
         $SumNumber1 = 0;
         $SumNumber2 = 0;
         $SumNumber3 = 0;
+        $SumNumber6 = 0;
+        $SumNumber400BF = 0;
 
         $CurDate = 0;
         $j = 0;
@@ -134,6 +136,20 @@ class FilterDustStatisticsController extends Controller
 
                 $resData[$j]["CRH3task_SumNumber"] = $SumNumber3;
             }
+            else if ($res[$i]["train_model"] == 3)
+            {
+                $resData[$j]["CRH6task_number"] = $res[$i]["task_number"] ;
+                $SumNumber6 = $resData[$j]["CRH6task_number"] + $SumNumber6;
+
+                $resData[$j]["CRH6task_SumNumber"] = $SumNumber6;
+            }
+            else if ($res[$i]["train_model"] == 4)
+            {
+                $resData[$j]["CRH400BFtask_number"] = $res[$i]["task_number"] ;
+                $SumNumber400BF = $resData[$j]["CRH400BFtask_number"] + $SumNumber400BF;
+
+                $resData[$j]["CRH400BFtask_SumNumber"] = $SumNumber400BF;
+            }
 
             $resData[$j]["date"] = $res[$i]["date"];
         }
@@ -143,7 +159,9 @@ class FilterDustStatisticsController extends Controller
         $columnHeader = Array('日期' => 'date',
             'CRH1数量' => 'CRH1task_number','CRH1累计数量' => 'CRH1task_SumNumber',
             'CRH2数量' => 'CRH2task_number','CRH2累计数量' => 'CRH2task_SumNumber',
-            'CRH3数量' => 'CRH3task_number','CRH3累计数量' => 'CRH3task_SumNumber'
+            'CRH3数量' => 'CRH3task_number','CRH3累计数量' => 'CRH3task_SumNumber',
+            'CRH6数量' => 'CRH6task_number','CRH6累计数量' => 'CRH6task_SumNumber',
+            'CRH400BF数量' => 'CRH400BFtask_number','CRH400BF累计数量' => 'CRH400BFtask_SumNumber'
         );
 
         $dtNow = new \DateTime('now', new \DateTimeZone('UTC'));

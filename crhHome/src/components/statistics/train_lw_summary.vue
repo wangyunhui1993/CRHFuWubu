@@ -12,7 +12,7 @@
                 <div class="panel-body" >
                     <el-form :model="queryFilters" label-position="left" label-width="75px" style="margin-top:20px;" >
                         <el-form-item label="作业日期:" >
-                            <el-col :span="5" >
+                            <el-col :span="3" >
                                 <el-form-item prop="dateStart" >
                                     <el-date-picker type="date" placeholder="起始日期时间" format="yyyy-MM-dd"
                                                     v-model="queryFilters.dateStart"
@@ -22,8 +22,8 @@
                                     </el-date-picker >
                                 </el-form-item >
                             </el-col >
-                            <el-col class="line" :span="1" style="margin-left: 25px;" >至</el-col >
-                            <el-col :span="5" style="margin-left: 13px;" >
+                            <el-col class="line" :span="1" style="margin-left: 8px;" >至</el-col >
+                            <el-col :span="3" style="margin-left: 13px;" >
                                 <el-form-item prop="dateEnd" >
                                     <el-date-picker type="date" placeholder="结束日期时间" format="yyyy-MM-dd"
                                                     v-model="queryFilters.dateEnd"
@@ -40,6 +40,19 @@
 		                                @click="onMonth" >本月
                                 </el-button >
                             </el-col >
+
+							<el-col :span="5" >
+								<label for="departSel">部门:</label>
+								<el-select id="departSel" ref="departSelRef" v-model="queryFilters.department_no"
+											:clearable="clearableDepart"
+											style="margin-left: 2px ;width: 200px;">
+									<el-option
+									v-for="item in departmentList"
+									v-bind:value="item.department_no"
+									v-bind:label="item.department_name" >
+									</el-option>
+								</el-select >
+							</el-col>
 
                             <el-col :span="2" >
                                 <el-button
@@ -223,13 +236,15 @@
 		    _this = this;
 		    return {
 			    userInfo: {},
+				fetchSubDepartmentsURL: HOME + "DepartmentInfo/fetchSubDepartments",
 			    queryCountUrl: HOME + "Statistics/getTrainLWSummaryCount",
 			    queryDataUrl: HOME + "Statistics/getTrainLWSummary",
 				exportUrl: HOME + "Statistics/exportLWStatics",
 
 				queryDataByDateUrl: HOME + "Statistics/QueryTrainLWStatisticsByDate",				
 				queryDateFilters: {
-				    date: ''
+				    date: '',
+					department_no:'',
 			    },
 
 			    isError: false,
@@ -237,7 +252,10 @@
 			    queryFilters: {
 				    dateStart: '',
 				    dateEnd: '',
+					department_no:'',
 			    },
+        		departmentList:[],
+        		clearableDepart:true,
 
 			    pickerOpt: {
 				    disabledDate(time) {
@@ -456,6 +474,8 @@
 				_this.showDetailDialogDate = new Date(date).format('yyyy 年 MM 月 dd 日');
 
 				_this.queryDateFilters.date = date;
+				_this.queryDateFilters.department_no = _this.queryFilters.department_no;
+
 			    $.ajax({
 				    url: _this.queryDataByDateUrl,
 				    type: 'POST',
@@ -559,11 +579,43 @@
 		    }
 	    },
 	    created: function () {
-		    this.userInfo = JSON.parse(sessionStorage.getItem('user'));
+		    //this.userInfo = JSON.parse(sessionStorage.getItem('user'));
 	    },
 	    mounted: function () {
 		    this.onMonth();
-		    this.onSearchRecordCounts();
+		    
+			this.userInfo = JSON.parse(sessionStorage.getItem('user'));
+		    if (this.userInfo != null && this.userInfo.department_no != "001") {
+				//非公司管理员
+				_this.departmentList.push({
+					"department_no": this.userInfo.department_no,
+					"department_name": this.userInfo.department_name
+				})
+
+				_this.queryFilters.department_no = this.userInfo.department_no;
+				_this.clearableDepart = false;
+
+				_this.onSearchRecordCounts();
+
+		    } else {
+
+			    $.ajax({
+				    url: _this.fetchSubDepartmentsURL,
+				    type: 'POST',
+				    dataType: 'json',
+				    data: {},
+				    success: function (data) {
+					    if (data.status != 0) {
+						    var list = data.info;
+						    for (var i = 0; i < list.length; i++) {
+							    _this.departmentList.push(copyObject(list[i]));
+						    }
+					    }
+
+						_this.onSearchRecordCounts();
+				    },
+			    });
+       		}
 	    },
     }
 

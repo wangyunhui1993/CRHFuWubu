@@ -233,7 +233,7 @@ class FilterClothStatisticsModel extends Model
             }
             if ($condition['department_no']) {
                 $departmentStr = $condition['department_no'];
-                $whereSql .= " AND (`department_no`='$departmentStr')";
+                $whereSql .= " AND (filter_cloth_statistics.department_no='$departmentStr')";
             }
         }
 

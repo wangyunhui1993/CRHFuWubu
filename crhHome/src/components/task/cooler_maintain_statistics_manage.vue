@@ -24,7 +24,7 @@
         <label for="depart">部门:</label>
         <el-select v-model="form.department_no"
                     :clearable="clearableDepart"
-                    style="width: 200px;" >
+                    style="width: 200px; margin-bottom: 25px;" >
             <el-option
                 v-for="item in departmentList"
               v-bind:value="item.department_no"
