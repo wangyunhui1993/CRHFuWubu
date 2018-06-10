@@ -157,8 +157,9 @@
 
 		<el-dialog v-model="detailDialogVisible" size="normal" >
 			<div id="printContent"  class="table-responsive" style="text-align: center;margin-top: -10px">
+				<div class="myborder cooler_maintain_query_statistics">
 				<h3 >CRH2型动车组散热设备清洁保养工作量统计</h3>
-				<h5 style="text-align: right;margin:20px;">_______分公司__________动车服务部</h5>
+				<h5 style="text-align: right;margin:20px;">升亮分公司__________动车服务部</h5>
 				<h5 style="text-align: right;margin:20px;">{{showDetailDialogDate}}</h5>
 				<el-table :data="detailForm.data"
 						:summary-method="getSummaries"
@@ -214,6 +215,7 @@
                 		</el-col>
             		</el-row>
         		</el-col>
+			</div>
 			</div>
 
 			<div slot="footer" class="dialog-footer" style="margin-top: 50px;text-align: right;" >
@@ -639,5 +641,8 @@
 	    float: left;
 	    color: #475669;
 	    font-weight: bold
+    }
+    .cooler_maintain_query_statistics{
+    	border-bottom: 1px solid #000;
     }
 </style >

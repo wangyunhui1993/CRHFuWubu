@@ -184,9 +184,9 @@
 		background-color: rgba(0, 0, 0, 0.8);class="table-responsive" border: 1px solid rgba(255, 0, 0, 0.3);background-color: rgba(0, 0, 0, 0.8); 
 		width:1070px; "</dialog-->
   		<el-dialog class="table-responsive" custom-class="detailDialog" v-model="detailDialogVisible" >
-			<div id="printContent" style="width:100%;text-align: center;margin-top: -10px ;">
+			<div id="printContent" style="width:100%;text-align: center;margin-top: -10px ;" class="myborder">
 				<h3>动车组滤尘网清洗拆装工作量统计</h3>
-				<h5 style="text-align: right;margin:20px;">_______分公司__________动车服务部</h5>
+				<h5 style="text-align: right;margin:20px;">升亮分公司__________动车服务部</h5>
 				<h5 style="text-align: right;margin:20px;">{{showDetailDialogDate}}</h5>
 				<!-- //////////////////-->
 				<el-table :data="detailForm.data"

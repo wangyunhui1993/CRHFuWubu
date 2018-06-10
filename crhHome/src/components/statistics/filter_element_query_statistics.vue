@@ -154,9 +154,9 @@
             </div -->
         </el-col >
 		<el-dialog v-model="detailDialogVisible" size="normal" >
-			<div id="printContent"  class="table-responsive" style="text-align: center;margin-top: -10px">
+			<div id="printContent"  class="table-responsive myborder" style="text-align: center;margin-top: -10px">
 				<h3 >CRH2型动车组滤芯清洁工作量统计</h3>
-				<h5 style="text-align: right;margin:20px;">_______分公司__________动车服务部</h5>
+				<h5 style="text-align: right;margin:20px;">升亮分公司__________动车服务部</h5>
 				<h5 style="text-align: right;margin:20px;">{{showDetailDialogDate}}</h5>
 				<el-table :data="detailForm.data"
 						:summary-method="getSummaries"
