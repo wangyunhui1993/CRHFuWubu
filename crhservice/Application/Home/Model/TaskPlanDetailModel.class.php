@@ -224,15 +224,15 @@ class TaskPlanDetailModel extends Model
         $transPlan->startTrans();
         //功能优化，可以多个作业一起开始  2017-06-14
         if(!is_array($condition)) {
-        $data['id'] = $condition['id'];
-        $data['state'] = "2";//“正在工作”状态
-        $datetime = new \DateTime();
-        $data['begin_time'] = $datetime->format("Y-m-d H:i:s");
-        $count = $transDetail->data($data)->save();
-        //print_r($count);
-        if($count < 0) {
-            $tranResult = false;
-        }
+            $data['id'] = $condition['id'];
+            $data['state'] = "2";//“正在工作”状态
+            $datetime = new \DateTime();
+            $data['begin_time'] = $datetime->format("Y-m-d H:i:s");
+            $count = $transDetail->data($data)->save();
+            //print_r($count);
+            if($count < 0) {
+                $tranResult = false;
+            }
         }else {
             $datetime = new \DateTime();
             for ($i=0; $i<sizeof($condition) && $tranResult; $i++) {
@@ -278,15 +278,16 @@ class TaskPlanDetailModel extends Model
         //$data['id'] = $condition['id'];
         $transDetail = M('task_plan_detail');
         $transDetail->startTrans();
-        if(!is_array($condition)) {
-        $data['id'] = $condition['id'];
-        $data['state'] = "3";//“工作结束”状态
-        $datetime = new \DateTime();
-        $data['end_time'] = $datetime->format("Y-m-d H:i:s");
-        $count = M('task_plan_detail')->data($data)->save();
-        if($count < 0) {
-                $tranResult = false;
-            }
+        if(!is_array($condition)) 
+        {
+            $data['id'] = $condition['id'];
+            $data['state'] = "3";//“工作结束”状态
+            $datetime = new \DateTime();
+            $data['end_time'] = $datetime->format("Y-m-d H:i:s");
+            $count = M('task_plan_detail')->data($data)->save();
+            if($count < 0) {
+                    $tranResult = false;
+                }
         } else {
             $datetime = new \DateTime();
             for ($i=0; $i<sizeof($condition) && $tranResult; $i++) {
