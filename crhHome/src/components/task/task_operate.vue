@@ -470,7 +470,7 @@
                           :value="item.id">
                   </el-option>
                 </el-select> -->
-                    <el-input :disabled="scope.row.state == '1' || scope.row.state == '3'"
+                    <el-input :disabled="scope.row.state == '3'"
                      v-show="true" size="small" v-model="scope.row.trouble_maintain_id"></el-input>
                     <!-- <span v-show="!scope.row.edit">{{ scope.row.title }}</span> -->
 
@@ -489,7 +489,7 @@
                           :value="item.id">
                   </el-option>
                 </el-select> -->
-                 <el-input :disabled="scope.row.state == '1' || scope.row.state == '3'"
+                 <el-input :disabled="scope.row.state == '3'"
                      v-show="true" size="small" v-model="scope.row.situation_content_id"></el-input>
               </template>
             </el-table-column>
@@ -1476,13 +1476,13 @@
               showMessage(this, "作业内容为空！", 0)
             } else {
 
-              for(let i=0; i < this.taskContentData.length; i++) {
-                if(this.taskContentData[i].state != "3") {
-                  allFinished = false;
-                  showMessage(this, "请结束所有作业内容后再出库！", 0)
-                  break;
-                }
-              }
+//            for(let i=0; i < this.taskContentData.length; i++) {
+//              if(this.taskContentData[i].state != "3") {
+//                allFinished = false;
+//                showMessage(this, "请结束所有作业内容后再出库！", 0)
+//                break;
+//              }
+//            }
               if(allFinished) {
                 this.endTaskPlanConfirmVisible = true;
               }

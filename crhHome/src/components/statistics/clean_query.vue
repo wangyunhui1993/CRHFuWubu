@@ -98,13 +98,14 @@
                                               auto-complete="off" ></el-input >
                                 </el-form-item >
                             </el-col >
-                            <el-col :span="2" style="float: right" >
+                            <el-col :span="4" style="float: right" >
                                 <el-button
 		                                icon="document"
 		                                size="normal"
 		                                type="primary"
 		                                @click="onExport" >导出
                                 </el-button >
+                                 <el-button @click="printPage" type="primary">打印</el-button >
                             </el-col >
                         </el-row >
 
@@ -221,6 +222,50 @@
 	        <!--</el-pagination >-->
 	        <!--</div >-->
         </el-col >
+        <div style="display: none;">
+        	<div id="subOutputRank-print"  class="clean_query">
+        		<div v-for="(list,index) in printData" :key="index"  style="page-break-after:always;">
+        <TABLE border="1" style="font-size:9pt;" width="100%" align="center">
+<THEAD style="display:table-header-group;font-weight:bold;border: none;">
+<TR><TD colspan="18" style="">
+	<div>
+		<h4 style="text-align: center;">动车保洁、吸污作业单</h4>
+	</div>
+	<div style="padding-bottom: 10px;margin-bottom: 10px;">
+		<span style="float: left;"><u>&nbsp;&nbsp;&nbsp;  升亮 &nbsp;&nbsp;&nbsp;  </u>分公司<u>&nbsp;&nbsp;&nbsp;  {{depname}} &nbsp;&nbsp;&nbsp;</u>  服务部（客技站）</span>
+	<span style="float: right;"><u>&nbsp;&nbsp;{{printTime.y}}&nbsp;&nbsp;</u>年<u>&nbsp;&nbsp;&nbsp;{{printTime.m}}&nbsp;&nbsp;&nbsp;</u>月<u>&nbsp;&nbsp;{{printTime.d}}&nbsp;&nbsp;</u>日</span>
+	</div>
+</TD></TR>
+</THEAD>
+<TBODY style="text-align:center"">
+	<TR>
+<TD colspan="18" >
+	<span style="float: left;">项目名称：{{queryFilters.task_content_id|convertTaskContentName}}</span>
+</TD>
+</TR>
+<TR><TD>序号</TD><TD>计划车组号</TD><TD>数量</TD><TD>实际车组号</TD><TD>数量</TD><TD>作业组长</TD><TD>公司质检员</TD><TD>段方质检员</TD><TD>备注</TD>
+	<TD>序号</TD><TD>计划车组号</TD><TD>数量</TD><TD>实际车组号</TD><TD>数量</TD><TD>作业组长</TD><TD>公司质检员</TD><TD>段方质检员</TD><TD>备注</TD>
+</TR>
+<TR v-for="(itemList,itemListIndex) in list"  :key="itemListIndex"> <TD>{{itemListIndex + (index* pageMaxNum * 2) + 1}}</TD><TD  v-for="item1 in 8">{{itemList[item1-1]}}</TD>
+	<TD>{{itemListIndex + (index* pageMaxNum * 2) + pageMaxNum + 1}}</TD><TD  v-for="item2 in 8">{{itemList[item2+7]}}</TD>
+</TR>
+</TBODY>
+<TFOOT style="display:table-footer-group;font-weight:bold">
+<TR>
+<TD colspan="18" style="">
+	<div style="margin: 15px 0;">
+		<span>合计：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;计划数量：{{(tableData.length/pageMaxNum/2>=(index+1))?(pageMaxNum * 2):(tableData.length - (pageMaxNum * 2 * index))}}&nbsp;&nbsp;&nbsp;&nbsp;实际数量：{{(tableData.length/pageMaxNum/2>=(index+1))?(pageMaxNum * 2):(tableData.length - (pageMaxNum * 2 * index))}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	</div>
+	<div style="margin: 15px 0;">
+		<span style="float: right;margin-right: 20px;">签认：<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>(分公司负责人)&nbsp;&nbsp;&nbsp;&nbsp;签认：<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>(段方负责人) </span>
+	</div>
+</TD>
+</TR>
+</TFOOT>
+</TABLE>
+    </div>
+        	</div>
+        </div>
     </div >
 </template >
 
@@ -290,9 +335,59 @@
 			    formLabelWidth: '100px',
 			    loadingUI: false,
 				autoSearch: false,
+				pageMaxNum:15,
+				printData:[],
+				depname:"",
+				printTime:{
+					y:"",
+					m:"",
+					d:"",
+				},
 		    }
 	    },
 	    methods: {
+	    	formatPrintData(data){
+	    		this.printData=[];
+	    		let pages=Math.ceil(this.tableData.length / (this.pageMaxNum*2) );
+	    		for(var i=0;i<pages;i++){
+	    			this.printData[i]=[];
+	    			let v=-1;
+	    			for(var j=this.pageMaxNum*2*i;j<this.pageMaxNum*2*(i+1);j++){
+	    				v++;
+	    				if(v<this.pageMaxNum){
+	    					this.printData[i][v]=[];
+	    					if(this.tableData.length>j){
+	    						this.printData[i][v].push(this.tableData[j].train_column_name||"",this.tableData[j].task_count,this.tableData[j].train_column_name,this.tableData[j].task_count,"","","","");
+	    					}else{
+	    						this.printData[i][v].push("","","","","","","","");
+	    					}
+	    					console.log(this.printData[i][v]);
+	    				}else{
+	    					if(this.tableData.length>j){
+	    						this.printData[i][v-this.pageMaxNum].push(this.tableData[j].train_column_name||"",this.tableData[j].task_count,this.tableData[j].train_column_name,this.tableData[j].task_count,"","","","");
+	    					}else{
+	    						this.printData[i][v-this.pageMaxNum].push("","","","","","","","");
+	    					}
+	    				}
+	    			}
+	    		}
+	    		console.log(this.printData);
+	    		return this.printData;
+	    	},
+	    	printPage(){
+	    		this.printContent();
+	    	},
+	    	     printContent(e){
+               let subOutputRankPrint = document.getElementById('subOutputRank-print');  
+               //console.log(subOutputRankPrint.innerHTML);  
+               let newContent =subOutputRankPrint.outerHTML;  
+               let oldContent = document.body.innerHTML;  
+               document.body.innerHTML = newContent;  
+               window.print();  
+               window.location.reload();
+               //document.body.innerHTML = oldContent;  
+               return false;  
+           } ,
 		    onToday()
 		    {
 			    var currentDate = new Date();
@@ -314,12 +409,26 @@
 			    _this.queryFilters.dateEnd = new Date(y, m, d, 8);
 		    },
 		    onSearch() {
+		    	this.depname='';
+		    	for(var item of this.departmentList){
+		    		console.log(item);
+		    		console.log(this.queryFilters.department_no);
+		    		if(item.department_no==this.queryFilters.department_no){
+		    			this.depname=item.department_name;
+		    			console.log(this.depname);
+		    		}
+		    	}
 			    _this.onSearchRecordCounts();
 		    },
 			onDateChange(){
 				var endDate   = Date.parse(_this.queryFilters.dateEnd);
 				var startDate = Date.parse(_this.queryFilters.dateStart);
 
+				var timer=new Date(_this.queryFilters.dateStart);
+	    		this.printTime.y=timer.getFullYear();
+	    		this.printTime.m=timer.getMonth() + 1;
+	    		this.printTime.d=timer.getDate();
+	    		console.log(this.printTime);
 				var dateDiff = endDate- startDate;
 				var days = Math.floor(dateDiff / (24 * 3600 * 1000));
 				var ds = new Date(startDate);
@@ -486,6 +595,7 @@
 					    _this.loadingUI = false;
 					    if (data.status) {
 						    _this.tableData = data.info;
+						    _this.formatPrintData(data.info);
 //						    for (var i = 0; i < _this.tableData.length; i++) {
 //							    _this.tableData[i].no = i + 1;
 //						    }
@@ -650,5 +760,8 @@
 	    float: left;
 	    color: #475669;
 	    font-weight: bold
+    }
+    .clean_query tbody tr td{
+    	height:30px;
     }
 </style >

@@ -186,7 +186,7 @@
   		<el-dialog class="table-responsive" custom-class="detailDialog" v-model="detailDialogVisible" >
 			<div id="printContent" style="width:100%;text-align: center;margin-top: -10px ;" class="myborder">
 				<h3>动车组滤尘网清洗拆装工作量统计</h3>
-				<h5 style="text-align: right;margin:20px;">升亮分公司__________动车服务部</h5>
+				<h5 style="text-align: right;margin:20px;">升亮分公司<u>&nbsp;&nbsp;{{depname}}&nbsp;&nbsp;</u>动车服务部</h5>
 				<h5 style="text-align: right;margin:20px;">{{showDetailDialogDate}}</h5>
 				<!-- //////////////////-->
 				<el-table :data="detailForm.data"
@@ -274,6 +274,7 @@
 	    data () {
 		    _this = this;
 		    return {
+		    	depname:"",
 			    userInfo: {},
 				fetchSubDepartmentsURL: HOME + "DepartmentInfo/fetchSubDepartments",
 			    queryCountUrl: HOME + "FilterDustStatistics/getLWCleanStatisticsCount",
@@ -390,6 +391,15 @@
 			    _this.queryFilters.dateEnd = new Date(y, m, d);
 		    },
 		    onSearch() {
+		    	this.depname='';
+		    	for(var item of this.departmentList){
+		    		console.log(item);
+		    		console.log(this.queryFilters.department_no);
+		    		if(item.department_no==this.queryFilters.department_no){
+		    			this.depname=item.department_name;
+		    			console.log(this.depname);
+		    		}
+		    	}
 			    _this.onSearchRecordCounts();
 		    },
 
