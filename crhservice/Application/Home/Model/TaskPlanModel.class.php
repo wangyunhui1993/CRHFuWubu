@@ -220,10 +220,15 @@ class TaskPlanModel extends Model
         $trans->startTrans();
         $transDetail->startTrans();
         for ($i = 0; $i < sizeof($info['choosed_content']) && $tran_result; $i++) {
-
+ 
             $dataDetail['task_content_id'] = $info['choosed_content'][$i]['id'];
             $dataDetail['task_number'] = $startNum;
             $dataDetail['state'] = "1";//等待作业
+            if(isset($info['choosed_content'][$i]['piecework']))
+            {
+                $dataDetail['piecework'] = $info['choosed_content'][$i]['piecework'];//计件数
+            }
+            
             $tran_result = $transDetail->data($dataDetail)->add();
             //$tran_result = false;测试事务成功与否
         }
