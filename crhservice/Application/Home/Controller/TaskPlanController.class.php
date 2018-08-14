@@ -214,6 +214,25 @@ class TaskPlanController extends Controller
         $this->success($result, null, true);
     }
 
+    public function getTaskContentStatisticalbyDate($condition)
+    {
+        $resData = D('TaskPlan')->getTaskContentStatisticalbyDate($_POST);
+        if ($resData) {
+            $this->success($resData, null, true);
+        } else {
+            $this->error($_POST, null, true);
+        }
+    }
+    public function getTaskContentStatisticalByPeriodDate($condition)
+    {
+        $resData = D('TaskPlan')->getTaskContentStatisticalByPeriodDate($_POST);
+        if ($resData) {
+            $this->success($resData, null, true);
+        } else {
+            $this->error($_POST, null, true);
+        }
+    }
+
     public function exportTaskStatisticsDetailData()
     {
         $resData = D('TaskPlan')->exportTaskDetailStatistics($_POST);

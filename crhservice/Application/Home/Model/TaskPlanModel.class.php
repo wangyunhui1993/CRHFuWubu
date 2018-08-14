@@ -952,6 +952,121 @@ class TaskPlanModel extends Model
 
     }
 
+    public function getTaskContentStatisticalbyDate($condition)
+    {
+        $data = ' 1 ';
+        if ($condition) {
+            if (isset($condition['task_date'])&&$condition['task_date']!='') {
+                $beginStr = $condition['task_date'][0];
+                $endStr = $condition['task_date'][1];
+                if ($beginStr == $endStr) {
+                    $date = date("Y-m-d", strtotime($endStr . "+1 day"));
+                    $endStr = $date;
+                    $data .= " AND tp.task_date>='$beginStr' AND tp.task_date<='$endStr'";
+                    $data .= " AND IF(tp.task_date='$beginStr', tp.task_time>='08:00:00', tp.task_time<='08:00:00')";
+                } else {
+                    $data .= " AND tp.task_date>='$beginStr' AND tp.task_date<='$endStr'";
+                }
+            }
+            if (isset($condition['train_column'])&&$condition['train_column']!='') {
+                $str = $condition['train_column'];
+                $data .= " AND tp.train_column='$str' ";
+            }
+            if (isset($condition['station_track_no'])&&$condition['station_track_no']!='') {
+                $str = $condition['station_track_no'];
+                $data .= " AND tp.station_track_no='$str' ";
+            }
+            if (isset($condition['repair_id'])&&$condition['repair_id']!='') {
+                $str = $condition['repair_id'];
+                $data .= " AND tp.repair_id='$str' ";
+            }
+            if (isset($condition['state'])&&$condition['state']!='') {
+                $str = $condition['state'];
+                $data .= " AND tp.state='$str' ";
+            }
+            if (isset($condition['department_no'])&&$condition['department_no']!='') {
+                $str = $condition['department_no'];
+                $data .= " AND tc.department_no='$str' ";
+            }
+
+            if (isset($condition['taskContentlist'][0])) {
+
+                $taskObjList = $condition['taskContentlist'];                
+                $objStr=$objStr.'And tpd.task_content_id IN (-1';
+
+                for ($i = 0; $i < sizeof($taskObjList); $i++) {
+                    $objStr = $objStr.','.$taskObjList[$i];
+                }
+
+                $objStr=$objStr.')';
+
+                $data .= $objStr;
+            }
+        }
+
+        $list = M('task_plan')
+            ->alias("tp")
+            ->join("LEFT JOIN train_column AS tc ON(tc.id=tp.train_column) 
+                    LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
+            ->where($data)
+            ->field("tp.*,GROUP_CONCAT(tpd.task_content_id) as task_content_list")
+            ->limit($condition['start_record'], $condition['page_size'])
+            ->group("tp.task_number")
+            ->select();
+        for ($i = 0; $i < sizeof($list); $i++) {
+            if ($list[$i]['task_content_list'] != null) {
+                $list[$i]['task_content_list'] = explode(',', $list[$i]['task_content_list']);
+            }
+        }
+
+        return $list;
+
+    }
+    public function getTaskContentStatisticalByPeriodDate($condition)
+    {
+        $data = ' 1 ';
+        if ($condition) {
+            if (isset($condition['task_date'])&&$condition['task_date']!='') {
+                $beginStr = $condition['task_date'][0];
+                $endStr = $condition['task_date'][1];
+                if ($beginStr == $endStr) {
+                    $date = date("Y-m-d", strtotime($endStr . "+1 day"));
+                    $endStr = $date;
+                    $data .= " AND tp.task_date>='$beginStr' AND tp.task_date<='$endStr'";
+                    $data .= " AND IF(tp.task_date='$beginStr', tp.task_time>='08:00:00', tp.task_time<='08:00:00')";
+                } else {
+                    $data .= " AND tp.task_date>='$beginStr' AND tp.task_date<='$endStr'";
+                }
+            }
+
+            if (isset($condition['state'])&&$condition['state']!='') {
+                $str = $condition['state'];
+                $data .= " AND tp.state='$str' ";
+            }
+            if (isset($condition['department_no'])&&$condition['department_no']!='') {
+                $str = $condition['department_no'];
+                $data .= " AND tc.department_no='$str' ";
+            }
+        }
+
+        $list = M('task_plan')
+            ->alias("tp")
+            ->join("LEFT JOIN train_column AS tc ON(tc.id=tp.train_column) 
+                    LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
+            ->where($data)
+            ->field("tp.*,GROUP_CONCAT(tpd.task_content_id) as task_content_list")
+            ->limit($condition['start_record'], $condition['page_size'])
+            ->group("tp.task_number")
+            ->select();
+        for ($i = 0; $i < sizeof($list); $i++) {
+            if ($list[$i]['task_content_list'] != null) {
+                $list[$i]['task_content_list'] = explode(',', $list[$i]['task_content_list']);
+            }
+        }
+
+        return $list;
+
+    }
     public function exportTaskDataGroupByDate($condition)
     {
         $whereSql = ' WHERE 1 ';
