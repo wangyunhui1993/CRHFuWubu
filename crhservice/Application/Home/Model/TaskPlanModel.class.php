@@ -224,9 +224,13 @@ class TaskPlanModel extends Model
             $dataDetail['task_content_id'] = $info['choosed_content'][$i]['id'];
             $dataDetail['task_number'] = $startNum;
             $dataDetail['state'] = "1";//等待作业
+            
+            $defaultPiecework = M("task_content")->where('id='.$dataDetail['task_content_id'])->getField('piecework');//获取默认的计件数
+            $dataDetail['piecework'] = $defaultPiecework;
+
             if(isset($info['choosed_content'][$i]['piecework']))
             {
-                $dataDetail['piecework'] = $info['choosed_content'][$i]['piecework'];//计件数
+                $dataDetail['piecework'] = $info['choosed_content'][$i]['piecework'];//实际填写的计件数，比如滤网布更换(新)或滤网布更换(旧)两项
             }
             
             $tran_result = $transDetail->data($dataDetail)->add();

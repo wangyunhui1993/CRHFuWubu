@@ -94,6 +94,7 @@ class TaskContentModel extends Model
         $data['is_statistics'] = $info['is_statistics'];
         $data['department_no'] = $info['department_no'];
         $data['font_color'] = $info['font_color'];
+        $data['piecework'] = $info['piecework'];
 
         $result = M('task_content')->data($data)->add();
         return $result;
@@ -123,6 +124,10 @@ class TaskContentModel extends Model
         if ($info['font_color']) {
             $data['font_color'] = $info['font_color'];
         }
+        if ($info['piecework']) {
+            $data['piecework'] = $info['piecework'];
+        }
+
         $result = M('task_content')->data($data)->save();
         return $result;
     }
