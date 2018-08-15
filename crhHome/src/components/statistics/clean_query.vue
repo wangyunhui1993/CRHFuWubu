@@ -361,7 +361,7 @@
 	    					}else{
 	    						this.printData[i][v].push("","","","","","","","");
 	    					}
-	    					console.log(this.printData[i][v]);
+	    					//console.log(this.printData[i][v]);
 	    				}else{
 	    					if(this.tableData.length>j){
 	    						this.printData[i][v-this.pageMaxNum].push(this.tableData[j].train_column_name||"",this.tableData[j].task_count,this.tableData[j].train_column_name,this.tableData[j].task_count,"","","","");
@@ -371,7 +371,7 @@
 	    				}
 	    			}
 	    		}
-	    		console.log(this.printData);
+	    		//console.log(this.printData);
 	    		return this.printData;
 	    	},
 	    	printPage(){
@@ -428,7 +428,7 @@
 	    		this.printTime.y=timer.getFullYear();
 	    		this.printTime.m=timer.getMonth() + 1;
 	    		this.printTime.d=timer.getDate();
-	    		console.log(this.printTime);
+	    		//console.log(this.printTime);
 				var dateDiff = endDate- startDate;
 				var days = Math.floor(dateDiff / (24 * 3600 * 1000));
 				var ds = new Date(startDate);
