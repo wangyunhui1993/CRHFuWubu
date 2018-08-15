@@ -956,9 +956,9 @@ class TaskPlanModel extends Model
     {
         $data = ' 1 ';
         if ($condition) {
-            if (isset($condition['task_date'])&&$condition['task_date']!='') {
-                $beginStr = $condition['task_date'][0];
-                $endStr = $condition['task_date'][1];
+            if (isset($condition['dateStart'])&&$condition['dateEnd']!='') {
+                $beginStr = $condition['dateStart'];
+                $endStr = $condition['dateEnd'];
                 if ($beginStr == $endStr) {
                     $date = date("Y-m-d", strtotime($endStr . "+1 day"));
                     $endStr = $date;
@@ -968,59 +968,37 @@ class TaskPlanModel extends Model
                     $data .= " AND tp.task_date>='$beginStr' AND tp.task_date<='$endStr'";
                 }
             }
-            if (isset($condition['train_column'])&&$condition['train_column']!='') {
-                $str = $condition['train_column'];
-                $data .= " AND tp.train_column='$str' ";
-            }
-            if (isset($condition['station_track_no'])&&$condition['station_track_no']!='') {
-                $str = $condition['station_track_no'];
-                $data .= " AND tp.station_track_no='$str' ";
-            }
-            if (isset($condition['repair_id'])&&$condition['repair_id']!='') {
-                $str = $condition['repair_id'];
-                $data .= " AND tp.repair_id='$str' ";
-            }
-            if (isset($condition['state'])&&$condition['state']!='') {
-                $str = $condition['state'];
-                $data .= " AND tp.state='$str' ";
-            }
+
+
+            //if (isset($condition['state'])&&$condition['state']!='') {
+            //    $str = $condition['state'];
+                $data .= " AND tp.state='3' ";
+            //}
+
             if (isset($condition['department_no'])&&$condition['department_no']!='') {
                 $str = $condition['department_no'];
                 $data .= " AND tc.department_no='$str' ";
             }
-
-            if (isset($condition['taskContentlist'][0])) {
-
-                $taskObjList = $condition['taskContentlist'];                
-                $objStr=$objStr.'And tpd.task_content_id IN (-1';
-
-                for ($i = 0; $i < sizeof($taskObjList); $i++) {
-                    $objStr = $objStr.','.$taskObjList[$i];
-                }
-
-                $objStr=$objStr.')';
-
-                $data .= $objStr;
-            }
         }
+/*SELECT tpd.id,tpd.task_number,tpd.task_content_id,tpd.state,tpd.begin_time,tpd.end_time,tpd.piecework,tp.task_date,tp.task_time,SUM(tpd.piecework) as sumPiece
 
+FROM task_plan tp LEFT JOIN train_column AS tc ON(tc.id=tp.train_column) 
+                    LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)  WHERE (tp.state = 3 AND (
+                                    CONCAT(DATE_FORMAT(`task_date`,'%Y-%m-%d'),' ',TIME_FORMAT(`task_time`,'%H:%i:%s'))
+                                    BETWEEN '2018-08-12 08:00:00' AND '2018-08-15 08:00:00'
+                                   ) ) 
+group BY tpd.task_number,tpd.task_content_id */
         $list = M('task_plan')
             ->alias("tp")
-            ->join("LEFT JOIN train_column AS tc ON(tc.id=tp.train_column) 
-                    LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
+            ->join("LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
             ->where($data)
-            ->field("tp.*,GROUP_CONCAT(tpd.task_content_id) as task_content_list")
+            ->field("tpd.id,tp.task_date,tp.task_time,tpd.task_number,tpd.task_content_id,tpd.piecework,tp.repair_category,GROUP_CONCAT(tpd.piecework) as task_piecework_list,tpd.begin_time,tpd.end_time")
             ->limit($condition['start_record'], $condition['page_size'])
-            ->group("tp.task_number")
+            ->group("tpd.task_number,tpd.task_content_id")
+            ->order("tpd.task_number")
             ->select();
-        for ($i = 0; $i < sizeof($list); $i++) {
-            if ($list[$i]['task_content_list'] != null) {
-                $list[$i]['task_content_list'] = explode(',', $list[$i]['task_content_list']);
-            }
-        }
 
         return $list;
-
     }
     public function getTaskContentStatisticalByPeriodDate($condition)
     {

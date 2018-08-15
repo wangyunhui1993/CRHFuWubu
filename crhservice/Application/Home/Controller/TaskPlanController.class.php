@@ -214,7 +214,7 @@ class TaskPlanController extends Controller
         $this->success($result, null, true);
     }
 
-    public function getTaskContentStatisticalbyDate($condition)
+    public function getTaskContentStatisticalbyDate()
     {
         $resData = D('TaskPlan')->getTaskContentStatisticalbyDate($_POST);
         if ($resData) {
