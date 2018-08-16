@@ -992,7 +992,7 @@ group BY tpd.task_number,tpd.task_content_id */
             ->alias("tp")
             ->join("LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
             ->where($data)
-            ->field("tp.task_date,tp.task_time,tpd.task_number,tpd.task_content_id,tpd.piecework,tp.repair_category,GROUP_CONCAT(tpd.piecework) as task_piecework_list,tpd.begin_time,tpd.end_time")
+            ->field("tpd.task_number,tp.task_date,tp.task_time,tpd.task_number,tpd.task_content_id,tpd.piecework,tp.repair_category,GROUP_CONCAT(tpd.piecework) as task_piecework_list,tpd.begin_time,tpd.end_time")
             ->limit($condition['start_record'], $condition['page_size'])
             ->group("tpd.task_number,tpd.task_content_id")
             ->order("tpd.task_number")
