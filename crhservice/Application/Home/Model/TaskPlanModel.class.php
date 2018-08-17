@@ -988,15 +988,17 @@ FROM task_plan tp LEFT JOIN train_column AS tc ON(tc.id=tp.train_column)
                                     BETWEEN '2018-08-12 08:00:00' AND '2018-08-15 08:00:00'
                                    ) ) 
 group BY tpd.task_number,tpd.task_content_id */
-        $list = M('task_plan')
+        $subquery = M('task_plan')
             ->alias("tp")
             ->join("LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
             ->where($data)
-            ->field("tpd.task_number,tp.task_date,tp.task_time,tpd.task_number,tpd.task_content_id,tpd.piecework,tp.repair_category,GROUP_CONCAT(tpd.piecework) as task_piecework_list,tpd.begin_time,tpd.end_time")
+            ->field("tpd.task_number,tp.task_date,tp.task_time,tpd.task_content_id,tpd.piecework,tp.repair_category")
             ->limit($condition['start_record'], $condition['page_size'])
             ->group("tpd.task_number,tpd.task_content_id")
-            ->order("tpd.task_number")
-            ->select();
+            ->select(false);
+
+        $list =   M()->field("stresult.task_number,stresult.task_date,stresult.task_time,stresult.task_content_id,task_content.task_content as task_content_name,stresult.piecework,stresult.repair_category")
+            ->table("(".$subquery.") as stresult")->join("LEFT JOIN task_content ON (task_content.id = stresult.task_content_id)")->select();
 
         return $list;
     }
