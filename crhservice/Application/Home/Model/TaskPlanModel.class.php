@@ -955,6 +955,8 @@ class TaskPlanModel extends Model
     public function getTaskContentStatisticalbyDate($condition)
     {
         $data = ' 1 ';
+        $start_record = 0;
+        $page_size = 0;
         if ($condition) {
             if (isset($condition['dateStart'])&&$condition['dateEnd']!='') {
                 $beginStr = $condition['dateStart'];
@@ -969,36 +971,36 @@ class TaskPlanModel extends Model
                 }
             }
 
-
-            //if (isset($condition['state'])&&$condition['state']!='') {
-            //    $str = $condition['state'];
-                $data .= " AND tp.state='3' ";
-            //}
-
             if (isset($condition['department_no'])&&$condition['department_no']!='') {
                 $str = $condition['department_no'];
                 $data .= " AND tc.department_no='$str' ";
             }
-        }
-/*SELECT tpd.id,tpd.task_number,tpd.task_content_id,tpd.state,tpd.begin_time,tpd.end_time,tpd.piecework,tp.task_date,tp.task_time,SUM(tpd.piecework) as sumPiece
 
-FROM task_plan tp LEFT JOIN train_column AS tc ON(tc.id=tp.train_column) 
-                    LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)  WHERE (tp.state = 3 AND (
-                                    CONCAT(DATE_FORMAT(`task_date`,'%Y-%m-%d'),' ',TIME_FORMAT(`task_time`,'%H:%i:%s'))
-                                    BETWEEN '2018-08-12 08:00:00' AND '2018-08-15 08:00:00'
-                                   ) ) 
-group BY tpd.task_number,tpd.task_content_id */
+            if (isset($condition['start_record']) && isset($condition['page_size']))
+            {
+                $start_record = $condition['start_record'];
+                $page_size = $condition['page_size'];
+            }
+        }
+
+        $data .= " AND tp.state='3' And tpd.end_time is not NULL AND (tpd.idef = tp.tpidef or tp.tpidef is null)";
+
         $subquery = M('task_plan')
             ->alias("tp")
             ->join("LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
             ->where($data)
-            ->field("tpd.task_number,tp.task_date,tp.task_time,tpd.task_content_id,tpd.piecework,tp.repair_category")
-            ->limit($condition['start_record'], $condition['page_size'])
-            ->group("tpd.task_number,tpd.task_content_id")
+            ->field("tpd.task_number,tp.task_date,tp.task_time,tpd.task_content_id,tpd.piecework,tp.repair_category,tpd.idef")
             ->select(false);
 
-        $list =   M()->field("stresult.task_number,stresult.task_date,stresult.task_time,stresult.task_content_id,task_content.task_content as task_content_name,stresult.piecework,stresult.repair_category")
-            ->table("(".$subquery.") as stresult")->join("LEFT JOIN task_content ON (task_content.id = stresult.task_content_id)")->select();
+        $subquery3 =   M()->field("task_number,task_date,task_time,task_content_id, task_content.task_content as task_content_name,SUM(stresult.piecework) as sumpiecework,repair_category,idef")
+            ->table("(".$subquery.") as stresult")->group("task_date,task_number,task_content_id")->join("LEFT JOIN task_content ON (task_content.id = task_content_id)")->select(false);
+
+//        $subquery3 =   M()->field("stresult.task_number,stresult.task_date,stresult.task_time,stresult.task_content_id,task_content.task_content as task_content_name,stresult.sumpiecework,stresult.repair_category,idef")
+//            ->table("(".$subquery2.") as stresult")->join("LEFT JOIN task_content ON (task_content.id = stresult.task_content_id)")->select(false);
+
+        $list =   M()->field("task_date,task_time,task_number,GROUP_CONCAT(task_content_id) as task_content_list, GROUP_CONCAT(task_content_name) as task_content_name_list,
+                            GROUP_CONCAT(sumpiecework) as task_piecework_list,repair_category,idef")
+            ->table("(".$subquery3.") as stresult3")->group("task_date,task_number")->limit($start_record, $page_size)->select();
 
         return $list;
     }
@@ -1006,6 +1008,9 @@ group BY tpd.task_number,tpd.task_content_id */
     public function getTaskContentStatisticalByPeriodDate($condition)
     {
         $data = ' 1 ';
+        $start_record = 0;
+        $page_size = 0;
+
         if ($condition) {
             if (isset($condition['dateStart'])&&$condition['dateEnd']!='') {
                 $beginStr = $condition['dateStart'];
@@ -1020,37 +1025,67 @@ group BY tpd.task_number,tpd.task_content_id */
                 }
             }
 
-
-            //if (isset($condition['state'])&&$condition['state']!='') {
-            //    $str = $condition['state'];
-                $data .= " AND tp.state='3' ";
-            //}
-
             if (isset($condition['department_no'])&&$condition['department_no']!='') {
                 $str = $condition['department_no'];
                 $data .= " AND tc.department_no='$str' ";
             }
-        }
-/*SELECT tpd.id,tpd.task_number,tpd.task_content_id,tpd.state,tpd.begin_time,tpd.end_time,tpd.piecework,tp.task_date,tp.task_time,SUM(tpd.piecework) as sumPiece
 
-FROM task_plan tp LEFT JOIN train_column AS tc ON(tc.id=tp.train_column) 
-                    LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)  WHERE (tp.state = 3 AND (
-                                    CONCAT(DATE_FORMAT(`task_date`,'%Y-%m-%d'),' ',TIME_FORMAT(`task_time`,'%H:%i:%s'))
-                                    BETWEEN '2018-08-12 08:00:00' AND '2018-08-15 08:00:00'
-                                   ) ) 
-group BY tpd.task_number,tpd.task_content_id */
+            if (isset($condition['start_record']) && isset($condition['page_size']))
+            {
+                $start_record = $condition['start_record'];
+                $page_size = $condition['page_size'];
+            }
+        }
+
+        // $subquery  = M('task_plan_detail')
+        // ->alias("tp")
+        // ->join("LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
+        // ->where($data)
+        // ->field("tp.task_date,tpd.task_content_id,tpd.piecework")
+        // //->field("tp.task_date,tpd.task_content_id,GROUP_CONCAT(tpd.task_content_id) as task_content_list,SUM(tpd.piecework) as sumPiece")
+        // //->limit($condition['start_record'], $condition['page_size'])
+        // //->group("tp.task_date,tpd.task_content_id")
+        // ->select(false);
+
+/*
         $subquery  = M('task_plan')
             ->alias("tp")
             ->join("LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
             ->where($data)
-            ->field("tp.task_date,tpd.task_content_id,GROUP_CONCAT(tpd.task_content_id) as task_content_list,SUM(tpd.piecework) as sumPiece")
-            ->limit($condition['start_record'], $condition['page_size'])
-            ->group("tp.task_date,tpd.task_content_id")
+            ->field("tp.task_date,tpd.task_content_id,tpd.piecework")
+            //->field("tp.task_date,tpd.task_content_id,GROUP_CONCAT(tpd.task_content_id) as task_content_list,SUM(tpd.piecework) as sumPiece")
+            //->limit($condition['start_record'], $condition['page_size'])
+            //->group("tp.task_date,tpd.task_content_id")
             ->select(false);
+
+            $subquery2 =   M()->field("task_date,task_content_id, piecework,task_content.task_content as task_content_name,SUM(tpd.piecework) as sumPiece")
+            ->table("(".$subquery.") as stresult")->join("LEFT JOIN task_content ON (task_content.id = stresult.task_content_id)")
+            ->group("task_date,task_content_id")->select(false);
 
             //$subQuery = $model->field('id,name')->table('tablename')->group('field')->where($where)->order('status')->select(false);
             $list =   M()->field("task_date,GROUP_CONCAT(task_content_id) as task_content_list, GROUP_CONCAT(sumPiece) as sumPiece_list")
-            ->table("(".$subquery.") as stresult")->group("stresult.task_date")->order("stresult.task_date")->select();
+            ->table("(".$subquery2.") as stresult2")->group("stresult.task_date")->order("stresult.task_date")->select();
+            //->limit($condition['start_record'], $condition['page_size'])
+*/
+
+        $data .= " AND tp.state='3' And tpd.end_time is not NULL AND (tpd.idef = tp.tpidef or tp.tpidef is null)";
+
+        $subquery = M('task_plan')
+            ->alias("tp")
+            ->join("LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
+            ->where($data)
+            ->field("tpd.task_number,tp.task_date,tpd.task_content_id,tpd.piecework,tpd.idef")
+            ->select(false);
+
+        $subquery3 =   M()->field("task_date,task_content_id, task_content.task_content as task_content_name,SUM(stresult.piecework) as sumpiecework")
+            ->table("(".$subquery.") as stresult")->group("task_date,task_content_id")->join("LEFT JOIN task_content ON (task_content.id = task_content_id)")->select(false);
+
+//        $subquery3 =   M()->field("stresult.task_number,stresult.task_date,stresult.task_time,stresult.task_content_id,task_content.task_content as task_content_name,stresult.sumpiecework,stresult.repair_category,idef")
+//            ->table("(".$subquery2.") as stresult")->join("LEFT JOIN task_content ON (task_content.id = stresult.task_content_id)")->select(false);
+
+        $list =   M()->field("task_date,GROUP_CONCAT(task_content_id) as task_content_list, GROUP_CONCAT(task_content_name) as task_content_name_list,
+                            GROUP_CONCAT(sumpiecework) as task_piecework_list")
+            ->table("(".$subquery3.") as stresult3")->group("task_date")->limit($start_record, $page_size)->select();
 
         return $list;
     }
