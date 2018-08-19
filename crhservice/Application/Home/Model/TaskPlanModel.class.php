@@ -1025,9 +1025,9 @@ class TaskPlanModel extends Model
             $subquery3 =   M()->field("task_number,train_column,task_date,task_time,task_content_id, SUM(stresult.piecework) as sumpiecework,repair_category,idef")
             ->table("(".$subquery.") as stresult")->group("task_date,task_number,task_content_id")->select(false);
 
-        $list =   M()->field("task_date,task_time,task_number,train_column,GROUP_CONCAT(task_content_id) as task_content_list, 
+        $list =   M()->field("task_date,task_time,task_number,stresult3.train_column,train_column.train_column as train_column_name,GROUP_CONCAT(task_content_id) as task_content_list, 
                             GROUP_CONCAT(sumpiecework) as task_piecework_list,repair_category,idef")
-            ->table("(".$subquery3.") as stresult3")->group("task_date,task_number")->limit($start_record, $page_size)->select();
+            ->table("(".$subquery3.") as stresult3")->group("task_date,task_number")->join("LEFT JOIN train_column ON (train_column.id = stresult3.train_column)")->limit($start_record, $page_size)->select();
 
 
         return $list;
