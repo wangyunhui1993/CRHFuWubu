@@ -206,7 +206,7 @@ class TaskPlanModel extends Model
 
     public function addData($info)
     {
-        $tran_result = true;
+        $tran_result = false;
         $trans = M("task_plan");
         $transDetail = M("task_plan_detail");
         $maxNum = $trans->max('task_number') > $transDetail->max('task_number') ? $trans->max('task_number') : $transDetail->max('task_number');
@@ -219,14 +219,15 @@ class TaskPlanModel extends Model
         //多表操作而且数据互相依赖，必须用事务来处理，必须用InnoDB,不用MyISAM
         $trans->startTrans();
         $transDetail->startTrans();
-        for ($i = 0; $i < sizeof($info['choosed_content']) && $tran_result; $i++) {
+        for ($i = 0; $i < sizeof($info['choosed_content']); $i++) {
  
             $dataDetail['task_content_id'] = $info['choosed_content'][$i]['id'];
             $dataDetail['task_number'] = $startNum;
             $dataDetail['state'] = "1";//等待作业
             
-            $defaultPiecework = M("task_content")->where('id='.$dataDetail['task_content_id'])->getField('piecework');//获取默认的计件数
-            $dataDetail['piecework'] = $defaultPiecework;
+            $defaultPiecework = M("pieceworkbase")->where(" train_column=".$info['train_column']." AND task_contentid=".$dataDetail['task_content_id'])
+            ->getField('piecebase');//获取默认的计件数
+            $dataDetail['piecework'] = empty($defaultPiecework)?1:$defaultPiecework;
 
             if(isset($info['choosed_content'][$i]['piecework']))
             {
@@ -342,17 +343,36 @@ class TaskPlanModel extends Model
                     $transResult = $transDetail->data($taskDetails[$k])->delete();
                 }
             }
+
             for ($i = 0; $i < sizeof($info['task_content_list']) && $transResult; $i++) {
                 $found = false;
                 for ($j = 0; $j < sizeof($taskDetails) && !$found; $j++) {
                     if ($taskDetails[$j]['task_content_id'] == $info['task_content_list'][$i]) {
                         $found = true;
+
+                        if(isset($info['task_content_list'][$i]['piecework']))
+                        {
+                            $map1['piecework'] = $info['task_content_list'][$i]['piecework'];//实际填写的计件数，比如滤网布更换(新)或滤网布更换(旧)两项
+
+                            $transResult = $transDetail->data($map1)->save();
+                        }                        
                     }
-                }
+                }//for
+
                 if (!$found) {
                     $map2['task_number'] = $info['task_number'];
                     $map2['task_content_id'] = $info['task_content_list'][$i];
                     $map2['state'] = "1";//等待作业
+
+                    $defaultPiecework = M("pieceworkbase")->where(" train_column=".$info['train_column']." AND task_contentid=".$info['task_content_list'][$i])
+                    ->getField('piecebase');//获取默认的计件数
+                    $map2['piecework'] = empty($defaultPiecework)?1:$defaultPiecework;
+        
+                    if(isset($info['task_content_list'][$i]['piecework']))
+                    {
+                        $map2['piecework'] = $info['task_content_list'][$i]['piecework'];//实际填写的计件数，比如滤网布更换(新)或滤网布更换(旧)两项
+                    }
+
                     $transResult = $transDetail->data($map2)->add();
                 }
                 //$tran_result = false;测试事务成功与否
@@ -989,18 +1009,26 @@ class TaskPlanModel extends Model
             ->alias("tp")
             ->join("LEFT JOIN task_plan_detail tpd ON (tp.task_number = tpd.task_number)")
             ->where($data)
-            ->field("tpd.task_number,tp.task_date,tp.task_time,tpd.task_content_id,tpd.piecework,tp.repair_category,tpd.idef")
+            ->field("tpd.task_number,train_column,tp.task_date,tp.task_time,tpd.task_content_id,tpd.piecework,tp.repair_category,tpd.idef")
             ->select(false);
 
-        $subquery3 =   M()->field("task_number,task_date,task_time,task_content_id, task_content.task_content as task_content_name,SUM(stresult.piecework) as sumpiecework,repair_category,idef")
-            ->table("(".$subquery.") as stresult")->group("task_date,task_number,task_content_id")->join("LEFT JOIN task_content ON (task_content.id = task_content_id)")->select(false);
+//         $subquery3 =   M()->field("task_number,train_column,task_date,task_time,task_content_id, task_content.task_content as task_content_name,SUM(stresult.piecework) as sumpiecework,repair_category,idef")
+//             ->table("(".$subquery.") as stresult")->group("task_date,task_number,task_content_id")->join("LEFT JOIN task_content ON (task_content.id = task_content_id)")->select(false);
 
-//        $subquery3 =   M()->field("stresult.task_number,stresult.task_date,stresult.task_time,stresult.task_content_id,task_content.task_content as task_content_name,stresult.sumpiecework,stresult.repair_category,idef")
-//            ->table("(".$subquery2.") as stresult")->join("LEFT JOIN task_content ON (task_content.id = stresult.task_content_id)")->select(false);
+// //        $subquery3 =   M()->field("stresult.task_number,stresult.task_date,stresult.task_time,stresult.task_content_id,task_content.task_content as task_content_name,stresult.sumpiecework,stresult.repair_category,idef")
+// //            ->table("(".$subquery2.") as stresult")->join("LEFT JOIN task_content ON (task_content.id = stresult.task_content_id)")->select(false);
 
-        $list =   M()->field("task_date,task_time,task_number,GROUP_CONCAT(task_content_id) as task_content_list, GROUP_CONCAT(task_content_name) as task_content_name_list,
+//         $list =   M()->field("task_date,task_time,task_number,train_column,GROUP_CONCAT(task_content_id) as task_content_list, GROUP_CONCAT(task_content_name) as task_content_name_list,
+//                             GROUP_CONCAT(sumpiecework) as task_piecework_list,repair_category,idef")
+//             ->table("(".$subquery3.") as stresult3")->group("task_date,task_number")->limit($start_record, $page_size)->select();
+
+            $subquery3 =   M()->field("task_number,train_column,task_date,task_time,task_content_id, SUM(stresult.piecework) as sumpiecework,repair_category,idef")
+            ->table("(".$subquery.") as stresult")->group("task_date,task_number,task_content_id")->select(false);
+
+        $list =   M()->field("task_date,task_time,task_number,train_column,GROUP_CONCAT(task_content_id) as task_content_list, 
                             GROUP_CONCAT(sumpiecework) as task_piecework_list,repair_category,idef")
             ->table("(".$subquery3.") as stresult3")->group("task_date,task_number")->limit($start_record, $page_size)->select();
+
 
         return $list;
     }
@@ -1077,15 +1105,26 @@ class TaskPlanModel extends Model
             ->field("tpd.task_number,tp.task_date,tpd.task_content_id,tpd.piecework,tpd.idef")
             ->select(false);
 
-        $subquery3 =   M()->field("task_date,task_content_id, task_content.task_content as task_content_name,SUM(stresult.piecework) as sumpiecework")
-            ->table("(".$subquery.") as stresult")->group("task_date,task_content_id")->join("LEFT JOIN task_content ON (task_content.id = task_content_id)")->select(false);
+//         $subquery3 =   M()->field("task_date,task_content_id, task_content.task_content as task_content_name,SUM(stresult.piecework) as sumpiecework")
+//             ->table("(".$subquery.") as stresult")->group("task_date,task_content_id")->join("LEFT JOIN task_content ON (task_content.id = task_content_id)")->select(false);
 
-//        $subquery3 =   M()->field("stresult.task_number,stresult.task_date,stresult.task_time,stresult.task_content_id,task_content.task_content as task_content_name,stresult.sumpiecework,stresult.repair_category,idef")
-//            ->table("(".$subquery2.") as stresult")->join("LEFT JOIN task_content ON (task_content.id = stresult.task_content_id)")->select(false);
+// //        $subquery3 =   M()->field("stresult.task_number,stresult.task_date,stresult.task_time,stresult.task_content_id,task_content.task_content as task_content_name,stresult.sumpiecework,stresult.repair_category,idef")
+// //            ->table("(".$subquery2.") as stresult")->join("LEFT JOIN task_content ON (task_content.id = stresult.task_content_id)")->select(false);
 
-        $list =   M()->field("task_date,GROUP_CONCAT(task_content_id) as task_content_list, GROUP_CONCAT(task_content_name) as task_content_name_list,
-                            GROUP_CONCAT(sumpiecework) as task_piecework_list")
-            ->table("(".$subquery3.") as stresult3")->group("task_date")->limit($start_record, $page_size)->select();
+//         $list =   M()->field("task_date,GROUP_CONCAT(task_content_id) as task_content_list, GROUP_CONCAT(task_content_name) as task_content_name_list,
+//                             GROUP_CONCAT(sumpiecework) as task_piecework_list")
+//             ->table("(".$subquery3.") as stresult3")->group("task_date")->limit($start_record, $page_size)->select();
+
+        $subquery3 =   M()->field("task_date,task_content_id, SUM(stresult.piecework) as sumpiecework")
+        ->table("(".$subquery.") as stresult")->group("task_date,task_content_id")->select(false);
+
+        //        $subquery3 =   M()->field("stresult.task_number,stresult.task_date,stresult.task_time,stresult.task_content_id,task_content.task_content as task_content_name,stresult.sumpiecework,stresult.repair_category,idef")
+        //            ->table("(".$subquery2.") as stresult")->join("LEFT JOIN task_content ON (task_content.id = stresult.task_content_id)")->select(false);
+
+        $list =   M()->field("task_date,GROUP_CONCAT(task_content_id) as task_content_list,
+                        GROUP_CONCAT(sumpiecework) as task_piecework_list")
+        ->table("(".$subquery3.") as stresult3")->group("task_date")->limit($start_record, $page_size)->select();
+
 
         return $list;
     }
