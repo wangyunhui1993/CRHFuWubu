@@ -225,7 +225,7 @@ class TaskPlanModel extends Model
             $dataDetail['task_number'] = $startNum;
             $dataDetail['state'] = "1";//等待作业
             
-            $defaultPiecework = M("pieceworkbase")->where(" train_column=".$info['train_column']." AND task_contentid=".$dataDetail['task_content_id'])
+            $defaultPiecework = M("piece_workbase")->where(" train_column=".$info['train_column']." AND task_contentid=".$dataDetail['task_content_id'])
             ->getField('piecebase');//获取默认的计件数
             $dataDetail['piecework'] = empty($defaultPiecework)?1:$defaultPiecework;
 
@@ -364,7 +364,7 @@ class TaskPlanModel extends Model
                     $map2['task_content_id'] = $info['task_content_list'][$i];
                     $map2['state'] = "1";//等待作业
 
-                    $defaultPiecework = M("pieceworkbase")->where(" train_column=".$info['train_column']." AND task_contentid=".$info['task_content_list'][$i])
+                    $defaultPiecework = M("piece_workbase")->where(" train_column=".$info['train_column']." AND task_contentid=".$info['task_content_list'][$i])
                     ->getField('piecebase');//获取默认的计件数
                     $map2['piecework'] = empty($defaultPiecework)?1:$defaultPiecework;
         
